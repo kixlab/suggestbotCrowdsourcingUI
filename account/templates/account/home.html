@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+
+    {% block head %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% endblock %}
+
+    {% block body %}
+      <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-3">Video tagging</h1>
+        <p class="lead">Please check the video to tag the contextual labels</p>
+      </div>
+    </div>
+    <div class="splash_page_subtitle container">
+            <h3>1. Category1</h3>
+    </div>
+    <div class="container footer">
+      <div class="card-deck" style="max-width: 60rem;">
+        <div class="card btn btn-light" >
+          <span>
+          {% load staticfiles %}
+          <a  href= "/home/introduction1/" role= 'button'>
+          {% load staticfiles %}
+          <img class="card-img-top " src="{%static 'account/video_icon.png'%}" alt="video1">
+          <div class="card-body">
+            <h4 class="card-caption">video1</h4>
+
+          </div></a>
+          </span>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="video2">
+          <div class="card-body">
+            <h4 class="card-title">video2</h4>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="Card image cap">
+          <div class="card-body">
+            <h4 class="card-title">video3</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="splash_page_subtitle container footer">
+            <h3>2. Category2</h3>
+    </div>
+    <div class="container footer">
+      <div class="card-deck" style="max-width: 60rem;">
+      <div class="card">
+        {% load staticfiles %}
+        <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="video1">
+        <div class="card-body">
+          <h4 class="card-caption">video1</h4>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="video2">
+        <div class="card-body">
+          <h4 class="card-title">video2</h4>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="Card image cap">
+        <div class="card-body">
+          <h4 class="card-title">video3</h4>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="splash_page_subtitle container footer">
+            <h3>3. Category3</h3>
+    </div>
+    <div class="container footer">
+      <div class="card-deck" style="max-width: 60rem;">
+      <div class="card">
+        {% load staticfiles %}
+        <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="video1">
+        <div class="card-body" >
+          <h4 class="card-caption">video1</h4>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="video2">
+        <div class="card-body">
+          <h4 class="card-title">video2</h4>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{%static 'account/video_icon.png'%}" alt="Card image cap">
+        <div class="card-body">
+          <h4 class="card-title">video3</h4>
+        </div>
+      </div>
+      </div>
+    </div>
+      {% endblock %}
+      </body>
+    </html>
