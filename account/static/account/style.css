@@ -24,3 +24,25 @@ border-color:grey;
 h2 {
   margin-top:50px;
 }
+
+.wrapper {
+  padding: 5px 10px;
+}
+
+.text {
+  text-align: justify;
+}
+
+hr
+{
+  background-color: rgba(144, 144, 144, 0.7);
+  border: 0 none;
+  color: #eee;
+  height: 2px;
+  //width: 98%;
+  margin: 15px 0;
+}
+
+.hover {
+    background-color: yellow;
+}

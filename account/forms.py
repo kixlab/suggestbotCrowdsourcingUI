@@ -1,7 +1,15 @@
 from django import forms
+from . import models
 
-class testform(forms.Form):
+class testform(forms.ModelForm):
     mturk_id=forms.CharField(required=True, widget=forms.TextInput())
     val1=forms.CharField(widget = forms.HiddenInput(), required = False)
     val2=forms.CharField(widget = forms.HiddenInput(), required = False)
-    post = forms.CharField()
+    q1 = forms.CharField(widget = forms.HiddenInput(), required = False)
+
+    class Meta:
+        model= models.Data
+        fields = "__all__" 
+
+class FeedbackForm(forms.Form):
+    text=forms.CharField(widget = forms.HiddenInput(), required = False)

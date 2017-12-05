@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^introduction1/$', views.introduction1),
     url(r'^task/$', views.get),
     url(r'^thankyou/$', views.thankyou),
+    url(r'^feedback/$', views.feedback),
 ]
