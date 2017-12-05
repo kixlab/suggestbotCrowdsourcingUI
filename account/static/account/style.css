@@ -21,6 +21,9 @@ border-style:solid;
 border-color:grey;
 }
 
+.slider-handle{
+  top:15px;
+}
 h2 {
   margin-top:50px;
 }
