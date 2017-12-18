@@ -6,75 +6,90 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <!-- d3.js -->
-  <!-- <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script> -->
   <script src="https://d3js.org/d3.v2.min.js"></script>
-  
+
 {% endblock %}
 {% block body %}
-<div class='content'>
-  <!-- /the chart goes here -->
-</div>
 <div class="container wrapper">
-<h3 class= "title">progress: Video 1 of 10</h3>
-<div class="separator"></div>
-
-<div class="container-fluid">
-  <div class="modal-body row">
-  <div class="col-md-6">
-    <div align="center" class="embed-responsive embed-responsive-16by9">
-      <video class="embed-responsive-item" controls>
-          {% load staticfiles %}
-          <source src="{% static 'account/video1.mp4' %}" type="video/mp4">
-          <source src="movie.ogg" type="video/ogg">
-          Your browser does not support the video tag.
-      </video>
+  <h3 class= "title">progress: Video 1 of 10</h3>
+  <div class="separator"></div>
+  <div class="container-fluid">
+    <div class="modal-body row">
+      <div class="col-md-6">
+        <div align="center" class="embed-responsive embed-responsive-16by9">
+          <video class="embed-responsive-item" id="myVideo" controls>
+              {% load staticfiles %}
+              <source src="{% static 'account/media/training.mp4' %}" type="video/mp4">
+              <source src="movie.ogg" type="video/ogg">
+              Your browser does not support the video tag.
+          </video>
+        </div>
+        <h2 id="detect">Detect Face</h2>
+      </div>
+      <div class="col-md-6">
+          <h2>Context:</h2><br>
+          <p>Departmental store training example: A departmental store employee attending a customer.</p>
+      </div>
     </div>
   </div>
-    <div class="col-md-6">
-      <h2>Context:</h2><br>
-      <p>Man ordering coffee in a cafe.</p>
-    </div>
-  </div>
+  <hr/>
 
 </div>
-<hr/>
-<div class="container footer ">
-  <h5 >Please answer the below questions about the video:</h5><br><hr/>
-  <div class="container">
-  <div class="hover">
+<script>
+window.onload=function(){
+                  document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
+                  this.currentTime = localStorage.getItem('elapsedtime');//perfect. now run it ok
+                  console.log("pageload(elapsedtime):"+localStorage.getItem('elapsedtime'));
+            }, false  );
 
-   <form method="post">
-     <br>
-    {% csrf_token %}
-    {{ form.as_p}}
-    <br>
+       };
+//var pausetime=2;
+var video = document.getElementById("myVideo");
+video.addEventListener("timeupdate", function(){
+// check whether we have passed 5 minutes,
+// current time is given in seconds
+console.log("currenttime: "+this.currentTime);
+if(this.currentTime >= localStorage.getItem('elapsedtime')+5) {
+    // pause the playback
+    localStorage.elapsedtime= this.currentTime;
+    alert("5 sec passed(elapsedtime):"+localStorage.getItem('elapsedtime'));
+    video.pause();
+    window.location.href="/home/questionaire/";
+}
+});
+</script>
+  <!--<script src="{%static 'account/js/faceDetection.min.js'%}"></script>
+  <script type="text/javascript">
+    setTimeout(function(){
+    window.location.href="/home/questionaire/";},20000);
+  </script>
+  <script type="text/javascript">
+    $("#detect").click(function(){
+    alert("Detecting Face ..............");
+    jQuery( document ).ready(function( $ ) {
+    $(".embed-responsive-item").faceDetection({
+      complete:function(faces){
+        alert("Detection Complete");
+        for(var i=0;i<faces.length;i++){
+          $('<div>',{
+            'class':'face',
+            'css':{
+              'position':'absolute',
+              'left':faces[i].x*faces[i].scaleX+'px',
+              'top':faces[i].y*faces[i].scaleY+'px',
+              'width':faces[i].width*faces[i].scaleX+'px',
+              'height':faces[i].height*faces[i].scaleY+'px'
+            }
+          })
+          .insertAfter(this);
+        }
+      },
+      error:function(code,message){
+        alert("Error: "+message);
+      }
+    });});
+    });
+  </script>-->
 
-  </div>
-    <hr/>
 
-     <p>Fine tune the <em>emotions:</em><br> <br>Please select the <em>emotion value</em> of the speaker using sliders. you have to use both <thead>
-       sliders to input the value of the emotion.
-     </thead></p>
-     <span id="slider1CurrentSliderValLabel">extremely sad &nbsp; &nbsp;</span>
-     <input class= "footer" id="slider1" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-     <span id="slider1CurrentSliderValLabel">extremely happy </span>
-     <br><br>
-
-     <span id="slider2CurrentSliderValLabel">extremely bored </span>
-     <input class= "footer" id="slider2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-     <span id="slider2CurrentSliderValLabel">extremely excited </span>
-     <br><br>
-     <hr/>
-    <p class="text">Please describe if any bodily expressions(face, gesture etc.) helped you to identify the underlined emotion.</p>
-    <textarea style="width:100%; height: 70px"></textarea>
-    <hr/>
-    <button class="btn btn-dark btn-lg footer" type="submit" >Submit</button>
-  </form>
-</div>
-</div>
-
-</div>
-{% load staticfiles %}
-<script src="{% static 'account/js/bubble.js' %}"></script>
 {% endblock %}
