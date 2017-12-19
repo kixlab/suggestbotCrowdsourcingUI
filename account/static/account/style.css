@@ -1,6 +1,7 @@
 .footer {
-  width:100;
-   margin-top:50px; }
+  width:100%;
+  margin-top:50px;
+ }
 .title {
   margin-bottom: 50px;
   margin-top: 50px;
@@ -46,6 +47,12 @@ hr
   margin: 15px 0;
 }
 
-.hover {
-    background-color: yellow;
+.face{
+  position: absolute;
+  border: 2px solid #009900;
+}
+#detect{
+  margin-left: 15%;
+  cursor: pointer;
+  cursor: hand;
 }

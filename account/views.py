@@ -16,6 +16,9 @@ def help(request):
 def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
+def task(request):
+    return(render(request,'account/task.html'))
+
 def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
@@ -28,10 +31,10 @@ def get(request):
             data.q1 = form.cleaned_data['q1']
             args = {'form': data}
             data.save()
-            return(HttpResponseRedirect('/home/feedback/'))
+            return(HttpResponseRedirect('/home/task/'))
     else:
         form = testform()
-        return(render(request,'account/task.html', {'form': form}))
+        return(render(request,'account/questionaire.html', {'form': form}))
 
 def getIntention(request):
     if request.method == 'POST':

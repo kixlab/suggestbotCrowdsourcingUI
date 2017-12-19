@@ -19,5 +19,6 @@ class intentionform(forms.ModelForm):
     class Meta:
         model= models.Intention
         fields = "__all__"
+        
 class FeedbackForm(forms.Form):
     text=forms.CharField(widget = forms.HiddenInput(), required = False)
