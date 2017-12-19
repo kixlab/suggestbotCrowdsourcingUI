@@ -9,12 +9,10 @@
   <!-- d3.js -->
   <!-- <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script> -->
   <script src="https://d3js.org/d3.v2.min.js"></script>
-  
+
 {% endblock %}
 {% block body %}
-<div class='content'>
-  <!-- /the chart goes here -->
-</div>
+
 <div class="container wrapper">
 <h3 class= "title">progress: Video 1 of 10</h3>
 <div class="separator"></div>
@@ -56,6 +54,7 @@
      <p>Fine tune the <em>emotions:</em><br> <br>Please select the <em>emotion value</em> of the speaker using sliders. you have to use both <thead>
        sliders to input the value of the emotion.
      </thead></p>
+
      <span id="slider1CurrentSliderValLabel">extremely sad &nbsp; &nbsp;</span>
      <input class= "footer" id="slider1" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
      <span id="slider1CurrentSliderValLabel">extremely happy </span>
@@ -65,12 +64,14 @@
      <input class= "footer" id="slider2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
      <span id="slider2CurrentSliderValLabel">extremely excited </span>
      <br><br>
+     <div class="content"></div>
      <hr/>
     <p class="text">Please describe if any bodily expressions(face, gesture etc.) helped you to identify the underlined emotion.</p>
-    <textarea style="width:100%; height: 70px"></textarea>
+    <textarea style="width:100%; height: 70px" name="q1"></textarea>
     <hr/>
     <button class="btn btn-dark btn-lg footer" type="submit" >Submit</button>
   </form>
+
 </div>
 </div>
 

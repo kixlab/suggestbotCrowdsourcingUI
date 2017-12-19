@@ -25,6 +25,7 @@ def get(request):
             data.mturk_id = form.cleaned_data['mturk_id']
             data.val1 = form.cleaned_data['val1']
             data.val2 = form.cleaned_data['val2']
+            data.q1 = form.cleaned_data['q1']
             args = {'form': data}
             data.save()
             return(HttpResponseRedirect('/home/feedback/'))
@@ -57,5 +58,6 @@ def feedback(request):
             #data.q1 = form.cleaned_data['q1'
             feed_data.text = form.cleaned_data['text']
             args = {'form': feed_data}
+            feed_data.save()
         return(HttpResponseRedirect('/home/thankyou/'))
     return(render(request,'account/feedback.html'))
