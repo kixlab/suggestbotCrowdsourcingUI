@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
   <head>
     <title>video tagging</title>
@@ -53,6 +53,12 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+    </script>
+
+    <script type="text/javascript">
+    if(localStorage.elapsedtime == 'undefined')
+      localStorage.elapsedtime = '0';
+      console.log("initializing(elapsedtime):"+localStorage.getItem('elapsedtime'));
     </script>
     <script type="text/javascript">
       $("#slider1").slider();
