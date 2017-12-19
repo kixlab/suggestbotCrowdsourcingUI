@@ -7,7 +7,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://d3js.org/d3.v2.min.js"></script>
+<script>
+window.onload=function(){
+                  document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
+                  this.currentTime = localStorage.getItem('elapsedtime');//perfect. now run it ok
+                  console.log("pageload(elapsedtime):"+localStorage.getItem('elapsedtime'));
+            }, false  );
 
+       };
+</script>
 {% endblock %}
 {% block body %}
 <div class="container wrapper">
@@ -27,33 +35,29 @@
         <h2 id="detect">Detect Face</h2>
       </div>
       <div class="col-md-6">
+
           <h2>Context:</h2><br>
           <p>Departmental store training example: A departmental store employee attending a customer.</p>
       </div>
     </div>
   </div>
+    <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off"></button>
   <hr/>
 
 </div>
 <script>
-window.onload=function(){
-                  document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
-                  this.currentTime = localStorage.getItem('elapsedtime');//perfect. now run it ok
-                  console.log("pageload(elapsedtime):"+localStorage.getItem('elapsedtime'));
-            }, false  );
-
-       };
 //var pausetime=2;
 var video = document.getElementById("myVideo");
 video.addEventListener("timeupdate", function(){
 // check whether we have passed 5 minutes,
 // current time is given in seconds
 console.log("currenttime: "+this.currentTime);
-if(this.currentTime >= localStorage.getItem('elapsedtime')+5) {
+
+if(this.currentTime >= parseInt(localStorage.getItem('elapsedtime'))+5) {
     // pause the playback
     localStorage.elapsedtime= this.currentTime;
-    alert("5 sec passed(elapsedtime):"+localStorage.getItem('elapsedtime'));
     video.pause();
+    alert("5 sec passed(elapsedtime):"+localStorage.getItem('elapsedtime'));
     window.location.href="/home/questionaire/";
 }
 });
