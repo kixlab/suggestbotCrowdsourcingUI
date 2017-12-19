@@ -10,7 +10,7 @@
 <script>
 window.onload=function(){
                   document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
-                  this.currentTime = localStorage.getItem('elapsedtime');//perfect. now run it ok
+                  this.currentTime = localStorage.getItem('elapsedtime');
                   console.log("pageload(elapsedtime):"+localStorage.getItem('elapsedtime'));
             }, false  );
 

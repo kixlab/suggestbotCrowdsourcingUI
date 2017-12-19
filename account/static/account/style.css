@@ -7,6 +7,30 @@
   margin-top: 50px;
 }
 
+#container-border{
+  align-content: center;
+  width: 50%;
+  border-width: 1px;
+  border-color: grey;
+  border-style: solid;
+}
+
+#part1{
+  color:#28a745;
+  background-color:#28a745;
+  background-image:none;
+  border-color:#28a745;
+  border-width: 1px;
+}
+
+#part2{
+  color:red;
+  background-color:red;
+  background-image:none;
+  border-color:red;
+  border-width: 1px;
+}
+
 .separator {
     margin-top: 31px;
     margin-bottom: 20px;
