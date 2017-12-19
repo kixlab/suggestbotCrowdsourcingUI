@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^intention/$',views.getIntention),
     url(r'^thankyou/$', views.thankyou),
     url(r'^feedback/$', views.feedback),
+    url(r'^get/$', views.get, name='get'),
 ]
