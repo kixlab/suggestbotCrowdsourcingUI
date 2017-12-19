@@ -27,7 +27,7 @@ window.onload=function(){
         <div align="center" class="embed-responsive embed-responsive-16by9">
           <video class="embed-responsive-item" id="myVideo" controls>
               {% load staticfiles %}
-              <source src="{% static 'account/media/training.mp4' %}" type="video/mp4">
+              <source src="{% static 'account/media/grumpy_customer.mp4' %}" type="video/mp4">
               <source src="movie.ogg" type="video/ogg">
               Your browser does not support the video tag.
           </video>
@@ -46,6 +46,7 @@ window.onload=function(){
 
 </div>
 <script>
+
 //var pausetime=2;
 var video = document.getElementById("myVideo");
 video.addEventListener("timeupdate", function(){

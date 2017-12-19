@@ -6,6 +6,7 @@ class testform(forms.ModelForm):
     val1=forms.CharField(widget = forms.HiddenInput(), required = False)
     val2=forms.CharField(widget = forms.HiddenInput(), required = False)
     q1 = forms.CharField(widget = forms.HiddenInput(), required = False)
+    current_offset= forms.IntegerField(widget = forms.HiddenInput(), required = True)
 
     class Meta:
         model= models.Data
@@ -19,6 +20,6 @@ class intentionform(forms.ModelForm):
     class Meta:
         model= models.Intention
         fields = "__all__"
-        
+
 class FeedbackForm(forms.Form):
     text=forms.CharField(widget = forms.HiddenInput(), required = False)

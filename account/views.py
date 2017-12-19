@@ -31,7 +31,7 @@ def get(request):
             data.q1 = form.cleaned_data['q1']
             args = {'form': data}
             data.save()
-            return(HttpResponseRedirect('/home/task/'))
+        return(HttpResponseRedirect('/home/task/'))
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
@@ -48,7 +48,7 @@ def getIntention(request):
             return(HttpResponseRedirect('/home/feedback/'))
     else:
         form = intentionform()
-    return(render(request,'account/intention.html', {'form': form}))
+        return(render(request,'account/intention.html', {'form': form}))
 
 def thankyou(request):
     return(render(request,'account/thankyou.html'))
