@@ -13,4 +13,6 @@ $(".slider-handle").on("mouseenter", function(){
 });
 
 
+$("#elapsedtime").val(localStorage.elapsedtime)
+
 });

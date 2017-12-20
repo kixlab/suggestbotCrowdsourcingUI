@@ -39,6 +39,10 @@ def get(request):
             data2.q1 = form.cleaned_data['q2_1']
             data2.save()
             data2.save()
+            #elapsedtime
+            elapsedtime = float(form.cleaned_data['elapsedtime'])
+            print(elapsedtime)
+
         return(HttpResponseRedirect('/home/task/'))
     else:
         form = testform()

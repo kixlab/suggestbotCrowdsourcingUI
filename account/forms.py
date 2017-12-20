@@ -10,6 +10,7 @@ class testform(forms.Form):
     val2_2=forms.CharField(widget = forms.HiddenInput(), required = False)
     q2_1 = forms.CharField(widget = forms.HiddenInput(), required = False)
     _len = forms.CharField(widget=forms.HiddenInput(), required= False)
+    elapsedtime = forms.CharField(widget=forms.HiddenInput(), required=False)
     #current_offset= forms.IntegerField(widget = forms.HiddenInput(), required = True)
 
     #class Meta:
