@@ -20,7 +20,9 @@
       <p>1.Tag the participants in the frame presented.<br>
       2.Enter emotions for each participant below.<br>
       <b>Note:<br> participant with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> participant with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
+      <img id="img" style="width:80%"></img>
     </div>
+  </div>
   </div>
 </div><br><br><br><br>
 
@@ -124,4 +126,21 @@
 <button class="btn btn-dark btn-lg footer" type="submit" style="height:50px; width:100px"  >Submit</button>
 </form>
 </div>
+<script>
+document.getElementById("img").setAttribute("src",JSON.parse(localStorage.getItem("img")).img);
+$(document).ready(function() {
+  $('img').click(function(e) {
+    var offset = $(this).offset();
+    var x = (e.pageX - offset.left);
+    var y = (e.pageY - offset.top);
+    var c=document.createElement("canvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.rect(x+10,y-10,x-10,y+10);
+    ctx.strokeStyle="red";
+    ctx.stroke();
+
+  });
+});
+</script>
 {% endblock %}
