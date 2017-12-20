@@ -13,7 +13,7 @@
   <div >
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <!-- <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <span>
             <a href="/home/" class="btn btn-outline-success btn-lg " role="button" >Home</a>
@@ -22,13 +22,13 @@
         </ul>
           <span>
           <a href="/home/about/" class="btn btn-dark btn-lg " role="button" >About</a>
-          </span>
+          </span> -->
           <span>
-            <button type="button" class="btn btn-dark btn-lg" id="btnPopover" title="Instructions" data-toggle="popover" data-placement="bottom" data-content="1.Read the text mentioned alongside the video to understand the context of the whole conversation.
-            2. Watch the video carefully and answer the questions below it.
-            3. Submit your response.">
-  Help
-</button></span>
+            <button type="button" class="btn btn-outline-success btn-lg " id="btnPopover" title="Instructions" data-toggle="popover" data-placement="bottom" data-content="1.Read the text in the side panel to understand the context of the whole conversation.
+             2. Video will be played for five seconds and you will be directed to the questionnaire page.
+             3. Submit your response.">Help
+           </button>
+         </span>
 
     </div>
 
@@ -45,7 +45,7 @@
   </div>
   </div>
 
- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+ <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.js" ></script>
     <script src="{%static 'account/bootstrap-slider.js'%}"></script>
@@ -59,33 +59,6 @@
     if(localStorage.elapsedtime == 'undefined')
       localStorage.elapsedtime = '0';
       console.log("initializing(elapsedtime):"+localStorage.getItem('elapsedtime'));
-    </script>
-    <script type="text/javascript">
-      $("#slider1").slider();
-      $("#slider1").on("slide", function(slideEvt) {
-    	$("#slider1SliderVal").text(slideEvt.value);
-
-    });
-    </script>
-    <script type="text/javascript">
-      $("#slider2").slider();
-      $("#slider2").on("slide", function(slideEvt) {
-    	$("#slider2SliderVal").text(slideEvt.value);
-
-    });
-    </script>
-    <script type="text/javascript">
-      $(document).ready(function(){
-      $('#btnPopover').popover();
-      $(".slider-handle").on("mouseenter", function(){
-        $(this).parent().find(".tooltip").css("opacity","1")
-
-      }).on("mouseout", function(){
-        $(this).parent().find(".tooltip").css("opacity","0")
-      });
-
-
-  });
     </script>
 
   </body>
