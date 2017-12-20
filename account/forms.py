@@ -1,16 +1,17 @@
 from django import forms
 from . import models
 
-class testform(forms.ModelForm):
+class testform(forms.Form):
     mturk_id=forms.CharField(required=False, widget = forms.HiddenInput())
     val1=forms.CharField(widget = forms.HiddenInput(), required = False)
     val2=forms.CharField(widget = forms.HiddenInput(), required = False)
     q1 = forms.CharField(widget = forms.HiddenInput(), required = False)
+
     current_offset= forms.IntegerField(widget = forms.HiddenInput(), required = True)
 
-    class Meta:
-        model= models.Data
-        fields = "__all__"
+    #class Meta:
+    #    model= models.Data
+    #    fields = "__all__"
 
 class intentionform(forms.ModelForm):
     mturk_id=forms.CharField(required=False, widget = forms.HiddenInput())
