@@ -19,7 +19,7 @@
       <p>1.Tag the participants in the frame presented.<br>
       2.Enter emotions for each participant below.<br>
       <b>Note:<br> participant with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> participant with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
-      <img id="img" style="width:80%"></img>
+      <canvas id="myCanvas"></canvas>
     </div>
   </div>
   </div>
@@ -123,16 +123,27 @@
 </form>
 </div>
 <script>
-document.getElementById("img").setAttribute("src",JSON.parse(localStorage.getItem("img")).img);
+var img = new Image;
+img.onload = start;
+img.src = JSON.parse(localStorage.getItem("img")).img
+// document.getElementById("img").setAttribute("src",);
+var c=document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+$("#myCanvas").css("width",img.width/2);
+$("#myCanvas").css("height",img.height/2);
+function start(){
+  ctx.drawImage(img,0,0,img.width/5,img.height/5);
+}
 $(document).ready(function() {
-  $('img').click(function(e) {
+  $('canvas').click(function(e) {
     var offset = $(this).offset();
     var x = (e.pageX - offset.left);
     var y = (e.pageY - offset.top);
-    var c=document.createElement("canvas");
-    var ctx = c.getContext("2d");
     ctx.beginPath();
-    ctx.rect(x+10,y-10,x-10,y+10);
+    ctx.rect(x,y,20,20);
+    console.log(x,y);
+    console.log(e.pageX,e.pageY);
+    console.log(offset.left,offset.top);
     ctx.strokeStyle="red";
     ctx.stroke();
 
