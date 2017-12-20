@@ -22,10 +22,12 @@ def task(request):
 def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
+        print("BBB")
         if form.is_valid():
+            print("AAA")
             data=models.Data()
             #data.q1 = form.cleaned_data['q1']
-            data.mturk_id = form.cleaned_data['mturk_id']
+            #data.mturk_id = form.cleaned_data['mturk_id']
             data.val1 = form.cleaned_data['val1']
             data.val2 = form.cleaned_data['val2']
             data.q1 = form.cleaned_data['q1']

@@ -1,3 +1,4 @@
 *.pyc
 .DS_Store
 *.cpython-36.pyc
+db.sqlite3

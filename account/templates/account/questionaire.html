@@ -3,12 +3,13 @@
 <title>jQuery UI Slider - Default functionality</title>
 <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://d3js.org/d3.v2.min.js"></script>
   {% load staticfiles %}
   <script src="{% static 'account/js/bubble.js' %}"></script>
+  <script src="{% static 'account/js/emotion_slider.js' %}"></script>
 {% endblock %}
 {% block body %}
 <br>
@@ -25,6 +26,8 @@
 
 <div class="container"><hr>
 <form method="post">
+  {% csrf_token %}
+  {{ form.as_p}}
   <div class="container">
   <br>
   <div id="accordion" role="tablist">
@@ -46,20 +49,19 @@
           <h5 >Please select the <em>emotion</em> of the speaker below:</h5><br>
           <div class="container">
                <br>
-              {% csrf_token %}
-              {{ form.as_p}}
-              <span id="slider2CurrentSliderValLabel">extremely bored </span>
-              <input class= "footer" id="slider1" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-              <span id="slider1CurrentSliderValLabel">extremely excited </span>
+
+              <span id="slider2CurrentSliderValLabel">extremely negative </span>
+              <input class= "footer input_slider" id="slider1_1" name='valence_1' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+              <span id="slider1CurrentSliderValLabel">extremely positive </span>
               <br><br>
               <span id="slider2CurrentSliderValLabel">extremely bored </span>
-              <input class= "footer" id="slider2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+              <input class= "footer input_slider" id="slider1_2" name='arousal_1' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
               <span id="slider2CurrentSliderValLabel">extremely excited </span>
               <br><br>
                <hr/>
                <div class="footer">
               <p class="text">Please describe if any bodily expressions(face, gesture etc.) helped you to identify the underlined emotion.</p>
-              <textarea style="width:100%; height: 70px"></textarea></div><br>
+              <textarea name='additional_1' style="width:100%; height: 70px"></textarea></div><br>
 
           </div>
         </div>
@@ -84,26 +86,26 @@
               <h5 >Please select the <em>emotion</em> of the speaker below:</h5><br>
               <div class="container">
                    <br>
-                  {% csrf_token %}
-                  {{ form.as_p}}
-                  <span id="slider2CurrentSliderValLabel">extremely bored </span>
-                  <input class= "footer" id="slider1" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-                  <span id="slider1CurrentSliderValLabel">extremely excited </span>
+                  <!--{% csrf_token %}-->
+                  <!--{{ form.as_p}}-->
+                  <span id="slider2CurrentSliderValLabel">extremely negative </span>
+                  <input class= "footer input_slider" id="slider2_1" name='valence_2' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+                  <span id="slider1CurrentSliderValLabel">extremely positive </span>
                   <br><br>
                   <span id="slider2CurrentSliderValLabel">extremely bored </span>
-                  <input class= "footer" id="slider2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+                  <input class= "footer input_slider" id="slider2_2" name='arousal_2' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
                   <span id="slider2CurrentSliderValLabel">extremely excited </span>
                   <br><br>
                    <hr/>
 
                    <div class="footer">
                   <p class="text">Please describe if any bodily expressions(face, gesture etc.) helped you to identify the underlined emotion.</p>
-                  <textarea style="width:100%; height: 70px"></textarea></div><br>
+                  <textarea name='additional_2' style="width:100%; height: 70px"></textarea></div><br>
               </div>
             </div>
           </div>
 
-          <script src="{% static 'account/js/bubble.js' %}"></script>
+
         </div>
       </div>
   </div><br>
