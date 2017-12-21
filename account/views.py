@@ -1,9 +1,11 @@
 from django.shortcuts import render, HttpResponse
 from .forms import testform
+from django.contrib import messages
 # FeedbackForm, intentionform
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
+from django.utils.datastructures import MultiValueDictKeyError
 from account.models import *
 import os, queue
 import json
@@ -22,6 +24,7 @@ def updateQueue():
     for i in all_entries:
         if not q.full():
             assignment = {}
+            assignment['id'] = i.id
             assignment['vname'] = i.vname
             assignment['start'] = i.start
             assignment['full'] = i.full
@@ -70,9 +73,22 @@ def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
 def task(request):
+<<<<<<< HEAD
     if 'full' in request.GET:
         return(render(request,'account/task.html', {'full':True}))
     else:
+=======
+    try:
+        if request.GET['full'] == "True":
+            return(render(request,'account/task.html', {"full":True}))
+        else:
+            if assign_queue.empty() or assign_queue.qsize()<50:
+                updateQueue()
+            assignment = assign_queue.get()
+            print (assignment)
+            return(render(request,'account/task.html', assignment))
+    except MultiValueDictKeyError:
+>>>>>>> databasesetup
         if assign_queue.empty() or assign_queue.qsize()<50:
             updateQueue()
         assignment = assign_queue.get()
@@ -83,6 +99,7 @@ def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
         if form.is_valid():
+<<<<<<< HEAD
             print("AAA")
             emotion=EmotionHit()
             emotion.mturk_id="A"
@@ -111,6 +128,24 @@ def get(request):
         if request.GET['full'] == "True":
 
             return(redirect('/home/task?full=True'))
+=======
+            emotion=EmotionHit.objects.create(positivity1=int(form.cleaned_data['positivity1']),
+                                            excitement1 = int(form.cleaned_data['excitement1']),
+                                            bodyexpression1 = form.cleaned_data['bodyexpression1'],
+                                            positivity2 = int(form.cleaned_data['positivity2']),
+                                            excitement2 = int(form.cleaned_data['excitement2']),
+                                            bodyexpression2 = form.cleaned_data['bodyexpression2'],
+                                            length = form.cleaned_data['length'],
+                                            elapsedtime = float(form.cleaned_data['elapsedtime']),
+                                            assign_id = int(request.GET['id']))
+            print(emotion)
+            emotion.save()
+            print("saved")
+        else:
+            return(render(request, 'account/questionaire.html', {'form':form,"message":True}))
+        if request.GET['full'] == "True":
+            return(HttpResponseRedirect('/home/task?full=True'))
+>>>>>>> databasesetup
         else:
             return(HttpResponseRedirect('/home/'))
     else:

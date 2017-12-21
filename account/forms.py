@@ -3,19 +3,20 @@ from django import forms
 #
 class testform(forms.Form):
     # MTurk id of the worker
-    mturk_id=forms.CharField(required=False, widget = forms.HiddenInput())
+    mturk_id=forms.CharField(required=True, widget = forms.TextInput())
 
     # input for character 1
-    positivity1=forms.CharField(widget = forms.HiddenInput(), required = False)
-    excitement1=forms.CharField(widget = forms.HiddenInput(), required = False)
-    bodyexpression1 = forms.CharField(widget = forms.HiddenInput(), required = False)
+    positivity1=forms.CharField(widget = forms.HiddenInput(), required = True)
+    excitement1=forms.CharField(widget = forms.HiddenInput(), required = True)
+    bodyexpression1 = forms.CharField(widget = forms.HiddenInput(), required = True)
 
     # input for character 2
-    positivity2=forms.CharField(widget = forms.HiddenInput(), required = False)
-    excitement2=forms.CharField(widget = forms.HiddenInput(), required = False)
-    bodyexpression2 = forms.CharField(widget = forms.HiddenInput(), required = False)
-    _len = forms.CharField(widget=forms.HiddenInput(), required= False)
-    elapsedtime = forms.CharField(widget=forms.HiddenInput(), required=False)
+    positivity2=forms.CharField(widget = forms.HiddenInput(), required = True)
+    excitement2=forms.CharField(widget = forms.HiddenInput(), required = True)
+    bodyexpression2 = forms.CharField(widget = forms.HiddenInput(), required = True)
+    length = forms.CharField(widget=forms.HiddenInput(), required= True)
+    elapsedtime = forms.CharField(widget=forms.HiddenInput(), required=True)
+    #current_offset= forms.IntegerField(widget = forms.HiddenInput(), required = True)
 
 #
 # class intentionform(forms.ModelForm):

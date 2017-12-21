@@ -33,6 +33,7 @@
 <form method="post">
   {% csrf_token %}
   {{ form.as_p}}
+  {% if message %}<div class="text-center" style="color:red">Do not forget to fill all the fields.</div>{% endif %}
   <div class="container">
   <br>
   <div id="accordion" role="tablist">
@@ -112,16 +113,16 @@
 <div class="footer">
   <h4>Additional Information:</h4>
   <p class="text">were length of the video and context provided sufficient information to tag the emotion? ans Y or N.</p>
-  <textarea name="_len" style="width:100%; height: 70px"></textarea>
+  <textarea name="length" style="width:100%; height: 70px"></textarea>
   <input id="elapsedtime" name="elapsedtime" style="display: none"></input>
 
 </div><br>
 <hr/>
-
 <button class="btn btn-dark btn-lg footer" type="submit" style="height:50px; width:100px">Submit</button>
 </form>
 </div>
 <script>
+<<<<<<< HEAD
 generate_circular_labeler('labeler1')
 generate_circular_labeler('labeler2')
 </script>
@@ -130,6 +131,13 @@ generate_circular_labeler('labeler2')
 
 <script>
 
+=======
+{% if full %}
+  $("#elapsedtime").val(localStorage.getItem("elapsedtime");
+{% else %}
+  $("#elapsedtime").val("-1");
+{% endif %}
+>>>>>>> databasesetup
 // document.getElementById("img").setAttribute("src",JSON.parse(localStorage.getItem("img")).img);
 // $(document).ready(function() {
 //   $('img').click(function(e) {

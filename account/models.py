@@ -67,7 +67,7 @@ class EmotionHit(models.Model):
     excitement2 = models.FloatField()
     bodyexpression1 = models.CharField(max_length=50)
     bodyexpression2 = models.CharField(max_length=50)
-    _len = models.TextField()
+    length = models.TextField()
     elapsedtime = models.FloatField()
 #
 #
