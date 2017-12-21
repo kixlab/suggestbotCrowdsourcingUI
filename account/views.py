@@ -70,7 +70,7 @@ def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
 def task(request):
-    if request.GET['full']:
+    if 'full' in request.GET:
         return(render(request,'account/task.html', {'full':True}))
     else:
         if assign_queue.empty() or assign_queue.qsize()<50:
@@ -97,7 +97,7 @@ def get(request):
             emotion.assign_id = assign_id
             emotion.elapsedtime = elapsedtime
             # TODO fill the video name
-            assign = Assign.objects.get(vname="grumpy_customer.mp4", seq=assign_id)
+            assign = Assign.objects.filter(vname="grumpy_customer.mp4", seq=assign_id)[0]
             if assign.wid1=="":
                 assign.wid1="A"
             elif assign.wid2=="":
