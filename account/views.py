@@ -1,7 +1,12 @@
 from django.shortcuts import render, HttpResponse
 from .forms import testform
 # FeedbackForm, intentionform
+<<<<<<< HEAD
 from django.http import HttpResponseRedirect, JsonResponse
+=======
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+>>>>>>> 20e64b6fc72c19e28db8fc971a474bbd57e74019
 from account.models import *
 import os, queue
 import json
@@ -68,11 +73,14 @@ def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
 def task(request):
-    if assign_queue.empty() or assign_queue.qsize()<50:
-        updateQueue()
-    assignment = assign_queue.get()
-    print (assignment)
-    return(render(request,'account/task.html', assignment))
+    if request.GET['full']:
+        return(render(request,'account/task.html', {'full':True}))
+    else:
+        if assign_queue.empty() or assign_queue.qsize()<50:
+            updateQueue()
+        assignment = assign_queue.get()
+        print (assignment)
+        return(render(request,'account/task.html', assignment))
 
 def get(request):
     if request.method == 'POST':
@@ -104,8 +112,14 @@ def get(request):
             emotion.save()
         #
         if request.GET['full'] == "True":
+<<<<<<< HEAD
             return(HttpResponseRedirect('/home/task/'))
         #return(HttpResponseRedirect('/home/task/'))#temporary need to decide escape plan
+=======
+            return(redirect('/home/task?full=True'))
+        else:
+            return(HttpResponseRedirect('/home/'))
+>>>>>>> 20e64b6fc72c19e28db8fc971a474bbd57e74019
 
     else:
         form = testform()
