@@ -52,20 +52,20 @@ class Assign(models.Model):
     done = models.BooleanField(default=False)
 
     def __str__(self):
-        return ("Done" if self.done else "Not done yet")
+        return (vname+" "+"Done" if self.done else "Not done yet")
 
 class EmotionHit(models.Model):
     # id of the row in Assign table
     assign_id = models.IntegerField()
     mturk_id = models.CharField(max_length=15)
-    positivity1 = models.CharField(max_length=10)
-    excitement1 = models.CharField(max_length=10)
-    positivity2 = models.CharField(max_length=10)
-    excitement2 = models.CharField(max_length=10)
+    positivity1 = models.IntegerField()
+    excitement1 = models.IntegerField()
+    positivity2 = models.IntegerField()
+    excitement2 = models.IntegerField()
     bodyexpression1 = models.CharField(max_length=50)
     bodyexpression2 = models.CharField(max_length=50)
     _len = models.TextField()
-    elapsedtime = models.CharField(max_length=10)
+    elapsedtime = models.FloatField()
 #
 #
 # class IntentionHit(models.Model):
