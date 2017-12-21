@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from .forms import testform
 # FeedbackForm, intentionform
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from account.models import *
 import os, queue
 # Input
@@ -67,11 +68,14 @@ def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
 def task(request):
-    if assign_queue.empty() or assign_queue.qsize()<50:
-        updateQueue()
-    assignment = assign_queue.get()
-    print (assignment)
-    return(render(request,'account/task.html', assignment))
+    if request.GET['full']:
+        return(render(request,'account/task.html', {'full':True}))
+    else:
+        if assign_queue.empty() or assign_queue.qsize()<50:
+            updateQueue()
+        assignment = assign_queue.get()
+        print (assignment)
+        return(render(request,'account/task.html', assignment))
 
 def get(request):
 
@@ -91,7 +95,9 @@ def get(request):
             # print(elapsedtime)
         #
         if request.GET['full'] == "True":
-            return(HttpResponseRedirect('/home/task/'))
+            return(redirect('/home/task?full=True'))
+        else:
+            return(HttpResponseRedirect('/home/'))
 
     else:
         form = testform()
