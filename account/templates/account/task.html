@@ -113,6 +113,9 @@ $("#proceed").on('click',function() {
   if (localStorage.id && ("{{full}}" == "True")){
     window.location.href="/home/questionaire?full={{full}}&id="+localStorage.id;
   }
+  else if ({{id}}){
+    window.location.href="/home/questionaire?full={{full}}&id={{id}}";
+  }
   else{
     window.location.href="/home/questionaire?full={{full}}";
   }
