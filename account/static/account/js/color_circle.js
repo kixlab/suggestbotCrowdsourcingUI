@@ -40,8 +40,20 @@ var main_circle_stroke = color_circle_radius/20;
 var circle_svg_dic = {}
 var select_dic = {}
 
+//will be deprecated... for input in figure number
+var fig_input_num=1
 //function for making labeler
 make_circular_labeler=function(image, color_circle, div_id){
+  //inputs to record the value
+  $("<input></input>").appendTo("#"+div_id)
+  .attr("id", div_id+"_pos").attr("type", "text").attr("name",function(){
+    return "positivity"+fig_input_num.toString();
+  }).css("display", "none")
+  $("<input></input>").appendTo("#"+div_id)
+  .attr("id", div_id+"_exc").attr("type", "text").attr("name",function(){
+    return "excitement"+fig_input_num.toString();
+  }).css("display", "none")
+  fig_input_num++;
   circle_svg_dic[div_id].append("circle")
   .attr("cx", color_circle_radius*1.5)
   .attr("cy", color_circle_radius*1.5)
@@ -58,6 +70,11 @@ make_circular_labeler=function(image, color_circle, div_id){
   .style("stroke-width", main_circle_stroke)
   .style("stroke", "#333333")
   .on("click", function(){
+    //change value of input
+    var pos_val = (parseFloat(d3.mouse(this)[0])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
+    var exc_val = -(parseFloat(d3.mouse(this)[1])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
+    $("#"+div_id+"_pos").val(pos_val.toString())
+    $("#"+div_id+"_exc").val(exc_val.toString())
     if(select_dic[div_id]==null){
       select_dic[div_id] = circle_svg_dic[div_id].append("circle")
       .attr("cx",d3.mouse(this)[0])
