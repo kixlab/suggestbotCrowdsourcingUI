@@ -1,7 +1,33 @@
 from django.shortcuts import render, HttpResponse
-from .forms import testform, FeedbackForm, intentionform
+from .forms import testform
+# FeedbackForm, intentionform
 from django.http import HttpResponseRedirect
-from . import models
+from account.models import *
+import os
+# Input
+# 1) vname (type: str) - specific location of the video file
+# 2) duration (type: int) - duration of mp4 in seconds
+# e.g. updateAssignTable("./account/static/account/media/grumpy_customer.mp4",1200)
+def updateAssignTable(video_location,duration):
+    print (video_location)
+    if os.path.isfile(video_location):
+        vname = os.path.basename(video_location)
+        segments = duration//5 if duration%5==0 else duration//5+1
+        assign = Assign.objects.create(vname=vname,start=0,full=True)
+        assign.save()
+        for i in range(segments):
+            start = 5*i
+            if start+5>duration:
+                start = duration-5
+            assign = Assign.objects.create(vname=vname,start=start,full=False)
+            assign.save()
+            start = 5*i+2.5
+            if start+5>duration:
+                continue
+            assign = Assign.objects.create(vname=vname,start=start,full=False)
+            assign.save()
+    else:
+        print ("Please check video location again")
 
 # Create your views here.
 def home(request):
@@ -22,26 +48,24 @@ def task(request):
 def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
-        print(form)
-        print("BBB")
-        if form.is_valid():
-            print("AAA")
-            data1=models.Data()
-            data1.fig_id=1
-            data1.val1 = int(form.cleaned_data['val1_1'])
-            data1.val2 = int(form.cleaned_data['val1_2'])
-            data1.q1 = form.cleaned_data['q1_1']
-            data1.save()
-            data2=models.Data()
-            data2.fig_id=2
-            data2.val1 = int(form.cleaned_data['val2_1'])
-            data2.val2 = int(form.cleaned_data['val2_2'])
-            data2.q1 = form.cleaned_data['q2_1']
-            data2.save()
-            data2.save()
-            #elapsedtime
-            elapsedtime = float(form.cleaned_data['elapsedtime'])
-            print(elapsedtime)
+        # if form.is_valid():
+        #     print("AAA")
+        #     data1=models.Data()
+        #     data1.fig_id=1
+        #     data1.val1 = int(form.cleaned_data['val1_1'])
+        #     data1.val2 = int(form.cleaned_data['val1_2'])
+        #     data1.q1 = form.cleaned_data['q1_1']
+        #     data1.save()
+        #     data2=models.Data()
+        #     data2.fig_id=2
+        #     data2.val1 = int(form.cleaned_data['val2_1'])
+        #     data2.val2 = int(form.cleaned_data['val2_2'])
+        #     data2.q1 = form.cleaned_data['q2_1']
+        #     data2.save()
+        #     data2.save()
+        #     #elapsedtime
+        #     elapsedtime = float(form.cleaned_data['elapsedtime'])
+        #     print(elapsedtime)
 
         return(HttpResponseRedirect('/home/task/'))
     else:
@@ -52,11 +76,11 @@ def getIntention(request):
     if request.method == 'POST':
         form = intentionform(request.POST)
         if form.is_valid():
-            data=models.Intention()
-            #data.q1 = form.cleaned_data['q1']
-            data.mturk_id = form.cleaned_data['mturk_id']
-            args = {'form': data}
-            data.save()
+            # data=models.Intention()
+            # #data.q1 = form.cleaned_data['q1']
+            # data.mturk_id = form.cleaned_data['mturk_id']
+            # args = {'form': data}
+            # data.save()
             return(HttpResponseRedirect('/home/feedback/'))
     else:
         form = intentionform()
@@ -69,11 +93,11 @@ def feedback(request):
     form = FeedbackForm(request.POST)
     print(form)
     if request.method == 'POST':
-        if form.is_valid():
-            feed_data=models.FeedbackModel()
-            #data.q1 = form.cleaned_data['q1'
-            feed_data.text = form.cleaned_data['text']
-            args = {'form': feed_data}
-            feed_data.save()
+        # if form.is_valid():
+            # feed_data=models.FeedbackModel()
+            # #data.q1 = form.cleaned_data['q1'
+            # feed_data.text = form.cleaned_data['text']
+            # args = {'form': feed_data}
+            # feed_data.save()
         return(HttpResponseRedirect('/home/thankyou/'))
     return(render(request,'account/feedback.html'))
