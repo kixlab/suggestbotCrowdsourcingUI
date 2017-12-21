@@ -1,12 +1,9 @@
 from django.shortcuts import render, HttpResponse
 from .forms import testform
 # FeedbackForm, intentionform
-<<<<<<< HEAD
 from django.http import HttpResponseRedirect, JsonResponse
-=======
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
->>>>>>> 20e64b6fc72c19e28db8fc971a474bbd57e74019
+from django.http import HttpResponseRedirect
 from account.models import *
 import os, queue
 import json
@@ -112,15 +109,10 @@ def get(request):
             emotion.save()
         #
         if request.GET['full'] == "True":
-<<<<<<< HEAD
-            return(HttpResponseRedirect('/home/task/'))
-        #return(HttpResponseRedirect('/home/task/'))#temporary need to decide escape plan
-=======
+
             return(redirect('/home/task?full=True'))
         else:
             return(HttpResponseRedirect('/home/'))
->>>>>>> 20e64b6fc72c19e28db8fc971a474bbd57e74019
-
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
