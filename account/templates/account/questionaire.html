@@ -8,7 +8,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://d3js.org/d3.v2.min.js"></script>
   {% load staticfiles %}
-  <script src="{% static 'account/js/bubble.js' %}"></script>
+  <!-- <script src="{% static 'account/js/bubble.js' %}"></script> -->
   <script src="{% static 'account/js/emotion_slider.js' %}"></script>
 {% endblock %}
 {% block body %}
@@ -17,22 +17,22 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <h3>Instructions:</h3>
-<<<<<<< HEAD
-      <p>1.Tag the participants in the frame presented.<br>
-      2.Enter emotions for each participant below.<br>
-      <b>Note:<br> participant with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> participant with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
-      <img id="img" src="{% static 'account/img/customer.png}" style="width:80%"></img>
-=======
+
       <!-- <p>1.Tag the Characters in the frame presented.<br>
       2.Enter emotions for each Character below.<br> -->
       <b>Note:<br> Character with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> Character with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
       {% load staticfiles %}
       <img src="{% static 'account/media/customer.png' %}" style="width:80%"></img>
->>>>>>> a505faa7a7aa0fd04112b9c6834959456e715c6b
+
     </div>
   </div>
   </div>
-</div><br><br><br><br>
+</div><br><br><br>
+{% load staticfiles %}
+<div class="container" id="shared_timeline"></div>
+<script src="{% static 'account/js/color_transform.js' %}"></script>
+<script src="{% static 'account/js/shared_timeline.js' %}"></script>
+
 
 <div class="container"><hr>
 <form method="post">

@@ -19,7 +19,7 @@ window.onload=function(){
 {% endblock %}
 {% block body %}
 <div class="container wrapper">
-  <h3 class= "title">Departmental Store scenerio:</h3>
+  <h3>Departmental Store scenerio:</h3>
   <p><em>Play the video when you are ready.</em></p>
   <div class="separator"></div>
   <div class="container-fluid">
@@ -35,7 +35,7 @@ window.onload=function(){
           <canvas style="display:none"></canvas>
           <img id="img"></img>
         </div>
-        
+
       </div>
       <div class="col-md-6">
 
@@ -73,7 +73,7 @@ if(this.currentTime >= parseInt(localStorage.getItem('elapsedtime'))+5) {
     localStorage.elapsedtime= this.currentTime;
     video.pause();
     console.log(w,h)
-    alert("5 sec passed(elapsedtime):"+localStorage.getItem('elapsedtime'));
+    alert("You will be directed to questionnaire page now..");
 
     context.drawImage(video, 0, 0, w, h);
     var img = canvas.toDataURL();

@@ -42,8 +42,11 @@ def get(request):
             #elapsedtime
             elapsedtime = float(form.cleaned_data['elapsedtime'])
             print(elapsedtime)
-
-        return(HttpResponseRedirect('/home/task/'))
+        # if(token== True):
+        #     return(HttpResponseRedirect('/home/task/'))
+        # else:
+        #     return(HttpResponseRedirect('/home/feedback/'))
+        # 
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
