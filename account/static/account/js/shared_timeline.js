@@ -3,21 +3,21 @@ var timeline_width = window.innerWidth*0.60;
 var timeline_height = 30;
 var stroke_border = 4;
 console.log(timeline_width)
+//for multiple timelines
+var timeline_data_dic={}
+var timeline_svg_dic ={}
+var gradient_defs_dic={}
+
 var timeline_data=[]
 
 //create shared timeline
-var timeline_svg = d3.select("#shared_timeline")
-  .style("width", timeline_width)
-  .append("svg")
-  .attr("width", timeline_width)
-  .attr("height",timeline_height)
-//create gradient color definition
-var gradient_defs = timeline_svg.append("defs")
+
 
 //function for generating mock data
 //data spec : for existing data, they will be color in string, like "rgb(#,#,#)"
 //empty string is for the case when no worker has worked on it
-gen_mock_data=function(n){
+gen_mock_data=function(div_id, n){
+  var timeline_data=[]
   for(var i=0; i<n; i++){
     if(Math.random()>0.5){
     var val = Math.random()*2-1
@@ -30,11 +30,12 @@ gen_mock_data=function(n){
     timeline_data.push("")
   }
   }
+  timeline_data_dic[div_id] = timeline_data
 }
 
 //function that pulls data from the database and draw timeline
-pull_data_from_database = function(video_name){
-  $.ajax({
+pull_data_from_database = function(video_name, div_ids){
+/*  $.ajax({
     url: '/home/retrieve_emotion_data',
     data:{
       "video_name": video_name,
@@ -47,13 +48,24 @@ pull_data_from_database = function(video_name){
     error: function(){
 
     }
-  })
-  gen_mock_data(50)
-  draw_emotion_gradient(timeline_svg, timeline_data,2)
+  })*/
+  for(var i=0; i<div_ids.length; i++){
+    gen_mock_data(div_ids[i], 50)
+    draw_emotion_gradient(div_ids[i], 2)
+  }
+
 }
 
 //function for drawing emotion gradient timeline
-draw_emotion_gradient = function(svg, data, n){
+draw_emotion_gradient = function(div_id, n){
+  var svg = d3.select("#"+div_id)
+    .style("width", timeline_width)
+    .append("svg")
+    .attr("width", timeline_width)
+    .attr("height",timeline_height)
+  var data = timeline_data_dic[div_id]
+  //create gradient color definition
+  var defs = svg.append("defs")
   //length in percentage and pixel
   var len = 100/parseFloat(data.length);
   var rect_len = timeline_width/parseFloat(data.length);
@@ -99,8 +111,8 @@ draw_emotion_gradient = function(svg, data, n){
     }
   }
   //making color definition from color data
-  gradient_defs.append("linearGradient")
-    .attr("id","timeline_grad")
+  defs.append("linearGradient")
+    .attr("id", div_id+"_timeline_grad")
     .attr("x1", "0%")
     .attr("x2", "100%")
     .attr("y1", "0%")
@@ -113,7 +125,7 @@ draw_emotion_gradient = function(svg, data, n){
 //draw rectangle for color
 console.log(timeline_width)
 
-  grad_rect.style("fill", "url(#timeline_grad)")
+  grad_rect.style("fill", "url(#"+div_id+"_timeline_grad)")
   .style("stroke", "#ffffff")
   .style("stroke-width", stroke_border)
 //draw lines for split
@@ -128,7 +140,8 @@ console.log(timeline_width)
   .style("stroke-width", stroke_border/2)
 //draw white space for block
   svg.append("rect")
-  .attr("id", "current_working_block")
+  .attr("id", div_id+"_current_working_block")
+  .attr("class", "current_working_block")
   .attr("x",(rect_len*n)+stroke_border/4).attr("y",stroke_border/2)
   .attr("width", rect_len-stroke_border/2)
   .attr("height", timeline_height-stroke_border)
@@ -136,9 +149,19 @@ console.log(timeline_width)
   .attr("title", "You are working on this time block.")
   .style("fill", "#eeeeee")
 //turn on tooltip
-  $("#current_working_block").tooltip("show");
+ //var id_string = "#"+$("#"+div_id+"_current_working_block").parent().parent().attr("id")
+  //$("#"+div_id+"_current_working_block").tooltip("show");
+
 }
 
+mock_function = function(id){
+  var id_string = "#"+$("#"+id+"_current_working_block").parent().parent().attr("id")
+  $(".current_working_block").tooltip("hide")
+  setTimeout(function(){
+    $("#"+id+"_current_working_block").tooltip("show")
+  },600)
+
+}
 
 ///////////////////
-pull_data_from_database()
+pull_data_from_database("videoname", ["shared_timeline1", "shared_timeline2"])
