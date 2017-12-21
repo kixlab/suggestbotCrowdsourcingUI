@@ -12,12 +12,16 @@ window.onload=function(){
                   document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
                   {% if full %}
                     this.currentTime = parseInt(localStorage.getItem('elapsedtime'));
+                    {% if id %}
+                      localStorage.id = {{id}}
+                    {% endif %}
                   {% else %}
                     this.currentTime = {{start}}
                   {% endif %}
-            }, false  );
-
-       };
+                  console.log("loaded");
+                },
+                false)
+              };
 </script>
 {% endblock %}
 {% block body %}
@@ -83,7 +87,12 @@ video.addEventListener("timeupdate", function(){
       // localStorage.width = w;
       // localStorage.height = h;
       // localStorage.setItem('img',JSON.stringify(storageFiles));
-      window.location.href="/home/questionaire?full={{full}}&id={{id}}";
+      if (localStorage.id && ("{{full}}" == "True")){
+        window.location.href="/home/questionaire?full={{full}}&id="+localStorage.id;
+      }
+      else{
+        window.location.href="/home/questionaire?full={{full}}";
+      }
   }
 });
 </script>

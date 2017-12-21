@@ -9,37 +9,30 @@ from django.utils.datastructures import MultiValueDictKeyError
 from account.models import *
 import os, queue
 import json
-# Input
-# 1) vname (type: str) - specific location of the video file
-# 2) duration (type: int) - duration of mp4 in seconds
-# e.g. updateAssignTable("./account/static/account/media/grumpy_customer.mp4",1200)
 
 assign_queue = queue.Queue()
 
 def updateQueue():
     global assign_queue
     print ("updateQueue yes")
-    q = queue.Queue(maxsize=300)
     all_entries = Assign.objects.all().filter(done=0)
     for i in all_entries:
-        if not q.full():
+        if not assign_queue.full():
             assignment = {}
             assignment['id'] = i.id
             assignment['vname'] = i.vname
             assignment['start'] = i.start
             assignment['full'] = i.full
-            q.put(assignment)
+            assign_queue.put(assignment)
         else:
             break
     print ("assigned")
-    assign_queue = q
 
-# while True:
-#     updateQueue()
-#     time.sleep(1)
-
+# Input
+# 1) vname (type: str) - specific location of the video file
+# 2) duration (type: int) - duration of mp4 in seconds
+# e.g. updateAssignTable("./account/static/account/media/grumpy_customer.mp4",120)
 def updateAssignTable(video_location,duration):
-    print (video_location)
     if os.path.isfile(video_location):
         vname = os.path.basename(video_location)
         segments = duration//5 if duration%5==0 else duration//5+1
@@ -77,13 +70,13 @@ def task(request):
         if request.GET['full'] == "True":
             return(render(request,'account/task.html', {"full":True}))
         else:
-            if assign_queue.empty() or assign_queue.qsize()<50:
+            if assign_queue.empty() or assign_queue.qsize()<10:
                 updateQueue()
             assignment = assign_queue.get()
             print (assignment)
             return(render(request,'account/task.html', assignment))
     except MultiValueDictKeyError:
-        if assign_queue.empty() or assign_queue.qsize()<50:
+        if assign_queue.empty() or assign_queue.qsize()<10:
             updateQueue()
         assignment = assign_queue.get()
         print (assignment)
@@ -93,11 +86,12 @@ def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
         if form.is_valid():
-            emotion=EmotionHit.objects.create(positivity1=int(form.cleaned_data['positivity1']),
-                                            excitement1 = int(form.cleaned_data['excitement1']),
+            emotion=EmotionHit.objects.create(mturk_id = form.cleaned_data['mturk_id'],
+                                            positivity1=float(form.cleaned_data['positivity1']),
+                                            excitement1 = float(form.cleaned_data['excitement1']),
                                             bodyexpression1 = form.cleaned_data['bodyexpression1'],
-                                            positivity2 = int(form.cleaned_data['positivity2']),
-                                            excitement2 = int(form.cleaned_data['excitement2']),
+                                            positivity2 = float(form.cleaned_data['positivity2']),
+                                            excitement2 = float(form.cleaned_data['excitement2']),
                                             bodyexpression2 = form.cleaned_data['bodyexpression2'],
                                             length = form.cleaned_data['length'],
                                             elapsedtime = float(form.cleaned_data['elapsedtime']),
@@ -105,10 +99,10 @@ def get(request):
             emotion.save()
         else:
             return(render(request, 'account/questionaire.html', {'form':form,"message":True}))
-        if request.GET['full'] == "True":
+        if request.GET['full'] == "True" and float(form.cleaned_data['elapsedtime'])<1200:
             return(HttpResponseRedirect('/home/task?full=True'))
         else:
-            return(HttpResponseRedirect('/home/'))
+            return(HttpResponseRedirect('/home/feedback.html'))
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
@@ -147,7 +141,6 @@ def retrieve_emotion_data(request):
     video_name = request.GET.get("video_name")
     assigns = Assign.objects.filter(vname=video_name, full=False)
     data_to_return=[]
-    print("dodo")
     for assign in assigns:
         no_val = True
         cur_count=0
@@ -156,9 +149,6 @@ def retrieve_emotion_data(request):
         cur_exc1=0
         cur_exc2=0
         dic={}
-        print(assign.wid1 == "")
-        if assign.id==0:
-            print("dodo")
         if assign.wid1 != "":
             no_val = False
             cur_count = cur_count + 1
