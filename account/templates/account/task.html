@@ -55,6 +55,25 @@ window.onload=function(){
   <hr/>
 
 </div>
+<div class="modal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="proceed">Proceed</button>
+        <button type="button" class="btn btn-success" id="replay" data-dismiss="modal">Replay</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 
 //var pausetime=2;
@@ -76,25 +95,33 @@ video.addEventListener("timeupdate", function(){
   // canvas.height = h;
   endOffset = {% if full %}parseInt(localStorage.getItem('elapsedtime'))+5{% else %}{{start}}+5{% endif %};
   if(this.currentTime >= endOffset) {
-      // pause the playback
-      {% if full %}localStorage.elapsedtime = this.currentTime;{% endif %}
-      video.pause();
-      alert("5 sec passed(elapsedtime):"+this.currentTime);
-
-      // context.drawImage(video, 0, 0, w, h);
-      // var img = canvas.toDataURL();
-      // var storageFiles = {"img":img};
-      // localStorage.width = w;
-      // localStorage.height = h;
-      // localStorage.setItem('img',JSON.stringify(storageFiles));
-      if (localStorage.id && ("{{full}}" == "True")){
-        window.location.href="/home/questionaire?full={{full}}&id="+localStorage.id;
-      }
-      else{
-        window.location.href="/home/questionaire?full={{full}}";
-      }
+    video.pause();
+    $(".modal").modal('show');
   }
 });
+$("#proceed").on('click',function() {
+  console.log('clicked');
+  var video = document.getElementById("myVideo");
+  // pause the playback
+  {% if full %}localStorage.elapsedtime = video.currentTime;{% endif %}
+  // context.drawImage(video, 0, 0, w, h);
+  // var img = canvas.toDataURL();
+  // var storageFiles = {"img":img};
+  // localStorage.width = w;
+  // localStorage.height = h;
+  // localStorage.setItem('img',JSON.stringify(storageFiles));
+  if (localStorage.id && ("{{full}}" == "True")){
+    window.location.href="/home/questionaire?full={{full}}&id="+localStorage.id;
+  }
+  else{
+    window.location.href="/home/questionaire?full={{full}}";
+  }
+})
+$("#replay").on("click",function() {
+  var video = document.getElementById("myVideo");
+  video.currentTime = video.currentTime - 5;
+  video.play();
+})
 </script>
   <!--<script src="{%static 'account/js/faceDetection.min.js'%}"></script>
   <script type="text/javascript">
