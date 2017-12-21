@@ -33,10 +33,21 @@ gen_mock_data=function(n){
 }
 
 //function that pulls data from the database and draw timeline
-pull_data_from_database = function(){
-  //$.ajax({
+pull_data_from_database = function(video_name){
+  $.ajax({
+    url: '/home/retrieve_emotion_data',
+    data:{
+      "video_name": video_name,
+      //"text_id" : 27,
+    },
+    dataType: 'json',
+    success: function(data){
 
-  //})
+    },
+    error: function(){
+
+    }
+  })
   gen_mock_data(50)
   draw_emotion_gradient(timeline_svg, timeline_data,2)
 }
