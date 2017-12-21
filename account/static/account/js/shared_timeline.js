@@ -1,5 +1,5 @@
 //initialization
-var timeline_width = window.innerWidth*0.72;
+var timeline_width = window.innerWidth*0.60;
 var timeline_height = 30;
 var stroke_border = 4;
 console.log(timeline_width)
