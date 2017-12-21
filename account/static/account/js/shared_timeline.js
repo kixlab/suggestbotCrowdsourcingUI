@@ -1,7 +1,3 @@
-var color_code = [
-
-]
-
 //initialization
 var timeline_width = window.innerWidth*0.72;
 var timeline_height = 30;
@@ -125,42 +121,3 @@ console.log(timeline_width)
 gen_mock_data(50)
 draw_emotion_gradient(timeline_svg, timeline_data,2)
 ///////////////////
-
-//function to transform emotion to hsl
-function emoTorgb(val, ar){
-  var rad = Math.atan2(ar, val)
-  var deg = (rad)/2/Math.PI;
-  var h = -deg+5/12
-  if(h<0){
-    h=h+1;
-  }
-  console.log(h)
-  var s = Math.sqrt(val*val+ar*ar)
-  return hslToRgb(h,s,0.8)
-}
-
-//function to transform hsl to rgb
-function hslToRgb(h, s, l){
-    var r, g, b;
-
-    if(s == 0){
-        r = g = b = l; // achromatic
-    }else{
-        var hue2rgb = function hue2rgb(p, q, t){
-            if(t < 0) t += 1;
-            if(t > 1) t -= 1;
-            if(t < 1/6) return p + (q - p) * 6 * t;
-            if(t < 1/2) return q;
-            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-            return p;
-        }
-
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1/3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1/3);
-    }
-
-    return "rgb("+Math.round(r * 255).toString()+","+ Math.round(g * 255).toString()+","+Math.round(b * 255)+")";
-}
