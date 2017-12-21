@@ -73,11 +73,6 @@ def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
 def task(request):
-<<<<<<< HEAD
-    if 'full' in request.GET:
-        return(render(request,'account/task.html', {'full':True}))
-    else:
-=======
     try:
         if request.GET['full'] == "True":
             return(render(request,'account/task.html', {"full":True}))
@@ -88,7 +83,6 @@ def task(request):
             print (assignment)
             return(render(request,'account/task.html', assignment))
     except MultiValueDictKeyError:
->>>>>>> databasesetup
         if assign_queue.empty() or assign_queue.qsize()<50:
             updateQueue()
         assignment = assign_queue.get()
@@ -99,36 +93,6 @@ def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
         if form.is_valid():
-<<<<<<< HEAD
-            print("AAA")
-            emotion=EmotionHit()
-            emotion.mturk_id="A"
-            emotion.positivity1 = float(form.cleaned_data['positivity1'])
-            emotion.excitement1 = float(form.cleaned_data['excitement1'])
-            emotion.bodyexpression1 = form.cleaned_data['bodyexpression1']
-            emotion.positivity2 = float(form.cleaned_data['positivity2'])
-            emotion.excitement2 = float(form.cleaned_data['excitement2'])
-            emotion.bodyexpression2 = form.cleaned_data['bodyexpression2']
-            elapsedtime = float(form.cleaned_data['elapsedtime'])
-            assign_id = int((elapsedtime-5)/2.5)
-            emotion.assign_id = assign_id
-            emotion.elapsedtime = elapsedtime
-            # TODO fill the video name
-            assign = Assign.objects.filter(vname="grumpy_customer.mp4", seq=assign_id)[0]
-            if assign.wid1=="":
-                assign.wid1="A"
-            elif assign.wid2=="":
-                assign.wid2="A"
-            elif assign.wid3=="":
-                assign.wid2="A"
-            assign.save()
-            print(assign_id)
-            emotion.save()
-        #
-        if request.GET['full'] == "True":
-
-            return(redirect('/home/task?full=True'))
-=======
             emotion=EmotionHit.objects.create(positivity1=int(form.cleaned_data['positivity1']),
                                             excitement1 = int(form.cleaned_data['excitement1']),
                                             bodyexpression1 = form.cleaned_data['bodyexpression1'],
@@ -138,14 +102,11 @@ def get(request):
                                             length = form.cleaned_data['length'],
                                             elapsedtime = float(form.cleaned_data['elapsedtime']),
                                             assign_id = int(request.GET['id']))
-            print(emotion)
             emotion.save()
-            print("saved")
         else:
             return(render(request, 'account/questionaire.html', {'form':form,"message":True}))
         if request.GET['full'] == "True":
             return(HttpResponseRedirect('/home/task?full=True'))
->>>>>>> databasesetup
         else:
             return(HttpResponseRedirect('/home/'))
     else:
