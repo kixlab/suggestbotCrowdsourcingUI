@@ -28,5 +28,5 @@ class testform(forms.Form):
 #         model= models.Intention
 #         fields = "__all__"
 #
-# class FeedbackForm(forms.Form):
-#     text=forms.CharField(widget = forms.HiddenInput(), required = False)
+class FeedbackForm(forms.Form):
+    text=forms.CharField(widget = forms.HiddenInput(), required = False)
