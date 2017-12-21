@@ -10,14 +10,20 @@
 <script>
 window.onload=function(){
                   document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
-                  this.currentTime = localStorage.getItem('elapsedtime');
-                  console.log("pageload(elapsedtime):"+localStorage.getItem('elapsedtime'));
+                  {% if full %}
+                    this.currentTime = localStorage.getItem('elapsedtime');
+                  {% else %}
+                    this.currentTime = {{start}}
+                  {% endif %}
             }, false  );
 
        };
 </script>
 {% endblock %}
 {% block body %}
+{{vname}}
+{{start}}
+{% if full %}yes{% endif %}
 <div class="container wrapper">
   <h3 class= "title">Departmental Store scenerio:</h3>
   <p><em>Play the video when you are ready.</em></p>
@@ -35,7 +41,7 @@ window.onload=function(){
           <canvas style="display:none"></canvas>
           <img id="img"></img>
         </div>
-        
+
       </div>
       <div class="col-md-6">
 
@@ -52,37 +58,37 @@ window.onload=function(){
 
 //var pausetime=2;
 var video = document.getElementById("myVideo");
+video.currentTime = {{start}}
 video.addEventListener("timeupdate", function(){
 // check whether we have passed 5 minutes,
 // current time is given in seconds
-console.log("currenttime: "+this.currentTime);
-var video = document.querySelector('video');
-var canvas = document.querySelector('canvas');
-var context = canvas.getContext('2d');
-var w,h,ratio;
-ratio = video.videoWidth / video.videoHeight;
-// Define the required width as 100 pixels smaller than the actual video's width
-w = video.videoWidth - 100;
-// Calculate the height based on the video's width and the ratio
-h = parseInt(w / ratio, 10);
-// Set the canvas width and height to the values just calculated
-canvas.width = w;
-canvas.height = h;
-if(this.currentTime >= parseInt(localStorage.getItem('elapsedtime'))+5) {
-    // pause the playback
-    localStorage.elapsedtime= this.currentTime;
-    video.pause();
-    console.log(w,h)
-    alert("5 sec passed(elapsedtime):"+localStorage.getItem('elapsedtime'));
+  // var video = document.querySelector('video');
+  // var canvas = document.querySelector('canvas');
+  // var context = canvas.getContext('2d');
+  // var w,h,ratio;
+  // ratio = video.videoWidth / video.videoHeight;
+  // // Define the required width as 100 pixels smaller than the actual video's width
+  // w = video.videoWidth - 100;
+  // // Calculate the height based on the video's width and the ratio
+  // h = parseInt(w / ratio, 10);
+  // // Set the canvas width and height to the values just calculated
+  // canvas.width = w;
+  // canvas.height = h;
+  endOffset = {% if full %}parseInt(localStorage.getItem('elapsedtime'))+5{% else %}{{start}}+5{% endif %};
+  if(this.currentTime >= endOffset) {
+      // pause the playback
+      {% if full %}localStorage.elapsedtime = this.currentTime;{% endif %}
+      video.pause();
+      alert("5 sec passed(elapsedtime):"+this.currentTime);
 
-    context.drawImage(video, 0, 0, w, h);
-    var img = canvas.toDataURL();
-    var storageFiles = {"img":img};
-    localStorage.width = w;
-    localStorage.height = h;
-    localStorage.setItem('img',JSON.stringify(storageFiles));
-    window.location.href="/home/questionaire/";
-}
+      // context.drawImage(video, 0, 0, w, h);
+      // var img = canvas.toDataURL();
+      // var storageFiles = {"img":img};
+      // localStorage.width = w;
+      // localStorage.height = h;
+      // localStorage.setItem('img',JSON.stringify(storageFiles));
+      window.location.href="/home/questionaire?full={{full}}";
+  }
 });
 </script>
   <!--<script src="{%static 'account/js/faceDetection.min.js'%}"></script>

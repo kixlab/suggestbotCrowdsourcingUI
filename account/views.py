@@ -3,11 +3,35 @@ from .forms import testform
 # FeedbackForm, intentionform
 from django.http import HttpResponseRedirect
 from account.models import *
-import os
+import os, queue
 # Input
 # 1) vname (type: str) - specific location of the video file
 # 2) duration (type: int) - duration of mp4 in seconds
 # e.g. updateAssignTable("./account/static/account/media/grumpy_customer.mp4",1200)
+
+assign_queue = queue.Queue()
+
+def updateQueue():
+    global assign_queue
+    print ("updateQueue yes")
+    q = queue.Queue(maxsize=300)
+    all_entries = Assign.objects.all().filter(done=0)
+    for i in all_entries:
+        if not q.full():
+            assignment = {}
+            assignment['vname'] = i.vname
+            assignment['start'] = i.start
+            assignment['full'] = i.full
+            q.put(assignment)
+        else:
+            break
+    print ("assigned")
+    assign_queue = q
+
+# while True:
+#     updateQueue()
+#     time.sleep(1)
+
 def updateAssignTable(video_location,duration):
     print (video_location)
     if os.path.isfile(video_location):
@@ -43,31 +67,32 @@ def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
 def task(request):
-    return(render(request,'account/task.html'))
+    if assign_queue.empty() or assign_queue.qsize()<50:
+        updateQueue()
+    assignment = assign_queue.get()
+    print (assignment)
+    return(render(request,'account/task.html', assignment))
 
 def get(request):
+
     if request.method == 'POST':
         form = testform(request.POST)
         # if form.is_valid():
-        #     print("AAA")
-        #     data1=models.Data()
-        #     data1.fig_id=1
-        #     data1.val1 = int(form.cleaned_data['val1_1'])
-        #     data1.val2 = int(form.cleaned_data['val1_2'])
-        #     data1.q1 = form.cleaned_data['q1_1']
-        #     data1.save()
-        #     data2=models.Data()
-        #     data2.fig_id=2
-        #     data2.val1 = int(form.cleaned_data['val2_1'])
-        #     data2.val2 = int(form.cleaned_data['val2_2'])
-        #     data2.q1 = form.cleaned_data['q2_1']
-        #     data2.save()
-        #     data2.save()
-        #     #elapsedtime
-        #     elapsedtime = float(form.cleaned_data['elapsedtime'])
-        #     print(elapsedtime)
+            # print("AAA")
+            # emotion=EmotionHit()
+            # emotion.positivity1 = int(form.cleaned_data['positivity1'])
+            # emotion.excitement1 = int(form.cleaned_data['excitement1'])
+            # emotion.bodyexpression1 = form.cleaned_data['bodyexpression1']
+            # emotion.positivity2 = int(form.cleaned_data['positivity2'])
+            # emotion.excitement2 = int(form.cleaned_data['excitement2'])
+            # emotion.bodyexpression2 = form.cleaned_data['bodyexpression2']
+            # elapsedtime = float(form.cleaned_data['elapsedtime'])
+            # emotion.save()
+            # print(elapsedtime)
+        #
+        if request.GET['full'] == "True":
+            return(HttpResponseRedirect('/home/task/'))
 
-        return(HttpResponseRedirect('/home/task/'))
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
