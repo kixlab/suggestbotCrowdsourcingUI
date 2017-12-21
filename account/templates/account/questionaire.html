@@ -17,18 +17,11 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <h3>Instructions:</h3>
-<<<<<<< HEAD
-      <p>1.Tag the participants in the frame presented.<br>
-      2.Enter emotions for each participant below.<br>
-      <b>Note:<br> participant with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> participant with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
-      <img id="img" src="{% static 'account/img/customer.png}" style="width:80%"></img>
-=======
       <!-- <p>1.Tag the Characters in the frame presented.<br>
       2.Enter emotions for each Character below.<br> -->
       <b>Note:<br> Character with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> Character with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
       {% load staticfiles %}
       <img src="{% static 'account/media/customer.png' %}" style="width:80%"></img>
->>>>>>> a505faa7a7aa0fd04112b9c6834959456e715c6b
     </div>
   </div>
   </div>
@@ -61,17 +54,17 @@
                <br>
 
               <span id="slider2CurrentSliderValLabel">extremely negative </span>
-              <input class= "footer input_slider" id="slider1_1" name='val1_1' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+              <input class= "footer input_slider" id="slider1_1" name='positivity1' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
               <span id="slider1CurrentSliderValLabel">extremely positive </span>
               <br><br>
               <span id="slider2CurrentSliderValLabel">extremely bored </span>
-              <input class= "footer input_slider" id="slider1_2" name='val1_2' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+              <input class= "footer input_slider" id="slider1_2" name='excitement1' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
               <span id="slider2CurrentSliderValLabel">extremely excited </span>
               <br><br>
                <hr/>
                <div class="footer">
               <p class="text">Please describe if any bodily expressions(face, gesture etc.) helped you to identify the underlined emotion.</p>
-              <textarea name='q1_1' style="width:100%; height: 70px"></textarea></div><br>
+              <textarea name='bodyexpression1' style="width:100%; height: 70px"></textarea></div><br>
 
           </div>
         </div>
@@ -99,18 +92,18 @@
                   <!--{% csrf_token %}-->
                   <!--{{ form.as_p}}-->
                   <span id="slider2CurrentSliderValLabel">extremely negative </span>
-                  <input class= "footer input_slider" id="slider2_1" name="val2_1" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+                  <input class= "footer input_slider" id="slider2_1" name="positivity2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
                   <span id="slider1CurrentSliderValLabel">extremely positive </span>
                   <br><br>
                   <span id="slider2CurrentSliderValLabel">extremely bored </span>
-                  <input class= "footer input_slider" id="slider2_2" name="val2_2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
+                  <input class= "footer input_slider" id="slider2_2" name="excitement2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
                   <span id="slider2CurrentSliderValLabel">extremely excited </span>
                   <br><br>
                    <hr/>
 
                    <div class="footer">
                   <p class="text">Please describe if any bodily expressions(face, gesture etc.) helped you to identify the underlined emotion.</p>
-                  <textarea  name="q2_1" style="width:100%; height: 70px"></textarea></div><br>
+                  <textarea  name="bodyexpression2" style="width:100%; height: 70px"></textarea></div><br>
               </div>
             </div>
           </div>

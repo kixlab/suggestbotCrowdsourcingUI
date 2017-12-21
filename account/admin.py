@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Data, FeedbackModel, Intention
+# from .models import Data, FeedbackModel, Intention
 # Register your models here.
-admin.site.register(Data)
-admin.site.register(FeedbackModel)
-admin.site.register(Intention)
+# admin.site.register(Data)
+# admin.site.register(FeedbackModel)
+# admin.site.register(Intention)
