@@ -1,6 +1,12 @@
 from django.db import models
 
 # Create your models here.
+
+# Extra Instructions
+# Whenever you update the model, run the followings:
+# 1) python manage.py makemigrations
+# 2) python manage.py migrate
+
 class Data(models.Model):
     fig_id=models.IntegerField(default = 0, max_length=15)
     val1=models.IntegerField(max_length=20)
