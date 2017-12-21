@@ -36,7 +36,7 @@ var circular_emotions = [
   'serene',
   'contented'
 ];
-var main_circle_stroke = 10;
+var main_circle_stroke = color_circle_radius/20;
 var circle_svg_dic = {}
 var select_dic = {}
 
@@ -63,10 +63,10 @@ make_circular_labeler=function(image, color_circle, div_id){
       .attr("cx",d3.mouse(this)[0])
       .attr("cy", d3.mouse(this)[1])
       .style("fill", "rgba(0,0,0,0.3)")
-      .style("stroke-width", 2)
+      .style("stroke-width", color_circle_radius/100)
       .style("stroke", "black")
       select_dic[div_id].transition(500)
-      .attr("r", 10)
+      .attr("r", color_circle_radius/20)
     }else{
       select_dic[div_id].transition(500).attr("cx",d3.mouse(this)[0])
       .attr("cy", d3.mouse(this)[1])
@@ -142,7 +142,3 @@ draw_color_circle =function(image, color_circle){
 
    make_circular_labeler(cc_img, color_circle, div_id);
  }
-
-
-generate_circular_labeler("test");
-generate_circular_labeler("test2");
