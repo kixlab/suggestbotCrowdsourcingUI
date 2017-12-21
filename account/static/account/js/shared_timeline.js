@@ -24,7 +24,7 @@ gen_mock_data=function(div_id, n){
     var ar = Math.random()*2-1
     var a = Math.floor(Math.random()*255)
     var c = emoTorgb(val, ar)//hslToRgb(h,s,l);//"hsl("+h.toString()+","+s.toString()+","+l.toString()+")"
-    console.log(c)
+    //console.log(c)
     timeline_data.push(c)
   }else{
     timeline_data.push("")
@@ -35,7 +35,7 @@ gen_mock_data=function(div_id, n){
 
 //function that pulls data from the database and draw timeline
 pull_data_from_database = function(video_name, div_ids){
-/*  $.ajax({
+  $.ajax({
     url: '/home/retrieve_emotion_data',
     data:{
       "video_name": video_name,
@@ -43,16 +43,32 @@ pull_data_from_database = function(video_name, div_ids){
     },
     dataType: 'json',
     success: function(data){
-
+      var d = JSON.parse(data.data)
+      console.log(d)
+      var timeline_data1 = []
+      var timeline_data2 = []
+      for(var i=0; i<d.length; i++){
+        if(d[i]==""){
+          timeline_data1.push("")
+          timeline_data2.push("")
+        }else{
+          timeline_data1.push(emoTorgb(d[i].return_pos1, d[i].return_exc1))
+          timeline_data2.push(emoTorgb(d[i].return_pos2, d[i].return_exc2))
+        }
+      }
+      timeline_data_dic[div_ids[0]]=timeline_data1
+      timeline_data_dic[div_ids[1]]=timeline_data2
+      var cur_pos = parseInt((localStorage.elapsedtime-5)/2.5)
+      for(var i=0; i<div_ids.length; i++){
+      //  gen_mock_data(div_ids[i], 50)
+        draw_emotion_gradient(div_ids[i], cur_pos)
+      }
     },
     error: function(){
 
     }
-  })*/
-  for(var i=0; i<div_ids.length; i++){
-    gen_mock_data(div_ids[i], 50)
-    draw_emotion_gradient(div_ids[i], 2)
-  }
+  })
+
 
 }
 
@@ -164,4 +180,4 @@ mock_function = function(id){
 }
 
 ///////////////////
-pull_data_from_database("videoname", ["shared_timeline1", "shared_timeline2"])
+pull_data_from_database("grumpy_customer.mp4", ["shared_timeline1", "shared_timeline2"])

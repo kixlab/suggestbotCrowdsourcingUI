@@ -10,6 +10,8 @@
   {% load staticfiles %}
   <script src="{% static 'account/js/bubble.js' %}"></script>
   <script src="{% static 'account/js/emotion_slider.js' %}"></script>
+  <script src="{% static 'account/js/color_transform.js' %}"></script>
+  <script src="{% static 'account/js/color_circle.js' %}"></script>
 {% endblock %}
 {% block body %}
 <br>
@@ -53,15 +55,8 @@
           <h5 >Please select the <em>emotion</em> of the speaker below:</h5><br>
           <div class="container">
                <br>
-
-              <span id="slider2CurrentSliderValLabel">extremely negative </span>
-              <input class= "footer input_slider" id="slider1_1" name='positivity1' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-              <span id="slider1CurrentSliderValLabel">extremely positive </span>
-              <br><br>
-              <span id="slider2CurrentSliderValLabel">extremely bored </span>
-              <input class= "footer input_slider" id="slider1_2" name='excitement1' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-              <span id="slider2CurrentSliderValLabel">extremely excited </span>
-              <br><br>
+               <div id='labeler1'></div>
+              <br>
                <hr/>
                <div class="footer">
               <p class="text">Please describe if any bodily expressions(face, gesture etc.) helped you to identify the underlined emotion.</p>
@@ -96,14 +91,8 @@
                    <br>
                   <!--{% csrf_token %}-->
                   <!--{{ form.as_p}}-->
-                  <span id="slider2CurrentSliderValLabel">extremely negative </span>
-                  <input class= "footer input_slider" id="slider2_1" name="positivity2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-                  <span id="slider1CurrentSliderValLabel">extremely positive </span>
-                  <br><br>
-                  <span id="slider2CurrentSliderValLabel">extremely bored </span>
-                  <input class= "footer input_slider" id="slider2_2" name="excitement2" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="10" style="margin: 0; width: 500px;" />
-                  <span id="slider2CurrentSliderValLabel">extremely excited </span>
-                  <br><br>
+                  <div id='labeler2'></div>
+                  <br>
                    <hr/>
 
                    <div class="footer">
@@ -132,9 +121,15 @@
 <button class="btn btn-dark btn-lg footer" type="submit" style="height:50px; width:100px">Submit</button>
 </form>
 </div>
-<script src="{% static 'account/js/color_transform.js' %}"></script>
-<script src="{% static 'account/js/shared_timeline.js' %}"></script>
 <script>
+generate_circular_labeler('labeler1')
+generate_circular_labeler('labeler2')
+</script>
+
+<script src="{% static 'account/js/shared_timeline.js' %}"></script>
+
+<script>
+
 // document.getElementById("img").setAttribute("src",JSON.parse(localStorage.getItem("img")).img);
 // $(document).ready(function() {
 //   $('img').click(function(e) {

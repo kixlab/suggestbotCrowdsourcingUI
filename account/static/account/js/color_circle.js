@@ -73,8 +73,8 @@ make_circular_labeler=function(image, color_circle, div_id){
     //change value of input
     var pos_val = (parseFloat(d3.mouse(this)[0])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
     var exc_val = -(parseFloat(d3.mouse(this)[1])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
-    $("#"+div_id+"_pos").val(pos_val.toString())
-    $("#"+div_id+"_exc").val(exc_val.toString())
+    $("#"+div_id+"_pos").val(pos_val)
+    $("#"+div_id+"_exc").val(exc_val)
     if(select_dic[div_id]==null){
       select_dic[div_id] = circle_svg_dic[div_id].append("circle")
       .attr("cx",d3.mouse(this)[0])
@@ -98,7 +98,14 @@ make_circular_labeler=function(image, color_circle, div_id){
     .attr("y", ypos)
     .text(circular_emotions[i])
     .attr("x", function(){
+      console.log(d3.select(this).node().getBoundingClientRect().width)
       var w = d3.select(this).node().getBoundingClientRect().width
+      if(w==0){
+        var upper = circular_emotions[i].replace(/[^A-Z]/g, "").length
+        w=(circular_emotions[i].length-upper) * color_circle_radius/40 + (upper+3) * color_circle_radius/40;
+      }
+       //= d3.select(this).node().getBoundingClientRect().width
+
       return xpos-w/2
     })
     .attr("fill", function(){
@@ -135,17 +142,19 @@ draw_color_circle =function(image, color_circle){
  generate_circular_labeler= function(div_id){
    var circle_svg = d3.select("#"+div_id)
      .append("svg")
+     .style("position", "relative").style("z-index", 1)
      .attr("width", color_circle_radius*3)
      .attr("height", color_circle_radius*3)
      .style("display", "block")
 
    d3.select("#"+div_id)
      .style("height", 3*color_circle_radius)
+     .style("width", 3*color_circle_radius)
 
      d3.select("#"+div_id).append("canvas")
      .style("position","relative").style("left", color_circle_radius/2)
      .style("top", -color_circle_radius/2*5)
-     .style("z-index", -1)
+     .style("z-index", 0)
      .style("display", "block")
      .attr("width", color_circle_radius *2)
      .attr("height", color_circle_radius *2)

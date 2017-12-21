@@ -34,6 +34,9 @@ class Assign(models.Model):
     # name of the video file
     vname = models.CharField(max_length=20)
 
+    #sequence #
+    seq = models.IntegerField()
+
     # startOffset of the video
     start = models.FloatField()
 
@@ -58,10 +61,10 @@ class EmotionHit(models.Model):
     # id of the row in Assign table
     assign_id = models.IntegerField()
     mturk_id = models.CharField(max_length=15)
-    positivity1 = models.IntegerField()
-    excitement1 = models.IntegerField()
-    positivity2 = models.IntegerField()
-    excitement2 = models.IntegerField()
+    positivity1 = models.FloatField()
+    excitement1 = models.FloatField()
+    positivity2 = models.FloatField()
+    excitement2 = models.FloatField()
     bodyexpression1 = models.CharField(max_length=50)
     bodyexpression2 = models.CharField(max_length=50)
     _len = models.TextField()
