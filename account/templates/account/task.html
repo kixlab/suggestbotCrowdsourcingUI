@@ -21,9 +21,6 @@ window.onload=function(){
 </script>
 {% endblock %}
 {% block body %}
-{{vname}}
-{{start}}
-{% if full %}yes{% endif %}
 <div class="container wrapper">
   <h3 class= "title">Departmental Store scenerio:</h3>
   <p><em>Play the video when you are ready.</em></p>
@@ -58,7 +55,6 @@ window.onload=function(){
 
 //var pausetime=2;
 var video = document.getElementById("myVideo");
-video.currentTime = {{start}}
 video.addEventListener("timeupdate", function(){
 // check whether we have passed 5 minutes,
 // current time is given in seconds
@@ -87,7 +83,7 @@ video.addEventListener("timeupdate", function(){
       // localStorage.width = w;
       // localStorage.height = h;
       // localStorage.setItem('img',JSON.stringify(storageFiles));
-      window.location.href="/home/questionaire?full={{full}}";
+      window.location.href="/home/questionaire?full={{full}}&id={{id}}";
   }
 });
 </script>
