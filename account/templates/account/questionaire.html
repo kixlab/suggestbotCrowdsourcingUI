@@ -17,10 +17,11 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <h3>Instructions:</h3>
-      <p>1.Tag the participants in the frame presented.<br>
-      2.Enter emotions for each participant below.<br>
-      <b>Note:<br> participant with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> participant with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
-      <img id="img" style="width:80%"></img>
+      <!-- <p>1.Tag the Characters in the frame presented.<br>
+      2.Enter emotions for each Character below.<br> -->
+      <b>Note:<br> Character with <font color="green">green</font> box will be represented with <font color="green">green</font> button.<br> Character with <font color="red">red</font> box will be represented with <font color="red">red</font> button</b></p>
+      {% load staticfiles %}
+      <img src="{% static 'account/media/customer.png' %}" style="width:80%"></img>
     </div>
   </div>
   </div>
@@ -37,7 +38,7 @@
       <div class="card-header" role="tab" id="headingOne">
       <h5 class="mb-0">
         <a class="btn btn-outline-success" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Participant1
+          Character1
         </a>
       </h5>
     </div>
@@ -74,7 +75,7 @@
       <div class="card-header" role="tab" id="headingTwo">
         <h5 class="mb-0">
           <a class="collapsed btn btn-outline-danger" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Participant2
+            Character2
           </a>
         </h5>
       </div>
@@ -127,20 +128,20 @@
 </form>
 </div>
 <script>
-document.getElementById("img").setAttribute("src",JSON.parse(localStorage.getItem("img")).img);
-$(document).ready(function() {
-  $('img').click(function(e) {
-    var offset = $(this).offset();
-    var x = (e.pageX - offset.left);
-    var y = (e.pageY - offset.top);
-    var c=document.createElement("canvas");
-    var ctx = c.getContext("2d");
-    ctx.beginPath();
-    ctx.rect(x+10,y-10,x-10,y+10);
-    ctx.strokeStyle="red";
-    ctx.stroke();
-
-  });
-});
+// document.getElementById("img").setAttribute("src",JSON.parse(localStorage.getItem("img")).img);
+// $(document).ready(function() {
+//   $('img').click(function(e) {
+//     var offset = $(this).offset();
+//     var x = (e.pageX - offset.left);
+//     var y = (e.pageY - offset.top);
+//     var c=document.createElement("canvas");
+//     var ctx = c.getContext("2d");
+//     ctx.beginPath();
+//     ctx.rect(x+10,y-10,x-10,y+10);
+//     ctx.strokeStyle="red";
+//     ctx.stroke();
+//
+//   });
+// });
 </script>
 {% endblock %}
