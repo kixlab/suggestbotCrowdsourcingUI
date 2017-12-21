@@ -7,6 +7,7 @@ var timeline_data=[]
 
 //create shared timeline
 var timeline_svg = d3.select("#shared_timeline")
+  .style("width", timeline_width)
   .append("svg")
   .attr("width", timeline_width)
   .attr("height",timeline_height)
@@ -29,6 +30,15 @@ gen_mock_data=function(n){
     timeline_data.push("")
   }
   }
+}
+
+//function that pulls data from the database and draw timeline
+pull_data_from_database = function(){
+  //$.ajax({
+
+  //})
+  gen_mock_data(50)
+  draw_emotion_gradient(timeline_svg, timeline_data,2)
 }
 
 //function for drawing emotion gradient timeline
@@ -118,6 +128,6 @@ console.log(timeline_width)
   $("#current_working_block").tooltip("show");
 }
 
-gen_mock_data(50)
-draw_emotion_gradient(timeline_svg, timeline_data,2)
+
 ///////////////////
+pull_data_from_database()
