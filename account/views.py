@@ -9,6 +9,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from account.models import *
 import os, queue
 import json
+import random
 
 assign_queue = queue.Queue()
 
@@ -27,6 +28,40 @@ def updateQueue():
         else:
             break
     print ("assigned")
+
+def generateFakeData():
+    all_entries = list(Assign.objects.all().order_by("?"))
+    for i in Assign.objects.all():
+        i.wid1 = ""
+        i.wid2 = ""
+        i.wid3 = ""
+        i.save()
+    for i in range(20):
+        entry = all_entries[i]
+        y1 = (random.choice(list(range(193,407)))-300)/200
+        x1 = (random.choice(list(range(184,411)))-300)/200
+        y2 = (random.choice(list(range(193,407)))-300)/200
+        x2 = (random.choice(list(range(184,411)))-300)/200
+        emohit = EmotionHit.objects.create(mturk_id = "fake",
+                    positivity1=x1,
+                    excitement1 = y1,
+                    bodyexpression1 = 'none',
+                    positivity2 = x2,
+                    excitement2 = y2,
+                    bodyexpression2 = 'none',
+                    length = 'length does not matter',
+                    elapsedtime = 0.0,
+                    assign_id = int(entry.id))
+        emohit.save()
+        assign = Assign.objects.get(id=int(entry.id))
+        if not assign.wid1:
+            assign.wid1='fake'
+        elif not assign.wid2:
+            assign.wid2='fake'
+        else:
+            assign.wid3='fake'
+        assign.save()
+
 
 # Input
 # 1) vname (type: str) - specific location of the video file
@@ -97,8 +132,16 @@ def get(request):
                                             elapsedtime = float(form.cleaned_data['elapsedtime']),
                                             assign_id = int(request.GET['id']))
             emotion.save()
+            assign = Assign.objects.get(id=int(request.GET['id']))
+            if not assign.wid1:
+                assign.wid1=form.cleaned_data['mturk_id']
+            elif not assign.wid2:
+                assign.wid2=form.cleaned_data['mturk_id']
+            else:
+                assign.wid3=form.cleaned_data['mturk_id']
         else:
             return(render(request, 'account/questionaire.html', {'form':form,"message":True}))
+
         if request.GET['full'] == "True" and float(form.cleaned_data['elapsedtime'])<1200:
             return(HttpResponseRedirect('/home/task?full=True'))
         else:
@@ -139,6 +182,7 @@ def feedback(request):
 
 def retrieve_emotion_data(request):
     video_name = request.GET.get("video_name")
+    print (video_name)
     assigns = Assign.objects.filter(vname=video_name, full=False)
     data_to_return=[]
     for assign in assigns:
@@ -152,7 +196,7 @@ def retrieve_emotion_data(request):
         if assign.wid1 != "":
             no_val = False
             cur_count = cur_count + 1
-            emohit = EmotionHit.objects.get(assign_id=assign.seq, mturk_id=assign.wid1)
+            emohit = EmotionHit.objects.get(assign_id=assign.id, mturk_id=assign.wid1)
             cur_pos1= cur_pos1 + float(emohit.positivity1)
             cur_pos2= cur_pos2 + float(emohit.positivity2)
             cur_exc1= cur_exc1 + float(emohit.excitement1)
@@ -160,7 +204,7 @@ def retrieve_emotion_data(request):
         if assign.wid2!="":
             no_val = False
             cur_count = cur_count + 1
-            emohit = EmotionHit.objects.get(assign_id=assign.seq, mturk_id=assign.wid2)
+            emohit = EmotionHit.objects.get(assign_id=assign.id, mturk_id=assign.wid2)
             cur_pos1= cur_pos1 + float(emohit.positivity1)
             cur_pos2= cur_pos2 + float(emohit.positivity2)
             cur_exc1= cur_exc1 + float(emohit.excitement1)
@@ -168,7 +212,7 @@ def retrieve_emotion_data(request):
         if assign.wid3!="":
             no_val = False
             cur_count = cur_count + 1
-            emohit = EmotionHit.objects.get(assign_id=assign.seq, mturk_id=assign.wid3)
+            emohit = EmotionHit.objects.get(assign_id=assign.id, mturk_id=assign.wid3)
             cur_pos1= cur_pos1 + float(emohit.positivity1)
             cur_pos2= cur_pos2 + float(emohit.positivity2)
             cur_exc1= cur_exc1 + float(emohit.excitement1)
@@ -185,5 +229,6 @@ def retrieve_emotion_data(request):
     data ={
         'data' : json.dumps(data_to_return)
     }
+    print (data_to_return)
     return JsonResponse(data)
 #updateAssignTable("./account/static/account/media/grumpy_customer.mp4",120)

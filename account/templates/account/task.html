@@ -16,6 +16,7 @@ window.onload=function(){
                       localStorage.id = {{id}}
                     {% endif %}
                   {% else %}
+                    localStorage.id = {{id}}
                     this.currentTime = {{start}}
                   {% endif %}
                   console.log("loaded");

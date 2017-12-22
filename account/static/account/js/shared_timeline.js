@@ -2,12 +2,10 @@
 var timeline_width = window.innerWidth*0.60;
 var timeline_height = 30;
 var stroke_border = 4;
-console.log(timeline_width)
 //for multiple timelines
 var timeline_data_dic={}
 var timeline_svg_dic ={}
 var gradient_defs_dic={}
-
 var timeline_data=[]
 
 //create shared timeline
@@ -58,7 +56,7 @@ pull_data_from_database = function(video_name, div_ids){
       }
       timeline_data_dic[div_ids[0]]=timeline_data1
       timeline_data_dic[div_ids[1]]=timeline_data2
-      var cur_pos = parseInt((localStorage.elapsedtime-5)/2.5)
+      var cur_pos = localStorage.id
       for(var i=0; i<div_ids.length; i++){
       //  gen_mock_data(div_ids[i], 50)
         draw_emotion_gradient(div_ids[i], cur_pos)
@@ -74,6 +72,7 @@ pull_data_from_database = function(video_name, div_ids){
 
 //function for drawing emotion gradient timeline
 draw_emotion_gradient = function(div_id, n){
+  console.log(n)
   var svg = d3.select("#"+div_id)
     .style("width", timeline_width)
     .append("svg")
@@ -139,7 +138,6 @@ draw_emotion_gradient = function(div_id, n){
     .attr("offset", function(d){return d.offset;})
     .attr("stop-color", function(d){return d.color;});
 //draw rectangle for color
-console.log(timeline_width)
 
   grad_rect.style("fill", "url(#"+div_id+"_timeline_grad)")
   .style("stroke", "#ffffff")
