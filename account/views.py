@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from .forms import testform
+from .forms import testform, FeedbackForm
 from django.contrib import messages
 # FeedbackForm, intentionform
 from django.http import HttpResponseRedirect, JsonResponse
@@ -102,7 +102,7 @@ def get(request):
         if request.GET['full'] == "True" and float(form.cleaned_data['elapsedtime'])<1200:
             return(HttpResponseRedirect('/home/task?full=True'))
         else:
-            return(HttpResponseRedirect('/home/feedback.html'))
+            return(HttpResponseRedirect('/home/feedback/'))
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))

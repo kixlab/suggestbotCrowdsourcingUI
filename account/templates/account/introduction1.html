@@ -17,11 +17,14 @@
 <b><em>Note:</em> Length of video may vary but won't be more than 5 mins.</b><br><br>
 <p>Please press the button to proceed to the task</p><br>
 <div>
-<a href="/home/task/" class="btn btn-dark btn-lg " role="button">Proceed
+<a href="/home/task/" class="btn btn-dark btn-lg " role="button" onclick="useralert()">Proceed
   <span class="glyphicon glyphicon-chevron-right"></span></a>
 </div>
 </div>
 <script>
   localStorage.elapsedtime = '0';
+  function useralert(){
+  {% if full %}alert("To capture the emotion  variation you will be presented questionnaire after evey 5 seconds.You can also choose to replay the video");{% endif %}
+}
 </script>
 {% endblock %}
