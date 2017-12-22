@@ -15,7 +15,7 @@ assign_queue = queue.Queue()
 def updateQueue():
     global assign_queue
     print ("updateQueue yes")
-    all_entries = Assign.objects.all().filter(done=0)
+    all_entries = Assign.objects.all().filter(done=0).order_by("?")
     for i in all_entries:
         if not assign_queue.full():
             assignment = {}
