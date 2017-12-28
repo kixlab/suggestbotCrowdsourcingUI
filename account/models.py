@@ -59,7 +59,7 @@ class Assign(models.Model):
 
 class EmotionHit(models.Model):
     # id of the row in Assign table
-    assign_id = models.IntegerField()
+    segment_id = models.IntegerField()
     mturk_id = models.CharField(max_length=15)
     positivity1 = models.FloatField()
     excitement1 = models.FloatField()
@@ -69,6 +69,25 @@ class EmotionHit(models.Model):
     bodyexpression2 = models.CharField(max_length=50)
     length = models.TextField()
     elapsedtime = models.FloatField()
+
+# - video ID
+# - segment ID (or starting time?)
+# - worker ID
+# - assignment ID (mturk has this param for all HITs)
+# - time stamps (this should be a string of all time stamps a worker made)
+# - comments
+# - starting time of the task
+# - ending time of the task (edited)
+
+class Experiment3(models.Model):
+    video_id = models.CharField(max_length=20)
+    segment_id = models.IntegerField()
+    mturk_id = models.CharField(max_length=15)
+    timestamps = models.CharField(max_length=20)
+    comments = models.TextField()
+    start_time = models.CharField(max_length=20)
+    end_time = models.CharField(max_length=20)
+
 #
 #
 # class IntentionHit(models.Model):

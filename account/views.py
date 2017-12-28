@@ -232,3 +232,26 @@ def retrieve_emotion_data(request):
     print (data_to_return)
     return JsonResponse(data)
 #updateAssignTable("./account/static/account/media/grumpy_customer.mp4",120)
+
+
+# - video ID
+# - segment ID (or starting time?)
+# - worker ID
+# - assignment ID (mturk has this param for all HITs)
+# - time stamps (this should be a string of all time stamps a worker made)
+# - comments
+# - starting time of the task
+# - ending time of the task (edited)
+def save_emotion_exp3(request):
+    video_id=request.POST.get("video_id")
+    segment_id=request.POST.get("segment_id")
+    mturk_id=request.POST.get("mturk_id")
+    assign_id=request.POST.get("assign_id")
+    timestamp=request.POST.get("timestamp")
+    comments=request.POST.get("comments")
+    start_time=request.POST.get("start_time")
+    end_time=request.POST.get("end_time")
+    exp3 = Experiment3.objects.create(video_id=video_id, segment_id=segment_id, mturk_id=mturk_id,assign_id=assign_id,
+                                    timestamps=timestamps,comments=comments,start_time=start_time,end_time=end_time)
+    exp3.save()
+    return(HttpResponseRedirect('/home/feedback/'))

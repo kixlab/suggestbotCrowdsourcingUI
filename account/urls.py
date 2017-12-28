@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^feedback/$', views.feedback),
     url(r'^get/$', views.get, name='get'),
     url(r'^retrieve_emotion_data/$', views.retrieve_emotion_data, name='retrieve_emotion_data'),
+    url(r'^save_emotion_exp3/$', views.save_emotion_exp3, name='save_emotion_exp3')
 ]
