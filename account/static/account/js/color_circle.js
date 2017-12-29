@@ -13,7 +13,7 @@ generate_circular_labeler("id_for_div")
 You can also add multiple labelers if you want to
 */
 //these are parameters for the labeler
-var color_circle_radius = 200;
+var color_circle_radius = 170;
 var circular_emotions = [
   'PLEASANT',
   'happy',
@@ -54,18 +54,42 @@ make_circular_labeler=function(image, color_circle, div_id){
     return "excitement"+fig_input_num.toString();
   }).css("display", "none")
   fig_input_num++;
-  circle_svg_dic[div_id].append("circle")
-  .attr("cx", color_circle_radius*1.5)
-  .attr("cy", color_circle_radius*1.5)
-  .attr("r", color_circle_radius*1.4)
+  circle_svg_dic[div_id].append("rect")
+  .attr("x", color_circle_radius*0.1)
+  .attr("y", color_circle_radius*0.1)
+  .attr("width", color_circle_radius*2.8)
+  .attr("height", color_circle_radius*2.8)
   .style("fill", "transparent")
   .style("stroke-width", main_circle_stroke)
   .style("stroke", "#333333")
+  circle_svg_dic[div_id].append('path')
+                        .attr('d', lineFunction([{'x':color_circle_radius*1.5, 'y':color_circle_radius*0.5},{'x':color_circle_radius*1.5, 'y':color_circle_radius*2.5}]))
+                        .attr("stroke", "black");
+  circle_svg_dic[div_id].append('path')
+                        .attr('d', lineFunction([{'x':color_circle_radius*0.5, 'y':color_circle_radius*1.5},{'x':color_circle_radius*2.5, 'y':color_circle_radius*1.5}]))
+                        .attr("stroke", "black")
+  circle_svg_dic[div_id].append('text')
+                        .attr("font-size", color_circle_radius/10)
+                        .text("valence")
+                        .attr("y", 1.5*color_circle_radius-color_circle_radius/100)
+                        .attr("x", function(){
+                          console.log(d3.select(this).node().getBoundingClientRect().width)
+                          return 2.5*color_circle_radius-main_circle_stroke-d3.select(this).node().getBoundingClientRect().width
+                        });
+  circle_svg_dic[div_id].append('text')
+                        .text("arousal")
+                        .attr("font-size", color_circle_radius/10)
+                        .attr("y", function(){
+                          return 0.5*color_circle_radius+d3.select(this).node().getBoundingClientRect().height
+                        })
+                        .attr("x", 1.5*color_circle_radius+color_circle_radius/100)
 
-  circle_svg_dic[div_id].append("circle")
-  .attr("cx", color_circle_radius*1.5)
-  .attr("cy", color_circle_radius*1.5)
-  .attr("r", color_circle_radius*1)
+
+  circle_svg_dic[div_id].append("rect")
+  .attr("x", color_circle_radius*0.5)
+  .attr("y", color_circle_radius*0.5)
+  .attr("width", color_circle_radius*2)
+  .attr("height", color_circle_radius*2)
   .style("fill", "transparent")
   .style("stroke-width", main_circle_stroke)
   .style("stroke", "#333333")
@@ -91,8 +115,29 @@ make_circular_labeler=function(image, color_circle, div_id){
   })
   for(var i=0; i<20; i++){
     var h = -i/20+5/12;
-    var xpos = 1.2*color_circle_radius * Math.cos(i * Math.PI/10)+color_circle_radius*1.5
-    var ypos = -1.2*color_circle_radius * Math.sin(i * Math.PI/10)+color_circle_radius*1.5
+    var xpos;
+    var ypos;
+    var xcos = Math.cos(i * Math.PI/10)
+    var ysin = Math.sin(i * Math.PI/10)
+    if(Math.abs(xcos)>Math.abs(ysin)){
+      if(xcos>0){
+        xpos = 2.7*color_circle_radius;
+        ypos = -1.2*ysin/xcos*color_circle_radius+1.5*color_circle_radius
+      }else{
+        xpos = 0.3*color_circle_radius;
+        ypos = 1.2*ysin/xcos*color_circle_radius+1.5*color_circle_radius
+      }
+    }else{
+      if(ysin<0){
+        ypos = 2.7*color_circle_radius;
+        xpos = -1.2/ysin*xcos*color_circle_radius+1.5*color_circle_radius
+      }else{
+        ypos = 0.3*color_circle_radius;
+        xpos = 1.2/ysin*xcos*color_circle_radius+1.5*color_circle_radius
+      }
+    }
+    //svar xpos = 1.2*color_circle_radius * Math.cos(i * Math.PI/10)+color_circle_radius*1.5
+    //var ypos = -1.2*color_circle_radius * Math.sin(i * Math.PI/10)+color_circle_radius*1.5
     var t = circle_svg_dic[div_id].append("text")
     .attr("font-size", color_circle_radius/20)
     .attr("y", ypos)
@@ -102,18 +147,16 @@ make_circular_labeler=function(image, color_circle, div_id){
       var w = d3.select(this).node().getBoundingClientRect().width
       if(w==0){
         var upper = circular_emotions[i].replace(/[^A-Z]/g, "").length
-        w=(circular_emotions[i].length-upper) * color_circle_radius/40 + (upper+3) * color_circle_radius/40;
+        w=(circular_emotions[i].length-upper) * color_circle_radius/40 + (upper+2.5) * color_circle_radius/40;
       }
        //= d3.select(this).node().getBoundingClientRect().width
 
       return xpos-w/2
     })
-    .attr("fill", function(){
-      return hslToRgb(h, 0.7, 0.4)
-    })
+
   }
 
-  draw_color_circle(image, color_circle)
+//  draw_color_circle(image, color_circle)
 
 }
 
@@ -168,3 +211,8 @@ draw_color_circle =function(image, color_circle){
 
    make_circular_labeler(cc_img, color_circle, div_id);
  }
+
+ var lineFunction = d3.svg.line()
+   .x(function(d) { return d.x; })
+   .y(function(d) { return d.y; })
+   .interpolate('linear');
