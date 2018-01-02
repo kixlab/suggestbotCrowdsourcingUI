@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container footer">
+  <form method="post">
+  <h3>Feedback time</h3><hr/>
+  <div>
+  <p class="text footer">Please provide additional feedback for the task. This will help us to provide better task design.</p>
+  <textarea style="width:100%; height: 70px" name="text"></textarea>
+</div>
+  <hr/>
+
+    {% csrf_token %}
+    <button class="btn btn-dark btn-lg footer" type="submit" style="height:50px; width:100px">Submit</button>
+  </form>
+</div>
+{% endblock %}
