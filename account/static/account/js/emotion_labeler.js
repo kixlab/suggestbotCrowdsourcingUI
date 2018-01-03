@@ -43,11 +43,11 @@ var fig_input_num=1
 make_circular_labeler=function(image, color_circle, div_id){
   //inputs to record the value
   $("<input></input>").appendTo("#"+div_id)
-  .attr("id", div_id+"_pos").attr("type", "text").attr("name",function(){
+  .attr("id", div_id+"_pos").attr("type", "number").attr("name",function(){
     return "positivity"+fig_input_num.toString();
   }).css("display", "none")
   $("<input></input>").appendTo("#"+div_id)
-  .attr("id", div_id+"_exc").attr("type", "text").attr("name",function(){
+  .attr("id", div_id+"_exc").attr("type", "number").attr("name",function(){
     return "excitement"+fig_input_num.toString();
   }).css("display", "none")
   fig_input_num++;
