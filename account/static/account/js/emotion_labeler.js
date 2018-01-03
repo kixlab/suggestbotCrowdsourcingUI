@@ -99,7 +99,7 @@ make_circular_labeler=function(image, color_circle, div_id){
       select_dic[div_id].transition(500)
       .attr("r", color_circle_radius/20)
     }else{
-      select_dic[div_id].transition(500).attr("cx",d3.mouse(this)[0])
+      select_dic[div_id].attr("cx",d3.mouse(this)[0])
       .attr("cy", d3.mouse(this)[1])
     }
   })
@@ -201,6 +201,31 @@ draw_color_circle =function(image, color_circle){
 
    make_circular_labeler(cc_img, color_circle, div_id);
  }
+// function to input circle to the interface
+input_value_to_labeler = function(div_id, val, aro){
+  var cx = (val+1.5)*color_circle_radius
+  var cy = (-aro+1.5)*color_circle_radius
+  if(select_dic[div_id]==null){
+    select_dic[div_id] = circle_svg_dic[div_id].append("circle")
+    .attr("cx",cx)
+    .attr("cy", cy)
+    .style("fill", "rgba(0,0,0,0.3)")
+    .style("stroke-width", color_circle_radius/100)
+    .style("stroke", "black")
+    select_dic[div_id].transition(500)
+    .attr("r", color_circle_radius/20)
+    console.log("in")
+  }else{
+    select_dic[div_id].attr("cx",cx)
+    .attr("cy", cy)
+    console.log("in")
+  }
+}
+// function to delete circle from the interface
+delete_value_circle = function(div_id){
+  select_dic[div_id].remove()
+  select_dic[div_id] = null;
+}
 
  var lineFunction = d3.svg.line()
    .x(function(d) { return d.x; })
