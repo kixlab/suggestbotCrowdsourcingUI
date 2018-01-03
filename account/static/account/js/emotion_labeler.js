@@ -229,6 +229,8 @@ delete_value_circle = function(div_id){
   if(select_dic[div_id]){
     select_dic[div_id].remove()
     select_dic[div_id] = null;
+    $("#"+div_id+"_pos").val(null)
+    $("#"+div_id+"_exc").val(null)
   }
 }
 
