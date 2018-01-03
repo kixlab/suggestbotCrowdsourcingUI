@@ -69,16 +69,32 @@ function changeButtonType(btn, value) {
 }
 
 function enable_tagging() {
-  var elem = document.getElementById("label_pane");
-  elem.setAttribute("style","pointer-events: auto;");
+  var elem1 = document.getElementById("label_pane");
+  elem1.setAttribute("style","pointer-events: auto;");
+
+  $('#Add_button').prop("disabled", false);
+
+  // Change the button to a play button
+  changeButtonType(btnPlayPause, 'play');
+  document.getElementById('playpauseimg').src="../../static/account/img/icon_round_play.png";
+  player.pause();
 }
 
 $(document).ready(function(){
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
 
-  $('#tag-tooltip').click(function(){
+  // tagging happens here ! //////////////////////
+  $("#Add_button").click(function(){
+    $('#Add_button').prop("disabled", true);
+
     var elem = document.getElementById("label_pane");
-    elem.setAttribute("style","pointer-events: auto;");
+    elem.setAttribute("style","pointer-events: none;");
+
+    // Change the button to a pause button
+    changeButtonType(btnPlayPause, 'pause');
+    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+    player.play();
   });
+  
 });
