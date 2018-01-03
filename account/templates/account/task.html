@@ -23,7 +23,6 @@ window.onload=function(){
 
 {% block body %}
 <div class="container wrapper">
-  <div class="separator"></div>
   <div class="container-fluid">
     <div class="modal-body row">
       <div class="col-md-6">
@@ -62,8 +61,8 @@ window.onload=function(){
         </div>
         <!-- Jean's change ends here -->
       </div>
-      <div class="col-md-6">
-        <div id="labeler"></div>
+      <div id="label_pane" class="col-md-6">
+        <div id="labeler" style="display:block; margin:auto"></div>
         <script>
           generate_circular_labeler('labeler')
         </script>
@@ -71,7 +70,6 @@ window.onload=function(){
     </div>
   </div>
     <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off"></button>
-  <hr/>
 
 </div>
 <div class="modal" role="dialog">
