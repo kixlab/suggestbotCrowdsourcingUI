@@ -87,6 +87,7 @@ make_circular_labeler=function(image, color_circle, div_id){
     //change value of input
     var pos_val = (parseFloat(d3.mouse(this)[0])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
     var exc_val = -(parseFloat(d3.mouse(this)[1])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
+    console.log("#"+div_id+"_pos")
     $("#"+div_id+"_pos").val(pos_val)
     $("#"+div_id+"_exc").val(exc_val)
     if(select_dic[div_id]==null){
@@ -205,6 +206,8 @@ draw_color_circle =function(image, color_circle){
 input_value_to_labeler = function(div_id, val, aro){
   var cx = (val+1.5)*color_circle_radius
   var cy = (-aro+1.5)*color_circle_radius
+  $("#"+div_id+"_pos").val(val)
+  $("#"+div_id+"_exc").val(aro)
   if(select_dic[div_id]==null){
     select_dic[div_id] = circle_svg_dic[div_id].append("circle")
     .attr("cx",cx)
