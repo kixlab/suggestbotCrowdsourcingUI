@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 {% block head %}
-
+<script src="{%static 'account/js/emotion_labeler.js'%}"></script>
 <!--<script>
 window.onload=function(){
                   document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
@@ -63,8 +63,10 @@ window.onload=function(){
         <!-- Jean's change ends here -->
       </div>
       <div class="col-md-6">
-
-
+        <div id="labeler"></div>
+        <script>
+          generate_circular_labeler('labeler')
+        </script>
       </div>
     </div>
   </div>
