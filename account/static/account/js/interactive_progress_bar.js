@@ -67,3 +67,18 @@ function changeButtonType(btn, value) {
   //btn.innerHTML = value;
   btn.className = value;
 }
+
+function enable_tagging() {
+  var elem = document.getElementById("label_pane");
+  elem.setAttribute("style","pointer-events: auto;");
+}
+
+$(document).ready(function(){
+  var elem = document.getElementById("label_pane");
+  elem.setAttribute("style","pointer-events: none;");
+
+  $('#tag-tooltip').click(function(){
+    var elem = document.getElementById("label_pane");
+    elem.setAttribute("style","pointer-events: auto;");
+  });
+});
