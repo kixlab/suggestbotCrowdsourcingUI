@@ -24,6 +24,7 @@ vd_player.addEventListener('ended', function() { this.pause(); }, false);
 progressBar.addEventListener("click", seek);
 
 function seek(e) {
+  if ($('#Add_button').prop("disabled")){
   var elem = document.getElementById("progress-bar");
   var percent = e.offsetX / this.offsetWidth;
   vd_player.currentTime = percent * vd_player.duration;
@@ -32,6 +33,7 @@ function seek(e) {
 
   $('#progress-bar').attr('aria-valuenow', percent);
   elem.style.width = percent + '%';
+  }
 }
 
 function playPauseVideo() {
@@ -74,6 +76,7 @@ function enable_tagging() {
 
   $('#Add_button').prop("disabled", false);
   $("#labeler").css("opacity", "1");
+
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
   document.getElementById('playpauseimg').src="../../static/account/img/icon_round_play.png";
@@ -100,3 +103,17 @@ $(document).ready(function(){
   });
 
 });
+
+function create_red_bar_div(string_time){
+
+  var div = document.createElement("div");
+  div.style.width = "5px";
+  div.style.height = "20px";
+  div.style.position = "absolute";
+  div.style.background = "red";
+  div.id = string_time;
+
+  document.getElementById("progress").appendChild(div);
+
+  $("[title]").tooltip({'placement': "bottom"});
+}
