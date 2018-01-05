@@ -86,11 +86,12 @@ $(document).ready(function(){
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
+
     $('#Add_button').prop("disabled", true);
     $("#labeler").css("opacity", "0.3");
     var elem = document.getElementById("label_pane");
     elem.setAttribute("style","pointer-events: none;");
-
+    delete_value_circle('labeler')
     // Change the button to a pause button
     changeButtonType(btnPlayPause, 'pause');
     document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
