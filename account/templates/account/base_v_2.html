@@ -6,6 +6,8 @@
     {% endblock %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     {% load staticfiles %}
+    <script src="{% static 'account/js/color_circle.js' %}"></script>
+    <script src="{% static 'account/js/color_transform.js' %}"></script>
     <script src="{% static 'account/js/emotion_slider.js' %}"></script>
     <link rel="stylesheet" href="{%static 'account/bootstrap-slider.css'%}" type="text/css">
     <link rel="stylesheet" href="{%static 'account/style.css'%}" type="text/css">
@@ -61,7 +63,7 @@
            <div class="panel-body">
              <h3>INSTRUCTIONS:</h3><hr>
              <p>1. Please watch the video and pay attention to the emotions of the <b><em>person presented in the &nbsp;&nbsp;&nbsp;&nbsp;screenshot</em></b> below.</p>
-             <p>2. Anytime you see an <b><em>emotional change</em></b> in the person, click on the progress bar below and tag the &nbsp;&nbsp;&nbsp;&nbsp;emotion in the right colomn. Press help button to watch "how to tag?"</p>
+             <p>2. Anytime you see an <b><em>emotional change</em></b> in the person, click on the <img src="{% static 'account/img/tag_button.png' %}" style="height:4%"> button in the progress bar below and to add the emotion by clicking on the right panel and enter the enotion for that moment using add button . Press button above to watch "how to tag?"</p>
              <p>3. Press the <b><em>submit</em></b> button after tagging the whole video.</p><br><br>
              {% load staticfiles %}
              <img src="{% static 'account/img/video1_screenshot.jpg' %}"  style="height:30%"></img><hr>
@@ -69,7 +71,9 @@
          </div>
          <hr>
           <p><b>Tag the emotion in below plane:</b></p><br>
-          <img src="{% static 'account/img/circumplex_img.jpg' %}">
+          <script>
+          generate_circular_labeler('labeler')
+        </script>
           <br><br>
           <hr/>
           <div class="footer">

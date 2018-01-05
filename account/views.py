@@ -89,7 +89,7 @@ def updateAssignTable(video_location,duration):
 
 # Create your views here.
 def home(request):
-    return(render(request,'account/home.html'))
+    return(render(request,'account/base_v_2.html'))
 
 def about(request):
     return(render(request,'account/about.html'))
