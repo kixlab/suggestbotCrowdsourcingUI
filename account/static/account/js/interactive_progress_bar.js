@@ -71,11 +71,14 @@ function changeButtonType(btn, value) {
 }
 
 function enable_tagging() {
+  $("#interactive_progress_bar").css("opacity", "0.3");
+  $(".tooltip").css("opacity", "0.3")
   var elem1 = document.getElementById("label_pane");
   elem1.setAttribute("style","pointer-events: auto;");
 
   $('#Add_button').prop("disabled", false);
   $("#labeler").css("opacity", "1");
+
 
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
@@ -89,6 +92,8 @@ $(document).ready(function(){
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
+    $("#interactive_progress_bar").css("opacity", "1");
+    $(".tooltip").css("opacity", "1")
     var string_time = parseInt(vd_player.currentTime).toString()
     add_data_to_data_structure(string_time, 'labeler')
     $('#Add_button').prop("disabled", true);
