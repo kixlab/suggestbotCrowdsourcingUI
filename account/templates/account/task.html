@@ -1,13 +1,8 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block head %}
-<title>jQuery UI Slider - Default functionality</title>
-<!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <script src="https://d3js.org/d3.v2.min.js"></script>
-<script>
+<script src="{%static 'account/js/emotion_labeler.js'%}"></script>
+<!--<script>
 window.onload=function(){
                   document.getElementById('myVideo').addEventListener('loadedmetadata', function() {
                   {% if full %}
@@ -23,18 +18,17 @@ window.onload=function(){
                 },
                 false)
               };
-</script>
+</script>-->
 {% endblock %}
+
 {% block body %}
 <div class="container wrapper">
-  <h2>Departmental Store scenerio:</h2>
-  <p><em>Play the video when you are ready.</em></p>
-  <div class="separator"></div>
   <div class="container-fluid">
-    <div class="modal-body row">
+    <div class="row">
       <div class="col-md-6">
         <div align="center" class="embed-responsive embed-responsive-16by9">
-          <video class="embed-responsive-item" id="myVideo" controls>
+          <!-- Jean's change starts here -->
+          <video class="embed-responsive-item" id="myVideo">
               {% load staticfiles %}
               <source src="{% static 'account/media/grumpy_customer.mp4' %}" type="video/mp4">
               <source src="movie.ogg" type="video/ogg">
@@ -43,17 +37,45 @@ window.onload=function(){
           <canvas style="display:none"></canvas>
           <img id="img"></img>
         </div>
-
+        <br/>
+        <div class="row">
+          <div class="col-sm-2">
+            <div id='controls'>
+              <button id='btnPlayPause' class='play' title='play' accesskey="P" onclick='playPauseVideo();'>
+                <img id='playpauseimg' src="{% static 'account/img/icon_round_play.png' %}" style="width:30px"></img>
+              </button>
+            </div>
+          </div>
+			    <!--progress id='progress-bar' min='0' max='100' value='0'>0% played
+            <span class="pop-over" data-toggle="tooltip" data-placement="bottom" title="tag"> </span>
+          </progress-->
+          <div class="col-sm-10">
+            <div class="barWrapper">
+              <div id='progress' class="progress">
+                <div id='progress-bar' class="progressBar" role="progressbar" style="width:100%; height:20px;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">
+                  <span id='pr-bar-tooltip' class="popOver" data-toggle="tooltip" data-html="true" data-placement="bottom" title="<a href='#' id='tag-tooltip' style='color:black' onclick='enable_tagging()'>tag</a>"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Jean's change ends here -->
       </div>
-      <div class="col-md-6">
-
-          <h2>Context:</h2><br>
-          <p>Departmental store training example: A departmental store employee attending a customer.</p>
+      <div id="label_pane" class="col-md-6">
+        <img id="figure_image" src="{% static 'account/img/customer_1.png' %}" style="height: 100px; display:block; margin: auto;">
+        <div id="labeler" style="display:block; margin:auto"></div>
+        <button id='Add_button' class='btn btn-primary' style="float:right" disabled>Add</button>
+        <script>
+          generate_circular_labeler('labeler')
+        </script>
       </div>
     </div>
   </div>
-    <button type="button" class="btn btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off"></button>
-  <hr/>
+  <form method='POST'>
+    {% csrf_token %}
+    <input type='text' name='result_json_string' style="display:none"></input>
+    <button class='btn btn-success' type='submit' style="float:right; margin-top:15px; margin-right:15px;" disabled>Submit</button>
+  </form>
 
 </div>
 <div class="modal" role="dialog">
@@ -72,6 +94,7 @@ window.onload=function(){
     </div>
   </div>
 </div>
+
 <script>
 
 //var pausetime=2;
@@ -91,7 +114,7 @@ video.addEventListener("timeupdate", function(){
   // // Set the canvas width and height to the values just calculated
   // canvas.width = w;
   // canvas.height = h;
-  endOffset = {% if full %}parseInt(localStorage.getItem('elapsedtime'))+5{% else %}{{start}}+5{% endif %};
+  endOffset = {% if full %}parseInt(localStorage.getItem('elapsedtime'))+30{% else %}{{start}}+30{% endif %};
   if(this.currentTime >= endOffset) {
     video.pause();
     $(".modal").modal('show');
@@ -120,10 +143,15 @@ $("#proceed").on('click',function() {
 })
 $("#replay").on("click",function() {
   var video = document.getElementById("myVideo");
-  video.currentTime = video.currentTime - 5;
+  video.currentTime = video.currentTime - 30;
   video.play();
 })
+
 </script>
+
+<!-- Jean added -->
+<script src="{% static 'account/js/interactive_progress_bar.js' %}"></script>
+
   <!--<script src="{%static 'account/js/faceDetection.min.js'%}"></script>
   <script type="text/javascript">
     setTimeout(function(){

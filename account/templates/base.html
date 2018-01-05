@@ -2,58 +2,31 @@
 <html>
   <head>
     <title>video tagging</title>
-    {% block head %}
-    {% endblock %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
     {% load staticfiles %}
     <link rel="stylesheet" href="{%static 'account/bootstrap-slider.css'%}" type="text/css">
     <link rel="stylesheet" href="{%static 'account/style.css'%}" type="text/css">
+    <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.js"></script>
+      <script src="https://d3js.org/d3.v2.min.js"></script>
+      {% block head %}
+      {% endblock %}
   </head>
   <body>
   <div >
-    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <span>
-            <a href="/home/" class="btn btn-outline-success btn-lg " role="button" >Home</a>
-            </span>
-          </li>
-        </ul>
-          <span>
-          <a href="/home/about/" class="btn btn-dark btn-lg " role="button" >About</a>
-          </span> -->
-          <span>
-            <button type="button" class="btn btn-outline-success btn-lg " id="btnPopover" title="Instructions" data-toggle="popover" data-placement="bottom" data-content="1.Read the text in the side panel to understand the context of the whole conversation.
-             2. Video will be played for five seconds and you will be directed to the questionnaire page.
-             3. Submit your response.">Help
-           </button>
-         </span>
-
-    </div>
-
-   </nav>
+    <nav class="navbar  navbar-dark bg-dark">
+        <button type="button" class="btn btn-outline-success btn-lg " id="help_button" style="float:right">Help</button>
+        <div style='color:#eeeeee'>See the video and label the emotion of the figure.</div>
+    </nav>
    </div>
    {% block body %}
    {% endblock %}
-   <div class="footer">
-   <div class="card text-white w-100 bg-dark">
-   <div class="card-body">
-     <h4 class="card-title" >Contact Information</h4>
-     <p class="card-text">for more information contact athakur36@gmail.com</p>
-   </div>
-  </div>
-  </div>
 
- <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.js" ></script>
-    <script src="{%static 'account/bootstrap-slider.js'%}"></script>
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
+  </div>
+  </div>
 
   </body>
 </html>
