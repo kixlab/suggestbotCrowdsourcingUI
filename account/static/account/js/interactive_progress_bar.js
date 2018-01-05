@@ -25,14 +25,14 @@ progressBar.addEventListener("click", seek);
 
 function seek(e) {
   if ($('#Add_button').prop("disabled")){
-  var elem = document.getElementById("progress-bar");
-  var percent = e.offsetX / this.offsetWidth;
-  vd_player.currentTime = percent * vd_player.duration;
+    var elem = document.getElementById("progress-bar");
+    var percent = e.offsetX / this.offsetWidth;
+    vd_player.currentTime = percent * vd_player.duration;
 
-  $('#pr-bar-tooltip').tooltip('show');
+    $('#pr-bar-tooltip').tooltip('show');
 
-  $('#progress-bar').attr('aria-valuenow', percent);
-  elem.style.width = percent + '%';
+    $('#progress-bar').attr('aria-valuenow', percent);
+    elem.style.width = percent + '%';
   }
 }
 
