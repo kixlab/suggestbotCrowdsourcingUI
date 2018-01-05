@@ -4,6 +4,7 @@
 vd_player       = document.getElementById('myVideo');
 btnPlayPause = document.getElementById('btnPlayPause');
 progressBar  = document.getElementById('progress');
+time_value_last =0;
 
 // Add a listener for the timeupdate event so we can update the progress bar
 vd_player.addEventListener('timeupdate', updateProgressBar, false);
@@ -25,14 +26,17 @@ progressBar.addEventListener("click", seek);
 
 function seek(e) {
   if ($('#Add_button').prop("disabled")){
-  var elem = document.getElementById("progress-bar");
-  var percent = e.offsetX / this.offsetWidth;
-  vd_player.currentTime = percent * vd_player.duration;
+    var elem = document.getElementById("progress-bar");
+    var percent = e.offsetX / this.offsetWidth;
+    if(percent * vd_player.duration < time_value_last){
+      vd_player.currentTime = percent * vd_player.duration;
+      $('#pr-bar-tooltip').tooltip('show');
+      $('#progress-bar').attr('aria-valuenow', percent);
+      elem.style.width = percent + '%';
+    }else{
+      alert("h")
+    }
 
-  $('#pr-bar-tooltip').tooltip('show');
-
-  $('#progress-bar').attr('aria-valuenow', percent);
-  elem.style.width = percent + '%';
   }
 }
 
@@ -56,7 +60,9 @@ function updateProgressBar() {
   // Work out how much of the media has played via the duration and currentTime parameters
   var elem = document.getElementById("progress-bar");
   var percentage = Math.floor((100 / vd_player.duration) * vd_player.currentTime);
-
+  if(time_value_last < vd_player.currentTime){
+    time_value_last = vd_player.currentTime
+  }
   $('#pr-bar-tooltip').tooltip('show');
   // Update the progress bar's value
   $('#progress-bar').attr('aria-valuenow', percentage);
@@ -71,11 +77,14 @@ function changeButtonType(btn, value) {
 }
 
 function enable_tagging() {
+  $("#interactive_progress_bar").css("opacity", "0.3");
+  $(".tooltip").css("opacity", "0.3");
   var elem1 = document.getElementById("label_pane");
   elem1.setAttribute("style","pointer-events: auto;");
 
   $('#Add_button').prop("disabled", false);
   $("#labeler").css("opacity", "1");
+
 
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
@@ -89,6 +98,8 @@ $(document).ready(function(){
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
+    $("#interactive_progress_bar").css("opacity", "1");
+    $(".tooltip").css("opacity", "1")
     var string_time = parseInt(vd_player.currentTime).toString()
     add_data_to_data_structure(string_time, 'labeler')
     $('#Add_button').prop("disabled", true);
