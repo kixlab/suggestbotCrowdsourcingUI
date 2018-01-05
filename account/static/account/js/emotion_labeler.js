@@ -5,7 +5,7 @@ You can put a circle by adding div in html with generate_circular_labeler functi
 like below
 <div id="id_for_div"></div>
 <script>
-generate_circular_labeler("id_for_div")
+//generate_circular_labeler("id_for_div")
 </script>
 You can also add multiple labelers if you want to
 */

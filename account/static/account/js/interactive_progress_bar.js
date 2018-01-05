@@ -103,6 +103,11 @@ function enable_tagging() {
   vd_player.pause();
 }
 
+function revise_tagging(string_time){
+  enable_tagging();
+  retrieve_data_from_data_structure(string_time);
+}
+
 $(document).ready(function(){
   submit_stringify_value()
   var elem = document.getElementById("label_pane");
@@ -136,10 +141,6 @@ $(document).ready(function(){
   });
 
 });
-
-function revise_tagging(string_time){
-  retrieve_data_from_data_structure(string_time);
-}
 
 function create_red_bar_div(string_time){
 
