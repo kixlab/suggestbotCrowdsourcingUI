@@ -89,7 +89,7 @@ def updateAssignTable(video_location,duration):
 
 # Create your views here.
 def home(request):
-    return(render(request,'account/base_v_2.html'))
+    return(render(request,'account/home.html'))
 
 def about(request):
     return(render(request,'account/about.html'))
@@ -121,6 +121,33 @@ def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
         if form.is_valid():
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            print("AAA")
+            data1=models.Data()
+            data1.fig_id=1
+            data1.val1 = int(form.cleaned_data['val1_1'])
+            data1.val2 = int(form.cleaned_data['val1_2'])
+            data1.q1 = form.cleaned_data['q1_1']
+            data1.save()
+            data2=models.Data()
+            data2.fig_id=2
+            data2.val1 = int(form.cleaned_data['val2_1'])
+            data2.val2 = int(form.cleaned_data['val2_2'])
+            data2.q1 = form.cleaned_data['q2_1']
+            data2.save()
+            data2.save()
+            #elapsedtime
+            elapsedtime = float(form.cleaned_data['elapsedtime'])
+            print(elapsedtime)
+        # if(token== True):
+        #     return(HttpResponseRedirect('/home/task/'))
+        # else:
+        #     return(HttpResponseRedirect('/home/feedback/'))
+        #
+=======
+>>>>>>> Stashed changes
             emotion=EmotionHit.objects.create(mturk_id = form.cleaned_data['mturk_id'],
                                             positivity1=float(form.cleaned_data['positivity1']),
                                             excitement1 = float(form.cleaned_data['excitement1']),
@@ -146,6 +173,10 @@ def get(request):
             return(HttpResponseRedirect('/home/task?full=True'))
         else:
             return(HttpResponseRedirect('/home/feedback/'))
+<<<<<<< Updated upstream
+=======
+>>>>>>> b70b989646053f54b1563f93c45757cdbe26cae7
+>>>>>>> Stashed changes
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
