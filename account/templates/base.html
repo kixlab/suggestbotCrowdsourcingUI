@@ -18,8 +18,31 @@
   <body>
   <div >
     <nav class="navbar  navbar-dark bg-dark">
-        <button type="button" class="btn btn-outline-success btn-lg " id="help_button" style="float:right">Help</button>
-        <div style='color:#eeeeee'>See the video and label the emotion of the figure.</div>
+        <button type="button" class="btn btn-outline-success btn-lg " id="help_button" style="float:right" data-toggle="modal" data-target="#helpDialouge">How to Tag</button>
+        <div id="helpDialouge" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="width:800px; margin: 0 auto;">
+              <div class="modal-header">
+                <h4 class="modal-title">Emotion Video Labeling</h4>
+              </div>
+              <div class="modal-body">
+                <p> You will watch video in which different actors express several emotions during a short speech-like utterance. Your task is to select the emotion which best describes the emotion the actor wanted to express in the respective video. While it is often quite clear which emotion is intended, in some cases the actors use fairly subtle expressions and it is more difficult to judge which emotion is shown. If this is the case, just trust your intuition and guess which emotion might be expressed. Please put on your earphones to hear the sound.
+                </p>
+                <video src="{% static 'account/media/videos/tutorial_vid.mp4' %}" type="video/mp4" autoplay controls style="height:500px; width:700px">
+                  <source src="movie.ogg" type="video/ogg">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div style='color:#eeeeee'>Emotion Tagging Task</div>
     </nav>
    </div>
    {% block body %}
