@@ -104,8 +104,10 @@ function enable_tagging() {
 }
 
 function revise_tagging(string_time){
+  revise_tag = string_time;
   enable_tagging();
-  retrieve_data_from_data_structure(string_time);
+  retrieve_data_from_data_structure(string_time, 'labeler');
+
 }
 
 $(document).ready(function(){
@@ -119,16 +121,22 @@ $(document).ready(function(){
     if (select_dic['labeler']) {
       $("#interactive_progress_bar").css("opacity", "1");
       $(".tooltip").css("opacity", "1")
-      var string_time = parseInt(vd_player.currentTime).toString()
+
+      if (revise_tag){
+        var string_time = revise_tag;
+      }else{
+        var string_time = parseInt(vd_player.currentTime).toString();
+        // add red bar div in progress bar
+        create_red_bar_div(string_time);
+      }
+      revise_tag = 0;
+
       add_data_to_data_structure(string_time, 'labeler')
       $('#Add_button').prop("disabled", true);
       $("#labeler").css("opacity", "0.3");
       var elem = document.getElementById("label_pane");
       elem.setAttribute("style","pointer-events: none;");
       delete_value_circle('labeler')
-
-      // add red bar div in progress bar
-      create_red_bar_div(string_time);
 
       // Change the button to a pause button
       changeButtonType(btnPlayPause, 'pause');
