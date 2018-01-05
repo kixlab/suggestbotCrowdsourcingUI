@@ -86,7 +86,8 @@ $(document).ready(function(){
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
-
+    var string_time = parseInt(vd_player.currentTime).toString()
+    add_data_to_data_structure(string_time, 'labeler')
     $('#Add_button').prop("disabled", true);
     $("#labeler").css("opacity", "0.3");
     var elem = document.getElementById("label_pane");
