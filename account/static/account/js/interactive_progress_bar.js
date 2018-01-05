@@ -73,7 +73,7 @@ function enable_tagging() {
   elem1.setAttribute("style","pointer-events: auto;");
 
   $('#Add_button').prop("disabled", false);
-
+  $("#labeler").css("opacity", "1");
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
   document.getElementById('playpauseimg').src="../../static/account/img/icon_round_play.png";
@@ -87,7 +87,7 @@ $(document).ready(function(){
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
     $('#Add_button').prop("disabled", true);
-
+    $("#labeler").css("opacity", "0.3");
     var elem = document.getElementById("label_pane");
     elem.setAttribute("style","pointer-events: none;");
 
