@@ -5,6 +5,7 @@ vd_player       = document.getElementById('myVideo');
 btnPlayPause = document.getElementById('btnPlayPause');
 progressBar  = document.getElementById('progress');
 time_value_last =0;
+revise_tag = 0;
 
 // Add a listener for the timeupdate event so we can update the progress bar
 vd_player.addEventListener('timeupdate', updateProgressBar, false);
@@ -27,16 +28,19 @@ progressBar.addEventListener("click", seek);
 function seek(e) {
   if ($('#Add_button').prop("disabled")){
     var elem = document.getElementById("progress-bar");
-    var percent = e.offsetX / this.offsetWidth;
+    var percent;
+    if(e.path[0].id=='progress-bar'){
+      percent = e.offsetX / this.offsetWidth;
+    }else{
+      percent = (elem.offsetWidth + e.offsetX) / this.offsetWidth
+    }
+
     if(percent * vd_player.duration < time_value_last){
       vd_player.currentTime = percent * vd_player.duration;
-      $('#pr-bar-tooltip').tooltip('show');
-      $('#progress-bar').attr('aria-valuenow', percent);
-      elem.style.width = percent + '%';
+      updateProgressBar();
     }else{
       alert("h")
     }
-
   }
 }
 
@@ -58,14 +62,21 @@ function playPauseVideo() {
 // Update the progress bar
 function updateProgressBar() {
   // Work out how much of the media has played via the duration and currentTime parameters
+  if(vd_player.duration <= vd_player.currentTime){
+    $("#submit").prop("disabled", false)
+  }
+
   var elem = document.getElementById("progress-bar");
   var percentage = Math.floor((100 / vd_player.duration) * vd_player.currentTime);
   if(time_value_last < vd_player.currentTime){
     time_value_last = vd_player.currentTime
   }
-  $('#pr-bar-tooltip').tooltip('show');
+  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
   // Update the progress bar's value
   $('#progress-bar').attr('aria-valuenow', percentage);
+  var sub_bar_length = Math.floor((100/vd_player.duration) * (time_value_last))-percentage;
+  $('#progress-bar-sub').attr('aria-valuenow', sub_bar_length).css("width", sub_bar_length.toString()+"%")
+
   elem.style.width = percentage + '%';
 }
 
@@ -93,38 +104,69 @@ function enable_tagging() {
 }
 
 $(document).ready(function(){
+  submit_stringify_value()
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
-    $("#interactive_progress_bar").css("opacity", "1");
-    $(".tooltip").css("opacity", "1")
-    var string_time = parseInt(vd_player.currentTime).toString()
-    add_data_to_data_structure(string_time, 'labeler')
-    $('#Add_button').prop("disabled", true);
-    $("#labeler").css("opacity", "0.3");
-    var elem = document.getElementById("label_pane");
-    elem.setAttribute("style","pointer-events: none;");
-    delete_value_circle('labeler')
-    // Change the button to a pause button
-    changeButtonType(btnPlayPause, 'pause');
-    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
-    vd_player.play();
+
+    if (select_dic['labeler']) {
+      $("#interactive_progress_bar").css("opacity", "1");
+      $(".tooltip").css("opacity", "1")
+      var string_time = parseInt(vd_player.currentTime).toString()
+      add_data_to_data_structure(string_time, 'labeler')
+      $('#Add_button').prop("disabled", true);
+      $("#labeler").css("opacity", "0.3");
+      var elem = document.getElementById("label_pane");
+      elem.setAttribute("style","pointer-events: none;");
+      delete_value_circle('labeler')
+
+      // add red bar div in progress bar
+      create_red_bar_div(string_time);
+
+      // Change the button to a pause button
+      changeButtonType(btnPlayPause, 'pause');
+      document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+      vd_player.play();
+    }
+    else{
+      alert("Please label emotion of the character.");
+    }
   });
 
 });
 
+function revise_tagging(string_time){
+  retrieve_data_from_data_structure(string_time);
+}
+
 function create_red_bar_div(string_time){
+
+  var barwidth = document.getElementById('progress').offsetWidth;
+
+  var barlocation = barwidth * vd_player.currentTime / vd_player.duration + 8;
 
   var div = document.createElement("div");
   div.style.width = "5px";
   div.style.height = "20px";
   div.style.position = "absolute";
   div.style.background = "red";
+  div.style.left = barlocation + 'px';
+  //div.style.pointerEvents = "none";
   div.id = string_time;
+  div.title = "<a href='#' id='tag-tooltip' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
+  //div.title = 'H';
 
   document.getElementById("progress").appendChild(div);
 
-  $("[title]").tooltip({'placement': "bottom"});
+  div.setAttribute("data-placement", "top");       // Create a "class" attribute
+
+  $("#"+string_time).tooltip({
+    placement: 'top',
+    trigger: 'manual',
+    html: true,
+    template: '<div class="tooltip red-tooltip"><div class="tooltip-inner"></div><div class="tooltip-arrow"></div></div>'
+  }).tooltip('show');
+
 }
