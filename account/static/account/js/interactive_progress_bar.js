@@ -36,9 +36,7 @@ function seek(e) {
 
     if(percent * vd_player.duration < time_value_last){
       vd_player.currentTime = percent * vd_player.duration;
-      $('#pr-bar-tooltip').tooltip('show');
-      $('#progress-bar').attr('aria-valuenow', percent).css("width", percent+"%");
-//      elem.style.width = percent + '%';
+      updateProgressBar();
     }else{
       alert("h")
     }
