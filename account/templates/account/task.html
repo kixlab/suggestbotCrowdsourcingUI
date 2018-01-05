@@ -75,10 +75,10 @@ window.onload=function(){
   </div>
   <form method='POST'>
     {% csrf_token %}
-    <input type='text' name='result_json_string' style="display:none"></input>
+    <input id="result_json_string" type='text' name='result_json_string' style="display:none"></input>
     <input type='text' name='Turker_Id' style="display:none"></input>
     <input type='text' name='Assignment_Id' style="display:none"></input>
-    <button class='btn btn-success' type='submit' style="float:right; margin-top:15px; margin-right:15px;" disabled>Submit</button>
+    <button id='submit' class='btn btn-success' type='submit' style="float:right; margin-top:15px; margin-right:15px;" disabled>Submit</button>
   </form>
 
 </div>

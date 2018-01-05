@@ -99,6 +99,7 @@ function enable_tagging() {
 }
 
 $(document).ready(function(){
+  submit_stringify_value()
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
 

@@ -10,3 +10,11 @@ add_data_to_data_structure =function(currenttime_string, labeler){
 delete_data_from_data_structure = function(currenttime_string){
   delete label_data_structure[currenttime_string]
 }
+
+submit_stringify_value = function(){
+  $("#submit").on("click", function(){
+    var stringified = JSON.stringify(label_data_structure)
+    $("#result_json_string").val(stringified)
+  })
+
+}
