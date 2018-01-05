@@ -42,8 +42,6 @@ function seek(e) {
     }else{
       alert("h")
     }
-
->>>>>>> eda7579b5a021cba5bb59e6c812ef7b613a60402
   }
 }
 
