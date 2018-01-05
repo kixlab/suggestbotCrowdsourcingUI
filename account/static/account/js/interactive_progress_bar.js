@@ -27,12 +27,18 @@ progressBar.addEventListener("click", seek);
 function seek(e) {
   if ($('#Add_button').prop("disabled")){
     var elem = document.getElementById("progress-bar");
-    var percent = e.offsetX / this.offsetWidth;
+    var percent;
+    if(e.path[0].id=='progress-bar'){
+      percent = e.offsetX / this.offsetWidth;
+    }else{
+      percent = (elem.offsetWidth + e.offsetX) / this.offsetWidth
+    }
+
     if(percent * vd_player.duration < time_value_last){
       vd_player.currentTime = percent * vd_player.duration;
       $('#pr-bar-tooltip').tooltip('show');
-      $('#progress-bar').attr('aria-valuenow', percent);
-      elem.style.width = percent + '%';
+      $('#progress-bar').attr('aria-valuenow', percent).css("width", percent+"%");
+//      elem.style.width = percent + '%';
     }else{
       alert("h")
     }
@@ -66,6 +72,9 @@ function updateProgressBar() {
   $('#pr-bar-tooltip').tooltip('show');
   // Update the progress bar's value
   $('#progress-bar').attr('aria-valuenow', percentage);
+  var sub_bar_length = Math.floor((100/vd_player.duration) * (time_value_last))-percentage;
+  $('#progress-bar-sub').attr('aria-valuenow', sub_bar_length).css("width", sub_bar_length.toString()+"%")
+
   elem.style.width = percentage + '%';
 }
 
