@@ -101,6 +101,10 @@ $(document).ready(function(){
     var elem = document.getElementById("label_pane");
     elem.setAttribute("style","pointer-events: none;");
     delete_value_circle('labeler')
+
+    // add red bar div in progress bar
+    create_red_bar_div(string_time);
+
     // Change the button to a pause button
     changeButtonType(btnPlayPause, 'pause');
     document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
@@ -111,14 +115,20 @@ $(document).ready(function(){
 
 function create_red_bar_div(string_time){
 
+  var barwidth = document.getElementById('progress').offsetWidth;
+
+  var barlocation = barwidth * vd_player.currentTime / vd_player.duration + 8;
+
   var div = document.createElement("div");
   div.style.width = "5px";
   div.style.height = "20px";
   div.style.position = "absolute";
   div.style.background = "red";
+  div.style.left = barlocation + 'px';
   div.id = string_time;
+  div.class = "toptooltip";
 
   document.getElementById("progress").appendChild(div);
 
-  $("[title]").tooltip({'placement': "bottom"});
+  $(string_time).tooltip({'placement': "top"});
 }
