@@ -121,9 +121,7 @@ def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
         if form.is_valid():
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
+
             print("AAA")
             data1=models.Data()
             data1.fig_id=1
@@ -146,8 +144,6 @@ def get(request):
         # else:
         #     return(HttpResponseRedirect('/home/feedback/'))
         #
-=======
->>>>>>> Stashed changes
             emotion=EmotionHit.objects.create(mturk_id = form.cleaned_data['mturk_id'],
                                             positivity1=float(form.cleaned_data['positivity1']),
                                             excitement1 = float(form.cleaned_data['excitement1']),
@@ -173,10 +169,7 @@ def get(request):
             return(HttpResponseRedirect('/home/task?full=True'))
         else:
             return(HttpResponseRedirect('/home/feedback/'))
-<<<<<<< Updated upstream
-=======
->>>>>>> b70b989646053f54b1563f93c45757cdbe26cae7
->>>>>>> Stashed changes
+
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
