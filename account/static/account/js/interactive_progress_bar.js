@@ -61,6 +61,10 @@ function playPauseVideo() {
 // Update the progress bar
 function updateProgressBar() {
   // Work out how much of the media has played via the duration and currentTime parameters
+  if(vd_player.duration <= vd_player.currentTime){
+    $("#submit").prop("disabled", false)
+  }
+
   var elem = document.getElementById("progress-bar");
   var percentage = Math.floor((100 / vd_player.duration) * vd_player.currentTime);
   if(time_value_last < vd_player.currentTime){
@@ -99,6 +103,7 @@ function enable_tagging() {
 }
 
 $(document).ready(function(){
+  submit_stringify_value()
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
 
