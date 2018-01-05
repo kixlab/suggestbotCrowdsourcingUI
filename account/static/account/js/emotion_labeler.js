@@ -51,7 +51,7 @@ make_circular_labeler=function(image, color_circle, div_id){
     return "excitement"+fig_input_num.toString();
   }).css("display", "none")
   fig_input_num++;
-<<<<<<< HEAD:account/static/account/js/color_circle.js
+/*<<<<<< HEAD:account/static/account/js/color_circle.js
   circle_svg_dic[div_id].append("rect")
   .attr("x", color_circle_radius*0.1)
   .attr("y", color_circle_radius*0.1)
@@ -82,7 +82,7 @@ make_circular_labeler=function(image, color_circle, div_id){
                         })
                         .attr("x", 1.5*color_circle_radius+color_circle_radius/100)
 
-=======
+=======*/
 
   circle_svg_dic[div_id].append('path')
                         .attr('d', lineFunction([{'x':color_circle_radius*1.5, 'y':color_circle_radius*0.5},{'x':color_circle_radius*1.5, 'y':color_circle_radius*2.5}]))
@@ -106,7 +106,7 @@ make_circular_labeler=function(image, color_circle, div_id){
                         })
                         .attr("x", 1.5*color_circle_radius+color_circle_radius/100)
 
->>>>>>> laber_label_drawer:account/static/account/js/emotion_labeler.js
+//>>>>>>> laber_label_drawer:account/static/account/js/emotion_labeler.js
 
   circle_svg_dic[div_id].append("rect")
   .attr("x", color_circle_radius*0.5)
@@ -235,8 +235,6 @@ draw_color_circle =function(image, color_circle){
 
    make_circular_labeler(cc_img, color_circle, div_id);
  }
-<<<<<<< HEAD:account/static/account/js/color_circle.js
-=======
 // function to input circle to the interface
 input_value_to_labeler = function(div_id, val, aro){
   var cx = (val+1.5)*color_circle_radius
@@ -268,7 +266,6 @@ delete_value_circle = function(div_id){
     $("#"+div_id+"_exc").val(null)
   }
 }
->>>>>>> laber_label_drawer:account/static/account/js/emotion_labeler.js
 
  var lineFunction = d3.svg.line()
    .x(function(d) { return d.x; })
