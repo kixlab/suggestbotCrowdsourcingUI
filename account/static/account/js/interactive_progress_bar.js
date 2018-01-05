@@ -164,7 +164,7 @@ function create_red_bar_div(string_time){
   div.style.left = barlocation + 'px';
   //div.style.pointerEvents = "none";
   div.id = string_time;
-  div.title = "<a href='#' id='tag-tooltip' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
+  div.title = "<a href='#label_pane' id='tag-tooltip' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
   //div.title = 'H';
 
   document.getElementById("progress").appendChild(div);
