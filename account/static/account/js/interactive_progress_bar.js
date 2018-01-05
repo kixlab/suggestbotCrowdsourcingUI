@@ -5,6 +5,7 @@ vd_player       = document.getElementById('myVideo');
 btnPlayPause = document.getElementById('btnPlayPause');
 progressBar  = document.getElementById('progress');
 time_value_last =0;
+revise_tag = 0;
 
 // Add a listener for the timeupdate event so we can update the progress bar
 vd_player.addEventListener('timeupdate', updateProgressBar, false);
@@ -70,7 +71,7 @@ function updateProgressBar() {
   if(time_value_last < vd_player.currentTime){
     time_value_last = vd_player.currentTime
   }
-  $('#pr-bar-tooltip').tooltip('show');
+  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
   // Update the progress bar's value
   $('#progress-bar').attr('aria-valuenow', percentage);
   var sub_bar_length = Math.floor((100/vd_player.duration) * (time_value_last))-percentage;
@@ -136,6 +137,10 @@ $(document).ready(function(){
 
 });
 
+function revise_tagging(string_time){
+  retrieve_data_from_data_structure(string_time);
+}
+
 function create_red_bar_div(string_time){
 
   var barwidth = document.getElementById('progress').offsetWidth;
@@ -148,13 +153,20 @@ function create_red_bar_div(string_time){
   div.style.position = "absolute";
   div.style.background = "red";
   div.style.left = barlocation + 'px';
-  div.style.pointerEvents = "none";
+  //div.style.pointerEvents = "none";
   div.id = string_time;
-  div.title = ".";
-  div.class = "toptooltip";
+  div.title = "<a href='#' id='tag-tooltip' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
+  //div.title = 'H';
 
   document.getElementById("progress").appendChild(div);
 
-  $("#"+string_time).tooltip({'placement': "top"});
-  $("[title]").tooltip({'placement': "top"});
+  div.setAttribute("data-placement", "top");       // Create a "class" attribute
+
+  $("#"+string_time).tooltip({
+    placement: 'top',
+    trigger: 'manual',
+    html: true,
+    template: '<div class="tooltip red-tooltip"><div class="tooltip-inner"></div><div class="tooltip-arrow"></div></div>'
+  }).tooltip('show');
+
 }

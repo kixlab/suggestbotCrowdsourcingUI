@@ -106,16 +106,13 @@ hr
   overflow:visible;
   height: 20px;
 }
+
 .progressBar{
   position: relative;
   background-color: gray;
 }
 
 .tooltip{
-  position: relative;
-  float: right;
-}
-.toptooltip{
   position: relative;
   float: right;
 }
@@ -127,12 +124,10 @@ hr
   font-weight:bold;
   font-size:13px;
 }
-.toptooltip > .tooltip-inner {
-  background-color: #eebf3f;
-  padding:5px 15px;
-  color:rgb(23,44,66);
-  font-weight:bold;
-  font-size:13px;
+.red-tooltip > .tooltip-inner {
+  background-color: red;
+  padding: 0px 0px;
+  font-size: 8px;
 }
 
 .popOver + .tooltip > .tooltip-arrow {
@@ -140,14 +135,18 @@ hr
   border-right: 5px solid transparent;
   border-top: 5px solid #eebf3f;
 }
+.red-tooltip > .tooltip-arrow {
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 10px solid red;
+}
+.red-tooltip{
+  padding-bottom: 0px !important;
+}
 
 .popOver {
   position: absolute;
   top: 100%;
   left: 100%;
   width: 1px;
-}
-
-.toptooltip {
-
 }
