@@ -28,14 +28,6 @@ function seek(e) {
   if ($('#Add_button').prop("disabled")){
     var elem = document.getElementById("progress-bar");
     var percent = e.offsetX / this.offsetWidth;
-<<<<<<< HEAD
-    vd_player.currentTime = percent * vd_player.duration;
-
-    $('#pr-bar-tooltip').tooltip('show');
-
-    $('#progress-bar').attr('aria-valuenow', percent);
-    elem.style.width = percent + '%';
-=======
     if(percent * vd_player.duration < time_value_last){
       vd_player.currentTime = percent * vd_player.duration;
       $('#pr-bar-tooltip').tooltip('show');
@@ -45,7 +37,6 @@ function seek(e) {
       alert("h")
     }
 
->>>>>>> eda7579b5a021cba5bb59e6c812ef7b613a60402
   }
 }
 
@@ -140,6 +131,7 @@ function create_red_bar_div(string_time){
   div.style.position = "absolute";
   div.style.background = "red";
   div.style.left = barlocation + 'px';
+  div.style.pointerEvents = "none";
   div.id = string_time;
   div.class = "toptooltip";
 
