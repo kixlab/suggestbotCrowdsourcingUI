@@ -104,23 +104,29 @@ $(document).ready(function(){
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
-    $("#interactive_progress_bar").css("opacity", "1");
-    $(".tooltip").css("opacity", "1")
-    var string_time = parseInt(vd_player.currentTime).toString()
-    add_data_to_data_structure(string_time, 'labeler')
-    $('#Add_button').prop("disabled", true);
-    $("#labeler").css("opacity", "0.3");
-    var elem = document.getElementById("label_pane");
-    elem.setAttribute("style","pointer-events: none;");
-    delete_value_circle('labeler')
 
-    // add red bar div in progress bar
-    create_red_bar_div(string_time);
+    if (select_dic['labeler']) {
+      $("#interactive_progress_bar").css("opacity", "1");
+      $(".tooltip").css("opacity", "1")
+      var string_time = parseInt(vd_player.currentTime).toString()
+      add_data_to_data_structure(string_time, 'labeler')
+      $('#Add_button').prop("disabled", true);
+      $("#labeler").css("opacity", "0.3");
+      var elem = document.getElementById("label_pane");
+      elem.setAttribute("style","pointer-events: none;");
+      delete_value_circle('labeler')
 
-    // Change the button to a pause button
-    changeButtonType(btnPlayPause, 'pause');
-    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
-    vd_player.play();
+      // add red bar div in progress bar
+      create_red_bar_div(string_time);
+
+      // Change the button to a pause button
+      changeButtonType(btnPlayPause, 'pause');
+      document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+      vd_player.play();
+    }
+    else{
+      alert("Please label emotion of the character.");
+    }
   });
 
 });
@@ -139,9 +145,11 @@ function create_red_bar_div(string_time){
   div.style.left = barlocation + 'px';
   div.style.pointerEvents = "none";
   div.id = string_time;
+  div.title = ".";
   div.class = "toptooltip";
 
   document.getElementById("progress").appendChild(div);
 
-  $(string_time).tooltip({'placement': "top"});
+  $("#"+string_time).tooltip({'placement': "top"});
+  $("[title]").tooltip({'placement': "top"});
 }
