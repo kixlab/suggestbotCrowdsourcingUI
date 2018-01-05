@@ -5,7 +5,7 @@ You can put a circle by adding div in html with generate_circular_labeler functi
 like below
 <div id="id_for_div"></div>
 <script>
-//generate_circular_labeler("id_for_div")
+generate_circular_labeler("id_for_div")
 </script>
 You can also add multiple labelers if you want to
 */
@@ -43,46 +43,14 @@ var fig_input_num=1
 make_circular_labeler=function(image, color_circle, div_id){
   //inputs to record the value
   $("<input></input>").appendTo("#"+div_id)
-  .attr("id", div_id+"_pos").attr("type", "number").attr("name",function(){
+  .attr("id", div_id+"_pos").attr("type", "text").attr("name",function(){
     return "positivity"+fig_input_num.toString();
   }).css("display", "none")
   $("<input></input>").appendTo("#"+div_id)
-  .attr("id", div_id+"_exc").attr("type", "number").attr("name",function(){
+  .attr("id", div_id+"_exc").attr("type", "text").attr("name",function(){
     return "excitement"+fig_input_num.toString();
   }).css("display", "none")
   fig_input_num++;
-/*<<<<<< HEAD:account/static/account/js/color_circle.js
-  circle_svg_dic[div_id].append("rect")
-  .attr("x", color_circle_radius*0.1)
-  .attr("y", color_circle_radius*0.1)
-  .attr("width", color_circle_radius*2.8)
-  .attr("height", color_circle_radius*2.8)
-  .style("fill", "transparent")
-  .style("stroke-width", main_circle_stroke)
-  .style("stroke", "#333333")
-  circle_svg_dic[div_id].append('path')
-                        .attr('d', lineFunction([{'x':color_circle_radius*1.5, 'y':color_circle_radius*0.5},{'x':color_circle_radius*1.5, 'y':color_circle_radius*2.5}]))
-                        .attr("stroke", "black");
-  circle_svg_dic[div_id].append('path')
-                        .attr('d', lineFunction([{'x':color_circle_radius*0.5, 'y':color_circle_radius*1.5},{'x':color_circle_radius*2.5, 'y':color_circle_radius*1.5}]))
-                        .attr("stroke", "black")
-  circle_svg_dic[div_id].append('text')
-                        .attr("font-size", color_circle_radius/10)
-                        .text("valence")
-                        .attr("y", 1.5*color_circle_radius-color_circle_radius/100)
-                        .attr("x", function(){
-                          console.log(d3.select(this).node().getBoundingClientRect().width)
-                          return 2.5*color_circle_radius-main_circle_stroke-d3.select(this).node().getBoundingClientRect().width
-                        });
-  circle_svg_dic[div_id].append('text')
-                        .text("arousal")
-                        .attr("font-size", color_circle_radius/10)
-                        .attr("y", function(){
-                          return 0.5*color_circle_radius+d3.select(this).node().getBoundingClientRect().height
-                        })
-                        .attr("x", 1.5*color_circle_radius+color_circle_radius/100)
-
-=======*/
 
   circle_svg_dic[div_id].append('path')
                         .attr('d', lineFunction([{'x':color_circle_radius*1.5, 'y':color_circle_radius*0.5},{'x':color_circle_radius*1.5, 'y':color_circle_radius*2.5}]))
@@ -106,7 +74,6 @@ make_circular_labeler=function(image, color_circle, div_id){
                         })
                         .attr("x", 1.5*color_circle_radius+color_circle_radius/100)
 
-//>>>>>>> laber_label_drawer:account/static/account/js/emotion_labeler.js
 
   circle_svg_dic[div_id].append("rect")
   .attr("x", color_circle_radius*0.5)
@@ -120,7 +87,6 @@ make_circular_labeler=function(image, color_circle, div_id){
     //change value of input
     var pos_val = (parseFloat(d3.mouse(this)[0])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
     var exc_val = -(parseFloat(d3.mouse(this)[1])-color_circle_radius*1.5)/parseFloat(color_circle_radius)
-    console.log("#"+div_id+"_pos")
     $("#"+div_id+"_pos").val(pos_val)
     $("#"+div_id+"_exc").val(exc_val)
     if(select_dic[div_id]==null){
@@ -239,8 +205,6 @@ draw_color_circle =function(image, color_circle){
 input_value_to_labeler = function(div_id, val, aro){
   var cx = (val+1.5)*color_circle_radius
   var cy = (-aro+1.5)*color_circle_radius
-  $("#"+div_id+"_pos").val(val)
-  $("#"+div_id+"_exc").val(aro)
   if(select_dic[div_id]==null){
     select_dic[div_id] = circle_svg_dic[div_id].append("circle")
     .attr("cx",cx)
@@ -259,12 +223,8 @@ input_value_to_labeler = function(div_id, val, aro){
 }
 // function to delete circle from the interface
 delete_value_circle = function(div_id){
-  if(select_dic[div_id]){
-    select_dic[div_id].remove()
-    select_dic[div_id] = null;
-    $("#"+div_id+"_pos").val(null)
-    $("#"+div_id+"_exc").val(null)
-  }
+  select_dic[div_id].remove()
+  select_dic[div_id] = null;
 }
 
  var lineFunction = d3.svg.line()
