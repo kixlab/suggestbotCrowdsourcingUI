@@ -30,7 +30,7 @@ window.onload=function(){
     <div class="panel-body"><br>
       <h4>INSTRUCTIONS:</h4><hr>
       <font size="2"><p>1. Please watch the video and pay attention to the emotions of the <em>person presented in the <b>screenshot</em></b> below:</p>
-      <img id="figure_image" src="{% static 'account/img/video1_screenshot.jpg' %}" style="height: 110px; display:block; margin: auto;">
+      <img id="figure_image" src="{% static 'account/img/customer_1.png' %}" style="height: 110px; display:block; margin: auto;">
       <p>2. Anytime you see an <b><em>emotional change</em></b> in the person, click on the <img src="{% static 'account/img/tag_button.png' %}" style="height:3%"> button attached below the progress bar and add the emotion by clicking your estimation on the square &nbsp;&nbsp;&nbsp;plane. Save the emotion for that moment using <b>add</b> button. For help click <b>"how to tag?"</b> button on the top left.</p>
       <p>3. Press the <b><em>submit</em></b> button after tagging the whole video.</p></font>
     <hr><br></div>
@@ -44,7 +44,7 @@ window.onload=function(){
           <!-- Jean's change starts here -->
           <video class="embed-responsive-item" id="myVideo">
               {% load staticfiles %}
-              <source src="{% static 'account/media/videos/video1.mp4' %}" type="video/mp4">
+              <source src="{% static 'account/media/grumpy_customer.mp4' %}" type="video/mp4">
               <source src="movie.ogg" type="video/ogg">
               Your browser does not support the video tag.
           </video>

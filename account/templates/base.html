@@ -28,9 +28,15 @@
                 <h4 class="modal-title">Emotion Video Labeling</h4>
               </div>
               <div class="modal-body">
-                <p> You will watch video in which different actors express several emotions during a short speech-like utterance. Your task is to select the emotion which best describes the emotion the actor wanted to express in the respective video. While it is often quite clear which emotion is intended, in some cases the actors use fairly subtle expressions and it is more difficult to judge which emotion is shown. If this is the case, just trust your intuition and guess which emotion might be expressed. Please put on your earphones to hear the sound.
-                </p>
-                <video src="{% static 'account/media/videos/tutorial_vid.mp4' %}" type="video/mp4" autoplay controls style="height:500px; width:700px">
+                <h4>Instructions</h4>
+                <p>1. You have to tag the emotions by estimating valence and arousal values.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<b>Arousal:</b> potential bodily activity/inactivity of the person <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Some Examples: <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Excited: high valence, high arousal <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;sad: Low valence, low arousal <br>
+                2. Intensity of the emotion increases as we move towards the center.</p><br>
+                <video src="{% static 'account/media/videos/tutorial_tag.mp4' %}" type="video/mp4" autoplay controls style="height:500px; width:700px">
                   <source src="movie.ogg" type="video/ogg">
                   Your browser does not support the video tag.
                 </video>
