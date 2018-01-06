@@ -10,7 +10,7 @@ generate_circular_labeler("id_for_div")
 You can also add multiple labelers if you want to
 */
 //these are parameters for the labeler
-var color_circle_radius = 120;
+var color_circle_radius = 100;
 var circular_emotions = [
   'POSITIVE',
   'happy',
@@ -33,7 +33,7 @@ var circular_emotions = [
   'serene',
   'contented'
 ];
-var main_circle_stroke = color_circle_radius/20;
+var main_circle_stroke = color_circle_radius/15;
 var circle_svg_dic = {}
 var select_dic = {}
 
@@ -129,7 +129,7 @@ make_circular_labeler=function(image, color_circle, div_id){
     //svar xpos = 1.2*color_circle_radius * Math.cos(i * Math.PI/10)+color_circle_radius*1.5
     //var ypos = -1.2*color_circle_radius * Math.sin(i * Math.PI/10)+color_circle_radius*1.5
     var t = circle_svg_dic[div_id].append("text")
-    .attr("font-size", color_circle_radius/15)
+    .attr("font-size", color_circle_radius/14)
     .attr("y", ypos)
     .text(circular_emotions[i])
     .attr("x", function(){

@@ -39,7 +39,7 @@ function seek(e) {
       vd_player.currentTime = percent * vd_player.duration;
       updateProgressBar();
     }else{
-      alert("h")
+      alert("You can not go beyond the time that you saw.")
     }
   }
 }
@@ -94,7 +94,7 @@ function enable_tagging() {
   elem1.setAttribute("style","pointer-events: auto;");
 
   $('#Add_button').prop("disabled", false);
-  $("#labeler").css("opacity", "1");
+  $("#label_pane").css("opacity", "1");
 
 
   // Change the button to a play button
@@ -114,6 +114,7 @@ $(document).ready(function(){
   submit_stringify_value()
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
+  $("#label_pane").css("opacity", "0.3");
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
@@ -133,7 +134,7 @@ $(document).ready(function(){
 
       add_data_to_data_structure(string_time, 'labeler')
       $('#Add_button').prop("disabled", true);
-      $("#labeler").css("opacity", "0.3");
+      $("#label_pane").css("opacity", "0.3");
       var elem = document.getElementById("label_pane");
       elem.setAttribute("style","pointer-events: none;");
       delete_value_circle('labeler')
