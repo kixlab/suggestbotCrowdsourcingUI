@@ -89,12 +89,28 @@ function changeButtonType(btn, value) {
 
 function enable_tagging(add_tag=false) {
   blur_progress_bar(add_tag)
+  if(add_tag){
+    retrieve_data_from_data_structure(add_tag, 'labeler');
+  }else{
+    var st_time = parseInt(vd_player.currentTime).toString();
+    add_tag=retrieve_data_from_data_structure(st_time, 'labeler');
+    if(add_tag){
+      revise_tag=st_time
+    }
+  }
   //$("#interactive_progress_bar").css("opacity", "0.3");
   //$(".tooltip").css("opacity", "0.3");
   var elem1 = document.getElementById("label_pane");
   elem1.setAttribute("style","pointer-events: auto;");
-
+  if(add_tag!=false){
+    $("#Add_button").text("Revise")
+    $("#Delete_button").text("Delete")
+  }else{
+    $("#Add_button").text("Add")
+    $("#Delete_button").text("Cancel")
+  }
   $('#Add_button').prop("disabled", false);
+  $('#Delete_button').prop("disabled", false);
   $("#label_pane").css("opacity", "1");
 
 
@@ -109,7 +125,7 @@ function revise_tagging(string_time){
   enable_tagging(revise_tag);
   //$('body').prepend($("#"+string_time))
   console.log($("#"+string_time))
-  retrieve_data_from_data_structure(string_time, 'labeler');
+
 
 }
 
@@ -132,12 +148,16 @@ $(document).ready(function(){
       }else{
         var string_time = parseInt(vd_player.currentTime).toString();
         // add red bar div in progress bar
-        create_red_bar_div(string_time);
+        if(label_data_structure[string_time]==null){
+          create_red_bar_div(string_time);
+        }
+
       }
       revise_tag = 0;
 
       add_data_to_data_structure(string_time, 'labeler')
       $('#Add_button').prop("disabled", true);
+      $('#Delete_button').prop("disabled", true);
       $("#label_pane").css("opacity", "0.3");
       var elem = document.getElementById("label_pane");
       elem.setAttribute("style","pointer-events: none;");
@@ -152,6 +172,29 @@ $(document).ready(function(){
       alert("Please label emotion of the character.");
     }
   });
+  $("#Delete_button").click(function(){
+    unblur_progress_bar()
+    if (revise_tag){
+      var string_time = revise_tag;
+      delete_red_bar_div(string_time);
+    }else{
+      var string_time = parseInt(vd_player.currentTime).toString();
+      // add red bar div in progress bar
+    }
+    revise_tag = 0;
+    delete_data_from_data_structure(string_time)
+    $('#Add_button').prop("disabled", true);
+    $('#Delete_button').prop("disabled", true);
+    $("#label_pane").css("opacity", "0.3");
+    var elem = document.getElementById("label_pane");
+    elem.setAttribute("style","pointer-events: none;");
+    delete_value_circle('labeler')
+
+    // Change the button to a pause button
+    changeButtonType(btnPlayPause, 'pause');
+    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+    vd_player.play();
+  })
 
 });
 
@@ -183,6 +226,12 @@ function create_red_bar_div(string_time){
     html: true,
     template: '<div class="tooltip red-tooltip"><div class="tooltip-inner"></div><div class="tooltip-arrow"></div></div>'
   }).tooltip('show');
+
+}
+
+function delete_red_bar_div(string_time){
+  $("#tag-tooltip_"+string_time).parent().parent().remove()
+  $("#"+string_time).remove()
 
 }
 

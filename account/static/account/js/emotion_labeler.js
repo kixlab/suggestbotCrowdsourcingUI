@@ -244,8 +244,10 @@ input_value_to_labeler = function(div_id, val, aro){
 }
 // function to delete circle from the interface
 delete_value_circle = function(div_id){
+  if(select_dic[div_id]!=null){
   select_dic[div_id].remove()
   select_dic[div_id] = null;
+}
 }
 
 var lineFunction = d3.svg.line()

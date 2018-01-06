@@ -8,15 +8,21 @@ add_data_to_data_structure =function(currenttime_string, labeler){
 }
 
 retrieve_data_from_data_structure =function(string_time, labeler){ // added by Jean 1/5/2017
+  if(label_data_structure[string_time]!=null){
   aro = label_data_structure[string_time].aro;
   val = label_data_structure[string_time].val;
 
   input_value_to_labeler(labeler,  parseFloat(val),  parseFloat(aro));
-
+  return true;
+}
+  return false;
 }
 
 delete_data_from_data_structure = function(currenttime_string){
-  delete label_data_structure[currenttime_string]
+  if(label_data_structure[currenttime_string]!=null){
+    delete label_data_structure[currenttime_string]
+  }
+  console.log(label_data_structure)
 }
 
 submit_stringify_value = function(){
