@@ -39,7 +39,7 @@ function seek(e) {
       vd_player.currentTime = percent * vd_player.duration;
       updateProgressBar();
     }else{
-      alert("You can not go beyond the time that you saw.")
+      alert("You can only jump to the time you have seen before.")
     }
   }
 }
