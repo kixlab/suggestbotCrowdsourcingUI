@@ -87,9 +87,10 @@ function changeButtonType(btn, value) {
   btn.className = value;
 }
 
-function enable_tagging() {
-  $("#interactive_progress_bar").css("opacity", "0.3");
-  $(".tooltip").css("opacity", "0.3");
+function enable_tagging(add_tag=false) {
+  blur_progress_bar(add_tag)
+  //$("#interactive_progress_bar").css("opacity", "0.3");
+  //$(".tooltip").css("opacity", "0.3");
   var elem1 = document.getElementById("label_pane");
   elem1.setAttribute("style","pointer-events: auto;");
 
@@ -105,7 +106,9 @@ function enable_tagging() {
 
 function revise_tagging(string_time){
   revise_tag = string_time;
-  enable_tagging();
+  enable_tagging(revise_tag);
+  //$('body').prepend($("#"+string_time))
+  console.log($("#"+string_time))
   retrieve_data_from_data_structure(string_time, 'labeler');
 
 }
@@ -120,8 +123,9 @@ $(document).ready(function(){
   $("#Add_button").click(function(){
 
     if (select_dic['labeler']) {
-      $("#interactive_progress_bar").css("opacity", "1");
-      $(".tooltip").css("opacity", "1")
+      unblur_progress_bar()
+      //$("#interactive_progress_bar").css("opacity", "1");
+      //$(".tooltip").css("opacity", "1")
 
       if (revise_tag){
         var string_time = revise_tag;
@@ -165,10 +169,11 @@ function create_red_bar_div(string_time){
   div.style.left = barlocation + 'px';
   //div.style.pointerEvents = "none";
   div.id = string_time;
-  div.title = "<a href='#label_pane' id='tag-tooltip' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
+  div.title = "<a href='#label_pane' id='tag-tooltip_"+string_time+"' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
   //div.title = 'H';
 
   document.getElementById("progress").appendChild(div);
+  $("#"+string_time).addClass("red_bar")
 
   div.setAttribute("data-placement", "top");       // Create a "class" attribute
 
@@ -179,4 +184,23 @@ function create_red_bar_div(string_time){
     template: '<div class="tooltip red-tooltip"><div class="tooltip-inner"></div><div class="tooltip-arrow"></div></div>'
   }).tooltip('show');
 
+}
+
+function blur_progress_bar(unblurred = false){
+  $("#controls").css("opacity", "0.3")
+  $("#progress").css("background-color", "rgba(233, 236, 239, 0.3)")
+  $(".progressbar").css("opacity", "0.3")
+  $(".tooltip").css("opacity", "0.3");
+  $(".red_bar").css("opacity", "0.3")
+  if(unblurred!=false){
+    $("#"+unblurred).css("opacity", "1")
+    $("#tag-tooltip_"+unblurred).parent().parent().css("opacity", "1")
+  }
+}
+function unblur_progress_bar(){
+  $("#controls").css("opacity", "1")
+  $("#progress").css("background-color", "rgba(233, 236, 239, 1)")
+  $(".progressbar").css("opacity", "1")
+  $(".tooltip").css("opacity", "1");
+  $(".red_bar").css("opacity", "1")
 }
