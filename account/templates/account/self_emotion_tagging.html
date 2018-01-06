@@ -1,0 +1,50 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}
+<script src="{%static 'account/js/emotion_labeler.js'%}"></script>
+<script src="{%static 'account/js/label_data_structure.js'%}"></script>
+<script src="{%static 'account/js/mturk.js'%}"></script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body"><br>
+      <font size="2"><p>Please tag your own emotion state below:</p><hr>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6"><br><br><br><br><br>
+        <p><b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative <br>
+        <b>Arousal:</b> potential bodily activity/inactivity of the person <br>
+        Some Examples: <br>
+        Excited: high valence, high arousal <br>
+        sad: Low valence, low arousal <br><br>
+        <b>Intensity of the each emotion increases as we move towards the center.</p></b><br>
+      </div>
+        <!-- Jean's change ends here -->
+
+      <div id="label_pane" class="col-md-6">
+        <div id="labeler" style="display:block; margin:auto; opacity:1"></div>
+        <script>
+          generate_circular_labeler('labeler')
+        </script>
+      </div>
+    </div>
+    <div><hr>
+    <a href="/home/task/" class="btn btn-success btn-lg " role="submit" onclick="useralert()" style="float:center; margin-top:15px; margin-left:400px; ">Proceed
+      <span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+  </div>
+
+
+</div>
+
+<script src="{% static 'account/js/interactive_progress_bar.js' %}"></script>
+
+
+
+{% endblock %}

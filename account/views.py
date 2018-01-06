@@ -100,6 +100,9 @@ def help(request):
 def introduction1(request):
     return(render(request,'account/introduction1.html'))
 
+def self_emotion(request):
+    return(render(request,'account/self_emotion_tagging.html'))
+
 def task(request):
     try:
         if request.GET['full'] == "True":
