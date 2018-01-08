@@ -14,9 +14,7 @@ var form_selector = "#mturk_form";
 
 // set timer
 var start_time;
-var start_hit_time;
 var finish_time;
-
 
 // function for getting URL parameters
 function gup(name) {
@@ -35,7 +33,6 @@ function validateAndSubmit() { // added by Jean
   // calculate time used
   finish_time = new Date();
   var time_used = (finish_time - start_time) / 1000.0;
-  var hit_time_used = (finish_time - start_hit_time) / 1000.0;
 
   console.log("\nTime used: " + time_used + " seconds");
 
@@ -46,35 +43,14 @@ function validateAndSubmit() { // added by Jean
   var dataPackage = { //::: TODO: change here [start] :::
     aID : assignmentID,
     wID : workerID,
-    expParameter : exp_parameter,
-    isPrePopulated : is_prepopulated.toString(),
-    imgurl : url,
-    comment : $('#comment').val(),
-    improvement : $('#improvement').val(),
     timeUsed : time_used,
-    hitTimeUsed : hit_time_used,
     start_time : start_time,
-    finish_time : finish_time
+    finish_time : finish_time,
+    result_json_string: JSON.stringify(label_data_structure)
   };
 
   $.ajax({
-    url: "./php/saveInput.php",
-    type: "POST",
-    async: false,
-    data: dataPackage,
-    dataType: "text",
-    success: function(d) {
-      console.log("Saving information succeeded!");
-      $("#mturk_form").submit();
-      alert("Thank you for submitting the task! Your HIT is being processed and evaluated as part of a quality check. You'll be paid soon.");
-    },
-    fail: function() {
-      alert("Saving information failed!");
-    }
-  }); //::: TODO: change here [end] :::
-
-  $.ajax({
-    url: "/save_db",
+    url: "/home/save_db/",
     type: "POST",
     data: dataPackage,
     success: function(d) {

@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.utils.datastructures import MultiValueDictKeyError
+from django.views.decorators.csrf import csrf_exempt
 from account.models import *
 import os, queue
 import json
@@ -283,6 +284,7 @@ def save_emotion_exp3(request):
     exp3.save()
     return(HttpResponseRedirect('/home/feedback/'))
 
+@csrf_exempt
 def save_db(request):
     print (request.POST)
     print (request.GET)
