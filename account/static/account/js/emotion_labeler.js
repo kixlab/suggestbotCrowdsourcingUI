@@ -109,27 +109,36 @@ make_circular_labeler=function(image, color_circle, div_id){
     var ypos;
     var xcos = Math.cos(i * Math.PI/10)
     var ysin = Math.sin(i * Math.PI/10)
+    //xpos = (xcos*1.4+1.5)*color_circle_radius
+    //ypos = (ysin*1.4+1.5)*color_circle_radius
     if(Math.abs(xcos)>Math.abs(ysin)){
       if(xcos>0){
-        xpos = 2.7*color_circle_radius;
+        xpos = 2.75*color_circle_radius;
         ypos = -1.2*ysin/xcos*color_circle_radius+1.5*color_circle_radius
       }else{
-        xpos = 0.3*color_circle_radius;
+        xpos = 0.25*color_circle_radius;
         ypos = 1.2*ysin/xcos*color_circle_radius+1.5*color_circle_radius
       }
     }else{
       if(ysin<0){
+
         ypos = 2.7*color_circle_radius;
+        if(i%5==0){
+          ypos = 2.8*color_circle_radius;
+        }
         xpos = -1.2/ysin*xcos*color_circle_radius+1.5*color_circle_radius
       }else{
         ypos = 0.3*color_circle_radius;
+        if(i%5==0){
+          ypos = 0.2*color_circle_radius;
+        }
         xpos = 1.2/ysin*xcos*color_circle_radius+1.5*color_circle_radius
       }
     }
     //svar xpos = 1.2*color_circle_radius * Math.cos(i * Math.PI/10)+color_circle_radius*1.5
     //var ypos = -1.2*color_circle_radius * Math.sin(i * Math.PI/10)+color_circle_radius*1.5
     var t = circle_svg_dic[div_id].append("text")
-    .attr("font-size", color_circle_radius/14)
+    .attr("font-size", color_circle_radius/9)
     .attr("y", ypos)
     .text(circular_emotions[i])
     .attr("x", function(){
