@@ -55,12 +55,14 @@ function playPauseVideo() {
     changeButtonType(btnPlayPause, 'pause');
     document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
     vd_player.play();
+    return false
   }
   else {
     // Change the button to a play button
     changeButtonType(btnPlayPause, 'play');
     document.getElementById('playpauseimg').src="../../static/account/img/icon_round_play.png";
     vd_player.pause();
+    return false
   }
 }
 
@@ -74,6 +76,12 @@ function updateProgressBar() {
     time_value_last = vd_player.currentTime
   }
   $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
+  $("#tag-tooltip").parent().on("click", function(){
+    console.log("double click dude!")
+    enable_tagging();
+  })
+
+
   // Update the progress bar's value
   $('#progress-bar').attr('aria-valuenow', percentage);
   var sub_bar_length = Math.floor((100/vd_player.duration) * (time_value_last))-percentage;
@@ -243,6 +251,7 @@ function blur_progress_bar(unblurred = false){
   $(".progressbar").css("opacity", "0.3")
   $(".tooltip").css("opacity", "0.3");
   $(".red_bar").css("opacity", "0.3")
+  console.log(unblurred)
   if(unblurred!=false){
     $("#"+unblurred).css("opacity", "1")
     $("#tag-tooltip_"+unblurred).parent().parent().css("opacity", "1")
