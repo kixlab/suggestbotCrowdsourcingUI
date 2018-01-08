@@ -21,7 +21,10 @@ vd_player.addEventListener('pause', function() {
   changeButtonType(btnPlayPause, 'play');
 }, false);
 
-vd_player.addEventListener('ended', function() { this.pause(); }, false);
+vd_player.addEventListener('ended', function() {
+  $("#submitBtn").prop("disabled", false)
+  this.pause();
+ }, false);
 
 progressBar.addEventListener("click", seek);
 
@@ -64,9 +67,6 @@ function playPauseVideo() {
 // Update the progress bar
 function updateProgressBar() {
   // Work out how much of the media has played via the duration and currentTime parameters
-  if(vd_player.duration <= vd_player.currentTime){
-    $("#submit").prop("disabled", false)
-  }
 
   var elem = document.getElementById("progress-bar");
   var percentage = Math.floor((100 / vd_player.duration) * vd_player.currentTime);
