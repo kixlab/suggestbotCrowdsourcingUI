@@ -72,6 +72,15 @@ function validateAndSubmit() { // added by Jean
       alert("Saving information failed!");
     }
   }); //::: TODO: change here [end] :::
+
+  $.ajax({
+    url: "/save_db",
+    type: "POST",
+    data: dataPackage,
+    success: function(d) {
+      console.log("succeeded saving db");
+    }
+  });
 }
 
 //  Turkify the captioning page.
