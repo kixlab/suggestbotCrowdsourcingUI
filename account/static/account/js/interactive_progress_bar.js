@@ -121,8 +121,8 @@ function enable_tagging(add_tag=false) {
   }
   $('#Add_button').prop("disabled", false);
   $('#Delete_button').prop("disabled", false);
-  $("#label_pane").css("opacity", "1");
-
+  $("#label_pane").css("opacity", 1);
+  console.log("label_pane opacity 1")
 
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
@@ -143,7 +143,8 @@ $(document).ready(function(){
   //submit_stringify_value()
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
-  $("#label_pane").css("opacity", "0.3");
+  $("#label_pane").css("opacity", 0.3);
+  console.log("label_pane opacity 0.3")
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
@@ -168,9 +169,10 @@ $(document).ready(function(){
       add_data_to_data_structure(string_time, 'labeler')
       $('#Add_button').prop("disabled", true);
       $('#Delete_button').prop("disabled", true);
-      $("#label_pane").css("opacity", "0.3");
       var elem = document.getElementById("label_pane");
       elem.setAttribute("style","pointer-events: none;");
+      $("#label_pane").css("opacity", 0.3);
+      console.log("label_pane opacity 0.3")
       delete_value_circle('labeler')
 
       // Change the button to a pause button
@@ -195,9 +197,10 @@ $(document).ready(function(){
     delete_data_from_data_structure(string_time)
     $('#Add_button').prop("disabled", true);
     $('#Delete_button').prop("disabled", true);
-    $("#label_pane").css("opacity", "0.3");
     var elem = document.getElementById("label_pane");
     elem.setAttribute("style","pointer-events: none;");
+    $("#label_pane").css("opacity", 0.3);
+    console.log("label_pane opacity 0.3")
     delete_value_circle('labeler')
 
     // Change the button to a pause button
@@ -222,7 +225,7 @@ function create_red_bar_div(string_time){
   div.style.left = barlocation + 'px';
   //div.style.pointerEvents = "none";
   div.id = string_time;
-  div.title = "<a href='#label_pane' id='tag-tooltip_"+string_time+"' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
+  div.title = "<a href='#' id='tag-tooltip_"+string_time+"' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
   //div.title = 'H';
 
   document.getElementById("progress").appendChild(div);
