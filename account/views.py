@@ -282,3 +282,8 @@ def save_emotion_exp3(request):
                                     timestamps=timestamps,comments=comments,start_time=start_time,end_time=end_time)
     exp3.save()
     return(HttpResponseRedirect('/home/feedback/'))
+
+def save_db(request):
+    print (request.POST)
+    print (request.GET)
+    return (HttpResponse(status=204))

@@ -31,6 +31,8 @@ function seek(e) {
     var percent;
     if(e.path[0].id=='progress-bar'){
       percent = e.offsetX / this.offsetWidth;
+    }else if(e.path[0].className.includes("red_bar")){
+      percent = ($("#"+e.path[0].id).position().left-$("#progress-bar").position().left+e.offsetX) / this.offsetWidth;
     }else{
       percent = (elem.offsetWidth + e.offsetX) / this.offsetWidth
     }
