@@ -77,7 +77,6 @@ function updateProgressBar() {
   }
   $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
   $("#tag-tooltip").parent().on("click", function(){
-    console.log("double click dude!")
     enable_tagging();
   })
 
@@ -122,7 +121,6 @@ function enable_tagging(add_tag=false) {
   $('#Add_button').prop("disabled", false);
   $('#Delete_button').prop("disabled", false);
   $("#label_pane").css("opacity", 1);
-  console.log("label_pane opacity 1")
 
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
@@ -134,7 +132,6 @@ function revise_tagging(string_time){
   revise_tag = string_time;
   enable_tagging(revise_tag);
   //$('body').prepend($("#"+string_time))
-  console.log($("#"+string_time))
 
 
 }
@@ -144,7 +141,6 @@ $(document).ready(function(){
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
   $("#label_pane").css("opacity", 0.3);
-  console.log("label_pane opacity 0.3")
 
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
@@ -172,7 +168,6 @@ $(document).ready(function(){
       var elem = document.getElementById("label_pane");
       elem.setAttribute("style","pointer-events: none;");
       $("#label_pane").css("opacity", 0.3);
-      console.log("label_pane opacity 0.3")
       delete_value_circle('labeler')
 
       // Change the button to a pause button
@@ -200,7 +195,6 @@ $(document).ready(function(){
     var elem = document.getElementById("label_pane");
     elem.setAttribute("style","pointer-events: none;");
     $("#label_pane").css("opacity", 0.3);
-    console.log("label_pane opacity 0.3")
     delete_value_circle('labeler')
 
     // Change the button to a pause button
@@ -254,7 +248,6 @@ function blur_progress_bar(unblurred = false){
   $(".progressbar").css("opacity", "0.3")
   $(".tooltip").css("opacity", "0.3");
   $(".red_bar").css("opacity", "0.3")
-  console.log(unblurred)
   if(unblurred!=false){
     $("#"+unblurred).css("opacity", "1")
     $("#tag-tooltip_"+unblurred).parent().parent().css("opacity", "1")
