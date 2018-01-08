@@ -132,7 +132,7 @@ function revise_tagging(string_time){
 }
 
 $(document).ready(function(){
-  submit_stringify_value()
+  //submit_stringify_value()
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
   $("#label_pane").css("opacity", "0.3");
