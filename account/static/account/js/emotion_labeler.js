@@ -138,7 +138,7 @@ make_circular_labeler=function(image, color_circle, div_id){
     //svar xpos = 1.2*color_circle_radius * Math.cos(i * Math.PI/10)+color_circle_radius*1.5
     //var ypos = -1.2*color_circle_radius * Math.sin(i * Math.PI/10)+color_circle_radius*1.5
     var t = circle_svg_dic[div_id].append("text")
-    .attr("font-size", color_circle_radius/9)
+    .attr("font-size", color_circle_radius/10)
     .attr("y", ypos)
     .text(circular_emotions[i])
     .attr("x", function(){
