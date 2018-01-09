@@ -84,6 +84,32 @@ function selfTagSubmit() { // added by Arti
     }
   });
 }
+
+//submitting feedback form
+function feedbackSubmit() { // added by Arti
+  // collecting information
+
+  console.log("preparing datapacakage for feedback");
+
+  var assignmentID = gup("assignmentId");
+  var workerID = gup("workerId");
+
+  // assembling data package
+  var feedbackdataPackage = { //::: TODO: change here [start] :::
+    aID : assignmentID,
+    wID : workerID,
+    result_json_string: JSON.stringify(feedback_data_structure)
+  };
+
+  $.ajax({
+    url: "/home/save_db/",
+    type: "POST",
+    data: feedbackdataPackage,
+    success: function(d) {
+      console.log("succeeded saving worker's feedback to db");
+    }
+  });
+}
 //  Turkify the captioning page.
 $(document).ready(function () {
 

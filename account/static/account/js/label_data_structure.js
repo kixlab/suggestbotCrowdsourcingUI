@@ -1,10 +1,18 @@
 var label_data_structure = {}
 var selflabel_data_structure = {}
+var feedback_data_structure = {}
 //self emotion label datastructure
+add_feedback_to_data_structure =function(feedback_string1, feedback_string2, feedback_string3){
+  q1 = feedback_string1
+  q2 = feedback_string2
+  q3 = feedback_string3
+  feedback_data_structure = {'q1':q1, 'q2':q2, 'q3':q3}
+  console.log("feedback1"+q1+" feedback2 "+q2+" feedback3 "+q3);
+}
 add_Selflabel_to_data_structure =function(labeler){
-  aro = $("#"+labeler+"_exc").val()
-  val = $("#"+labeler+"_pos").val()
-  selflabel_data_structure={'aro':aro, "val": val}
+  aro_self = $("#"+labeler+"_exc").val()
+  val_self = $("#"+labeler+"_pos").val()
+  selflabel_data_structure={'aro_self':aro_self, "val_self": val_self}
   console.log(selflabel_data_structure)
 }
 

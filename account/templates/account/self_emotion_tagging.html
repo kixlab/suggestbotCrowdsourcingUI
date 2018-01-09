@@ -54,7 +54,7 @@
 //self-emotion tagging check
 $("#Selftag_Add").click(function(){
   if (select_dic['labeler']) {
-    add_data_to_data_structure('labeler');
+    add_Selflabel_to_data_structure('labeler');
     console.log("self tag is stored in the datastructure");
     $("#Selftag_Add").prop("disabled", true)
     $("#Selftag_submit").prop("disabled", false)
@@ -74,7 +74,7 @@ $("#Selftag_submit").click(function(event) {
   console.log("Selftag_submit clicled");
   $("#Selftag_submit").attr('type', 'submit');
   selfTagSubmit();
-  location.href = "/home/task/";
+  //location.href = "/home/task/";
 });
 </script>
 {% endblock %}

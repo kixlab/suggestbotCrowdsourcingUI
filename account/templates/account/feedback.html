@@ -1,21 +1,35 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
+{% block head %}
+<script src="{%static 'account/js/label_data_structure.js'%}"></script>
+<script src="{%static 'account/js/mturk.js'%}"></script>
+{% endblock %}
 {% block body %}
 <div class="container footer">
   <form method="post">
-  <h3>Feedback time</h3><hr/>
+  <h3>Feedback time</h3><hr/><br>
   <div>
-    <p class="text footer">Do you able to get the context/situation from the video?</p>
-    <textarea style="width:100%; height: 70px" name="text"></textarea>
-    <p class="text footer">Was it hard to label emotions? If yes please explain the reason.</p>
-    <textarea style="width:100%; height: 70px" name="text"></textarea>
+    <p class="text" >Did you able to get the context/situation from the video?</p>
+    <textarea id="feedback1" style="width:100%; height: 70px" name="text"></textarea>
+    <p class="text footer">Was it hard to label emotions? If yes please explain the possible reason.</p>
+    <textarea id="feedback2"style="width:100%; height: 70px" name="text"></textarea>
     <p class="text footer">Please provide additional feedback for the task. This will help us to provide better task design.</p>
-    <textarea style="width:100%; height: 70px" name="text"></textarea>
+    <textarea id="feedback3"style="width:100%; height: 70px" name="text"></textarea>
 </div>
   <hr/>
-
+  <form method="post">
     {% csrf_token %}
-    <button class="btn btn-dark btn-lg footer" type="submit" style="height:50px; width:100px">Submit</button>
+    <button class="btn btn-dark btn-lg footer" type="submit" id="Submit_feedback" style="height:50px; width:100px">Submit</button>
   </form>
 </div>
+<script type="text/javascript">
+$("#Submit_feedback").click(function(event) {
+  // force submit
+  add_feedback_to_data_structure(document.getElementById('feedback1').value, document.getElementById('feedback2').value, document.getElementById('feedback3').value);
+  console.log("Submit feedback");
+  $("#Submit_feedback").attr('type', 'submit');
+  feedbackSubmit();
+  //location.href = "/home/thankyou/";
+});
+</script>
 {% endblock %}
