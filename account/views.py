@@ -286,6 +286,25 @@ def save_emotion_exp3(request):
 
 @csrf_exempt
 def save_db(request):
-    print (request.POST)
-    print (request.GET)
+    aId = request.POST['aID']
+    wId = request.POST['wID']
+    timeUsed = float(request.POST['timeUsed'])
+    start_time = request.POST['start_time']
+    finish_time = request.POST["finish_time"]
+    result_json_string = json.loads(request.POST["result_json_string"])
+    for key,value in result_json_string.items():
+        label_time = key
+        arousal = value['aro']
+        valence = value['val']
+        label, created = Labels.objects.get_or_create(aId=aId,
+                                                    wId=wId,
+                                                    timeUsed=timeUsed,
+                                                    start_time=start_time,
+                                                    finish_time=finish_time,
+                                                    label_time=label_time,
+                                                    arousal=arousal,
+                                                    valence=valence)
+        print (label, created)
+        if created:
+            label.save()
     return (HttpResponse(status=204))
