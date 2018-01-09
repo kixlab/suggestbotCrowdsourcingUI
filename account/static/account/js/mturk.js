@@ -59,6 +59,31 @@ function validateAndSubmit() { // added by Jean
   });
 }
 
+//this function is submitting worker's self emotion tag
+function selfTagSubmit() { // added by Arti
+  // collecting information
+
+  console.log("preparing datapacakage for self emotion tag");
+
+  var assignmentID = gup("assignmentId");
+  var workerID = gup("workerId");
+
+  // assembling data package
+  var selfEmotiondataPackage = { //::: TODO: change here [start] :::
+    aID : assignmentID,
+    wID : workerID,
+    result_json_string: JSON.stringify(selflabel_data_structure)
+  };
+
+  $.ajax({
+    url: "/home/save_db/",
+    type: "POST",
+    data: selfEmotiondataPackage,
+    success: function(d) {
+      console.log("succeeded saving worker's self emotion tag to db");
+    }
+  });
+}
 //  Turkify the captioning page.
 $(document).ready(function () {
 
