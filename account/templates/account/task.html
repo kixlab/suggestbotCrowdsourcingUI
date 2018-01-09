@@ -96,7 +96,7 @@ window.onload=function(){
         </script>
       </div>
     </div><hr style="margin: 2px 0px;">
-    <form id="mturk_form" method='POST' style='margin-bottom: 0px;'>
+    <form id="mturk_form" method='POST' action="/home/feedback/"style='margin-bottom: 0px;'>
       {% csrf_token %}
       <input type='text' name='result_json_string' style="display:none"></input>
       <button class='btn btn-success' id="submitBtn" type='submit' style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem;" disabled>Submit</button>
