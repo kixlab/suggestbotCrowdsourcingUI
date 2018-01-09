@@ -34,9 +34,15 @@
         </script>
       </div>
     </div>
-    <div><hr>
-    <a href="/home/task/" class="btn btn-success btn-lg " role="submit" onclick="useralert()" style="float:center; margin-top:15px; margin-left:950px; ">Proceed
-      <span class="glyphicon glyphicon-chevron-right"></span></a>
+    <div>
+      <button id='Selftag_Add' class='btn btn-primary btn-sm' style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem;">Submit</button><hr>
+      <form id="mturk_form" method='POST' action="/home/task/" style='margin-bottom: 0px;'>
+        {% csrf_token %}
+        <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" style="float:center; margin-top:15px; margin-left:1000px; " disabled>Proceed</button>
+        <!-- <span class="glyphicon glyphicon-chevron-right"></span></a> -->
+      </form>
+      <!-- <a href="/home/task/" class="btn btn-dark btn-lg " role="submit" onclick="useralert()" style="float:center; margin-top:15px; margin-left:950px; ">Proceed
+        <span class="glyphicon glyphicon-chevron-right"></span></a> -->
     </div>
   </div>
 
@@ -44,7 +50,31 @@
 </div>
 
 <script src="{% static 'account/js/interactive_progress_bar.js' %}"></script>
+<script type="text/javascript">
+//self-emotion tagging check
+$("#Selftag_Add").click(function(){
+  if (select_dic['labeler']) {
+    add_data_to_data_structure('labeler');
+    console.log("self tag is stored in the datastructure");
+    $("#Selftag_Add").prop("disabled", true)
+    $("#Selftag_submit").prop("disabled", false)
+    var elem = document.getElementById("label_pane");
+    elem.setAttribute("style","pointer-events: none;");
+    $("#label_pane").css("opacity", 0.3);
+    delete_value_circle('labeler')
+  }
+  else{
+    alert("Please tag your emotion on the Plane before submitting");
+  }
+})
 
-
-
+//self_tag button submit
+$("#Selftag_submit").click(function(event) {
+  // force submit
+  console.log("Selftag_submit clicled");
+  $("#Selftag_submit").attr('type', 'submit');
+  selfTagSubmit();
+  location.href = "/home/task/";
+});
+</script>
 {% endblock %}

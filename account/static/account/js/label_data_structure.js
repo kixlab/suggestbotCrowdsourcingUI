@@ -1,4 +1,12 @@
 var label_data_structure = {}
+var selflabel_data_structure = {}
+//self emotion label datastructure
+add_Selflabel_to_data_structure =function(labeler){
+  aro = $("#"+labeler+"_exc").val()
+  val = $("#"+labeler+"_pos").val()
+  selflabel_data_structure={'aro':aro, "val": val}
+  console.log(selflabel_data_structure)
+}
 
 add_data_to_data_structure =function(currenttime_string, labeler){
   aro = $("#"+labeler+"_exc").val()
