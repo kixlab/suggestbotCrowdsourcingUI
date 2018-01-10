@@ -106,6 +106,7 @@ function feedbackSubmit() { // added by Arti
     type: "POST",
     data: feedbackdataPackage,
     success: function(d) {
+      //window.location.href = "/home/thankyou/";
       console.log("succeeded saving worker's feedback to db");
     }
   });
@@ -120,6 +121,7 @@ $(document).ready(function () {
     // force submit
     $("#submitBtn").attr('type', 'submit');
     validateAndSubmit();
+    //window.location.href = '/account/feedback.html';
   });
 
   // is assigntmentId is a URL parameter

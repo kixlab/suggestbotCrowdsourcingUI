@@ -11,6 +11,7 @@ from account.models import *
 import os, queue
 import json
 import random
+import logging
 
 assign_queue = queue.Queue()
 
@@ -196,16 +197,18 @@ def thankyou(request):
     return(render(request,'account/thankyou.html'))
 
 def feedback(request):
-    form = FeedbackForm(request.POST)
-    print(form)
-    if request.method == 'POST':
-        # if form.is_valid():
-            # feed_data=models.FeedbackModel()
-            # #data.q1 = form.cleaned_data['q1'
-            # feed_data.text = form.cleaned_data['text']
-            # args = {'form': feed_data}
-            # feed_data.save()
-        return(HttpResponseRedirect('/home/thankyou/'))
+    # form = FeedbackForm(request.POST)
+    # print(form)
+    # print(request.action)
+    # if (request.method == 'POST'):
+    #     print("feedback post method")
+    #     # if form.is_valid():
+    #         # feed_data=models.FeedbackModel()
+    #         # #data.q1 = form.cleaned_data['q1'
+    #         # feed_data.text = form.cleaned_data['text']
+    #         # args = {'form': feed_data}
+    #         # feed_data.save()
+    #     return(HttpResponseRedirect('/home/thankyou/'))
     return(render(request,'account/feedback.html'))
 
 def retrieve_emotion_data(request):
@@ -286,6 +289,9 @@ def save_emotion_exp3(request):
 
 @csrf_exempt
 def save_db(request):
+    # print (request.POST)
+    # return (HttpResponseRedirect("/home/thankyou/"))
+    print("save db on")
     aId = request.POST['aID']
     wId = request.POST['wID']
     timeUsed = float(request.POST['timeUsed'])
