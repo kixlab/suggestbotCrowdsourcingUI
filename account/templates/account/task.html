@@ -3,6 +3,8 @@
 {% load staticfiles %}
 {% block head %}
 <script src="{%static 'account/js/emotion_labeler.js'%}"></script>
+<script src="{%static 'account/js/tutorial.js'%}"></script>
+<script src="{%static 'account/js/tutorial1.js'%}"></script>
 <script src="{%static 'account/js/label_data_structure.js'%}"></script>
 <script src="{%static 'account/js/mturk.js'%}"></script>
 <!--<script>
@@ -215,6 +217,34 @@ $("#replay").on("click",function() {
     });});
     });
   </script>-->
-
-
+  <div class="modal fade" id="tutorial_modal" tabindex="-1" role="dialog" aria-labelledby="confidence_modalLabel" aria-hidden="true">
+    <div class="fullscreen-modal modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tutorial_modalLabel">Tutorial</h5>
+        </div>
+        <div class="modal-body">
+          <h5 id='tuto_text'></h5>
+          <img id='tuto_img_box' style='border: 3px solid black; display: block;max-width:100%; max-height:400px; margin: auto'></img>
+        </div>
+          <div class="modal-footer">
+            <button id='tuto_close' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="tuto_prev" type="button" class="btn btn-secondary">Prev</button>
+            <button id="tuto_next" type="button" class="btn btn-success">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script>
+  apply_tuto_content = function(tutostring,tutoimgname, keyword=false, keyword_explanation=false){
+    if(keyword){
+      tutostring = tutostring.replace(keyword, "<u>"+keyword+"</u><img src='{% static 'img/info-icon.png' %}' class='tutorial_keyword fa fa-info-circle' data-toggle='tooltip' title='"+keyword_explanation+"' data-placement='top' style='width:10px; height:10px; margin-bottom:8px; margin-left:2px;'></img>")
+    }
+    $("#tuto_text").empty().append(tutostring)//.text(tutostring);
+    $("#tuto_img_box").attr("src", "{% static 'img/' %}"+tutoimgname+".png")
+    if(keyword){
+      $(".tutorial_keyword").tooltip()
+    }
+  }
+  </script>
 {% endblock %}
