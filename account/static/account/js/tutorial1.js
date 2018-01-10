@@ -7,7 +7,7 @@ var tutotext=['Please watch the video and pay attention to the emotions of the p
 'You can revise or delete any of your tag by click on the red tip on top of the tag.',
 'After choosing one to revise, you can revise the emotion label by picking a point on the map again.',
 'If you pick new point, you can store the change with revise button',
-'If you want to delete the label, click the delete button.'
+'If you want to delete the label, click the delete button.',
 'After you have seen all the video, and done with the tagging emotions, end with submit button.']
 
 var tutoimgdone='tutorial_img/tutorial_'

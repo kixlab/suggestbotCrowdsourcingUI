@@ -142,6 +142,7 @@ $(document).ready(function(){
   elem.setAttribute("style","pointer-events: none;");
   $("#label_pane").css("opacity", 0.3);
   $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
+  $(".tooltip").css("z-index", "0")
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
 
