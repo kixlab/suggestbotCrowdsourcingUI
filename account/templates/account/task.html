@@ -34,9 +34,11 @@ window.onload=function(){
           <img id="figure_image" src="{% static 'account/img/customer_1.png' %}" style="height: 110px; display:block; margin: auto;">
         </div>
         <div class='col-sm-11' style="display:inline-block">
-          <font size="2"><p class='compact_p'>1. Please watch the video and pay attention to the emotions of the <em>person presented in the left <b>screenshot</em></b>:</p>
-            <p class='compact_p'>2. Anytime you see an <b><em>emotional change</em></b> in the person, click on the <img src="{% static 'account/img/tag_button.png' %}" style="height:3%"> button attached below the progress bar and add the emotion by clicking your &nbsp;&nbsp;&nbsp;&nbsp;estimation on the square plane. Save the emotion for that moment using <b>add</b> button. For help click <b>"how to tag?"</b> button on the top left.</p>
-            <p class='compact_p'>3. Press the <b><em>submit</em></b> button after tagging the whole video.</p></font>
+          <font size="2"><p class='compact_p'>&#8592; Please watch the video and pay attention to the emotions of the <em>person presented in the left <b>screenshot</em></b><br>
+            1. <strong>Whenever you notice an emotion change</strong> in the person, click on the <img src="{% static 'account/img/tag_button.png' %}" style="height:3%"> button.<br>
+            2. Mark your estimation on the <strong>Emotion Pane</strong>. Save the emotion for that moment using <b>add</b> button.<br>
+            3. You can edit any of your tag by click on the red tip <img src="{%static 'account/img/red_tip_button.png'%}" style="height:2%"> on top of the tag.<br>
+            4. Press the <b><em>Submit</em></b> button after tagging the whole video.</p></font>
         </div>
         </div>
         <hr style='margin: 5px 0px'></div>
@@ -44,7 +46,7 @@ window.onload=function(){
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-6">
-        <p class='compact_p'><em>Play the video once you are ready:</em><br></p>
+        <p class='compact_p'>Play the video once you are ready (turn up the volume):<br></p>
 
         <div align="center" class="embed-responsive embed-responsive-16by9">
           <!-- Jean's change starts here -->
@@ -83,7 +85,7 @@ window.onload=function(){
         <!-- Jean's change ends here -->
       </div>
       <div id="label_pane" class="col-md-6" style="opacity: 0.3">
-        <div><font size='2'>Point emotion of the figure on the plane.</font></div>
+        <div align='center'><font size='3'>Emotion Pane</font></div>
         <div id="labeler" style="display:block; margin:auto;"></div>
         <p class="text compact_p"><font size='2'>Describe any bodily expressions(face, gesture etc.) helped you to identify the underlining emotion.</font></p>
         <textarea name='bodyexpression1' style="width:100%; height: 25px"></textarea>
