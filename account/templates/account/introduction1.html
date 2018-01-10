@@ -3,9 +3,10 @@
 {% block body %}
 <div class="container footer">
 
-<h3 class="title">Emotion Video Labeling</h3>
+<h4>Emotion Tagging in Videos</h4><br>
 <h4>Introduction</h4>
-<p> You will watch video in which different actors express several emotions during a short speech-like utterance. Your task is to select the emotion which best describes the emotion the actor wanted to express in the respective video. While it is often quite clear which emotion is intended, in some cases the actors use fairly subtle expressions and it is more difficult to judge which emotion is shown. If this is the case, just trust your intuition and guess which emotion might be expressed. Please put on your earphones to hear the sound.
+<p> You will watch a video in which an actor/actress expresses several emotions<!-- during a short speech-like utterance-->.
+  <strong>Whenever you notice an emotion,</strong> your task is to tag the emotion which best describes what the actor wanted to express in the respective moment.
 </p><hr>
 <!-- <h4 class="text">Purpose of The Study</h4>
 <p>This study is to understand
@@ -18,15 +19,21 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <h4>Instructions</h4>
+      <h5>How To Tag</h5>
       <ol type="1">
-        <li>You have to tag the emotions by estimating valence and arousalvalues.<br><b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative <br><b>Arousal:</b> potential bodily activity/inactivity of the person <br>Some Examples: <br>
-        Excited: high valence, high arousal <br>
-        sad: Low valence, low arousal <br></li>
-        <li>Intensity of the emotion increases as we move towards the center.</li>
+        <li>You have to tag the emotions by estimating valence and arousal intensities of the actor/actress.<br>
+          <!--b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative. <br-->
+          <ul><li><strong>Valence</strong> means the intrinsic "good"-ness (positive valence) or "bad"-ness (negative valence) of a person's emotion.<br>
+          <small>Some examples: <b>Joy</b> is <b>Positive</b> and <b>Anger</b> is <b>Negative</b></small><br></li>
+          <li><strong>Arousal</strong> is the physiological and psychological state of being awoken or stimulated.<br>
+            <!--b>Arousal:</b> potential bodily activity/inactivity of the person <br-->
+          <small>Some Examples: <b>Excited</b> is <b>high</b> and <b>Sad</b> is <b>low</b></small><br></ul></li></li>
+        <li>You have to click on the location on the two-dimensional emotion pane that best maps the actor/actress's emotion. Please consider the intensity of Valence and Arousal when you do the task. Intensity increases as it moves towards the rim.</li>
       </ol>
-      <b><em>Note:</em><br> To read the instructions and watch the video anytime during the task, press <img src="{% static 'account/img/help-button.png' %}" style="height:4%"> on top left corner of the screen.<br>Length of video may vary but won't be more than 9 mins.</b>
-      <p>Please press the button to proceed to the task.</p></div>
+
+      <!--b><em>Note:</em><br> To read the instructions and watch the video anytime during the task, press <img src="{% static 'account/img/help-button.png' %}" style="height:4%"> on top left corner of the screen.<br>
+        <Length of video may vary but won't be more than 9 mins.</b-->
+      <p>Please press the green button to proceed to the task.</p></div>
     <div class="col-md-6">
       <div align="center" class="embed-responsive embed-responsive-16by9">
         <!-- Jean's change starts here -->
@@ -36,6 +43,10 @@
         </video>
       </div>
     </div>
+  </div>
+  <div class="row">
+    <small>While it is often quite clear which emotion is intended, in some cases the actor/actress uses fairly subtle expressions and it is more difficult to judge which emotion is shown.
+    If this is the case, just trust your intuition and guess which emotion might be expressed. Please put on your earphones to hear the sound.</small>
   </div>
 </div>
 <div><hr>
