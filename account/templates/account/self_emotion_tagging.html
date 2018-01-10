@@ -22,12 +22,14 @@
         <ol type="1">
           <li>Please mark your emotion by estimating your valence and arousal intensities.<br><br>
             <!--b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative. <br-->
-            <ul><li><strong>Valence</strong> means the intrinsic "good"-ness (positive valence) or "bad"-ness (negative valence) of a person's emotion.<br>
+            <ul><li><strong>Valence</strong> means the positive/negative intrinsic property of a person's emotion.<br>
             <small>Some examples: <b>Joy</b> is <b>Positive</b> and <b>Anger</b> is <b>Negative</b></small><br></li>
-            <li><strong>Arousal</strong> is the physiological and psychological state of being awoken or stimulated.<br>
+            <li><strong>Arousal</strong> is potential lavel of bodily activity/inactivity of the person <br>
               <!--b>Arousal:</b> potential bodily activity/inactivity of the person <br-->
             <small>Some Examples: <b>Excited</b> is <b>high</b> and <b>Sad</b> is <b>low</b></small><br></ul></li></li><br>
-          <li>You have to click on the location on the two-dimensional <strong>Emotion Pane</strong> that best indicates your emotion. Please consider the intensity of Valence and Arousal when you do the task. Intensity increases as it moves towards the rim.</li>
+          <li>Click on a point on the map which best describes your emotion.
+            Please consider the intensity of Valence and Arousal when you do the task.
+            Intensity increases as the point moves away from the center.</li>
         </ol>
       </div>
         <!-- Jean's change ends here -->
@@ -39,11 +41,11 @@
         </script>
       </div>
     </div>
-    <div>
-      <button id='Selftag_Add' class='btn btn-primary btn-sm' style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:950px;">Done</button><hr>
-      <form id="selftag_form" method='POST' action="/home/task/" style='margin-bottom: 0px;'>
+    <div><hr>
+      <!-- <button id='Selftag_Add' class='btn btn-primary btn-sm' style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:950px;">Done</button><hr> -->
+      <form id="selftag_form" method='POST' style='margin-bottom: 0px;'>
         {% csrf_token %}
-        <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:950px; " disabled>Proceed</button>
+        <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:850px; ">Proceed</button>
         <!-- <span class="glyphicon glyphicon-chevron-right"></span></a> -->
       </form>
       <!-- <a href="/home/task/" class="btn btn-dark btn-lg " role="submit" onclick="useralert()" style="float:center; margin-top:15px; margin-left:950px; ">Proceed
@@ -57,28 +59,35 @@
 <script src="{% static 'account/js/interactive_progress_bar.js' %}"></script>
 <script type="text/javascript">
 //self-emotion tagging check
-$("#Selftag_Add").click(function(){
-  if (select_dic['labeler']) {
-    add_Selflabel_to_data_structure('labeler');
-    console.log("self tag is stored in the datastructure");
-    $("#Selftag_Add").prop("disabled", true)
-    $("#Selftag_submit").prop("disabled", false)
-    var elem = document.getElementById("label_pane");
-    elem.setAttribute("style","pointer-events: none;");
-    $("#label_pane").css("opacity", 0.3);
-    delete_value_circle('labeler')
-  }
-  else{
-    alert("Please tag your emotion on the Plane before submitting");
-  }
-})
+// $("#Selftag_Add").click(function(){
+//   if (select_dic['labeler']) {
+//     add_Selflabel_to_data_structure('labeler');
+//     console.log("self tag is stored in the datastructure");
+//     $("#Selftag_Add").prop("disabled", true)
+//     $("#Selftag_submit").prop("disabled", false)
+//     var elem = document.getElementById("label_pane");
+//     elem.setAttribute("style","pointer-events: none;");
+//     $("#label_pane").css("opacity", 0.3);
+//     delete_value_circle('labeler')
+//   }
+//   else{
+//     alert("Please tag your emotion on the Plane before submitting");
+//   }
+// })
 
 //self_tag button submit
 $("#Selftag_submit").click(function(event) {
   // force submit
-  console.log("Selftag_submit clicled");
-  $("#Selftag_submit").attr('type', 'submit');
-  selfTagSubmit();
+  if (select_dic['labeler']) {
+    add_Selflabel_to_data_structure('labeler');
+    console.log("Selftag_submit clicled");
+    $("#Selftag_submit").attr('type', 'submit');
+    selfTagSubmit();
+    //$('selftag_form').attr('action','/home/task/');
+}
+else{
+     alert("Please tag your emotion on the Plane before submitting");
+   }
   //location.href = "/home/task/";
 });
 </script>
