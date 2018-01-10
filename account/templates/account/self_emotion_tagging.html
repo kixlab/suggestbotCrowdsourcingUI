@@ -40,12 +40,24 @@
       </div>
     </div>
     <div>
-      <button id='Selftag_Add' class='btn btn-primary btn-sm' style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:950px;">Done</button><hr>
-      <form id="selftag_form" method='POST' action="/home/task/" style='margin-bottom: 0px;'>
-        {% csrf_token %}
-        <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:950px; " disabled>Proceed</button>
-        <!-- <span class="glyphicon glyphicon-chevron-right"></span></a> -->
-      </form>
+      <div class="row">
+        <div class="col-11 text-right">
+          <span>Please complete the task and click Done button.</span>
+        </div>
+        <div class="text-center col-1">
+          <button id='Selftag_Add' class='btn btn-primary btn-sm'>Done</button>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-2 offset-10 text-right">
+          <form id="selftag_form" method='POST' action="/home/task/">
+            {% csrf_token %}
+            <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" disabled>Proceed</button>
+            <!-- <span class="glyphicon glyphicon-chevron-right"></span></a> -->
+          </form>
+        </div>
+      </div>
       <!-- <a href="/home/task/" class="btn btn-dark btn-lg " role="submit" onclick="useralert()" style="float:center; margin-top:15px; margin-left:950px; ">Proceed
         <span class="glyphicon glyphicon-chevron-right"></span></a> -->
     </div>
@@ -54,7 +66,7 @@
 
 </div>
 
-<script src="{% static 'account/js/interactive_progress_bar.js' %}"></script>
+<!--script src="{% static 'account/js/interactive_progress_bar.js' %}"></script-->
 <script type="text/javascript">
 //self-emotion tagging check
 $("#Selftag_Add").click(function(){

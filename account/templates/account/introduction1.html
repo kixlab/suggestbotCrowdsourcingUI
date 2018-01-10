@@ -21,16 +21,18 @@
     <div class="col-md-6">
       <h5>How To Tag</h5>
       <ol type="1">
-        <li>You have to tag the emotions by estimating valence and arousal intensities of the actor/actress.<br>
+        <li>Please tag the emotions by estimating valence and arousal intensities of the actor/actress.<br>
           <!--b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative. <br-->
           <ul><li><strong>Valence</strong> means the intrinsic "good"-ness (positive valence) or "bad"-ness (negative valence) of a person's emotion.<br>
           <small>Some examples: <b>Joy</b> is <b>Positive</b> and <b>Anger</b> is <b>Negative</b></small><br></li>
           <li><strong>Arousal</strong> is the physiological and psychological state of being awoken or stimulated.<br>
             <!--b>Arousal:</b> potential bodily activity/inactivity of the person <br-->
-          <small>Some Examples: <b>Excited</b> is <b>high</b> and <b>Sad</b> is <b>low</b></small><br></ul></li></li>
-        <li>You have to click on the location on the two-dimensional emotion pane that best maps the actor/actress's emotion.
+          <small>Some Examples: <b>Excited</b> is <b>high</b> and <b>Sad</b> is <b>low</b></small> (<label>Click: <input id="checkBox-int1" style="" type="checkbox"></label>)<br></ul></li></li>
+
+        <li>Please click on the location on the two-dimensional emotion pane that best maps the actor/actress's emotion.
           Please consider the intensity of Valence and Arousal when you do the task.
-          Intensity increases as it moves towards the rim.</li>
+          Intensity increases as it moves towards the rim. (<label>Click: <input id="checkBox-int2" style="" type="checkbox"></label>)</li>
+
       </ol>
 
       <!--b><em>Note:</em><br> To read the instructions and watch the video anytime during the task, press <img src="{% static 'account/img/help-button.png' %}" style="height:4%"> on top left corner of the screen.<br>
@@ -54,7 +56,7 @@
   </div>
 </div>
 <div><hr>
-<a href="/home/self_emotion/" class="btn btn-success btn-lg " role="button" onclick="useralert()" style="float:center; margin-top:15px; margin-left:1000px; ">Proceed
+<a id="proceed_btn" class="btn btn-success btn-lg " role="button" style="color: white; float:center; margin-top:15px; margin-left:1000px; ">Proceed
   <span class="glyphicon glyphicon-chevron-right"></span></a>
 </div>
 </div>
@@ -64,4 +66,15 @@
   {% if full %}alert("To capture the emotion  variation you will be presented questionnaire after evey 5 seconds.You can also choose to replay the video");{% endif %}
 }
 </script> -->
+<script>
+  $("#proceed_btn").on('click', function() {
+    if ($("#checkBox-int2").prop('checked') && ($("#checkBox-int1").prop('checked'))){
+      // useralert();
+      window.location.href = "/home/self_emotion/"
+    }
+    else {
+      alert("Please read the instruction carefully and click all the checkboxes.")
+    }
+  })
+</script>
 {% endblock %}
