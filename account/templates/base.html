@@ -29,14 +29,17 @@
               </div>
               <div class="modal-body">
                 <h4>Instructions</h4>
-                <p>1. You have to tag the emotions by estimating valence and arousal values.<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<b>Arousal:</b> potential bodily activity/inactivity of the person <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;Some Examples: <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;Excited: high valence, high arousal <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;sad: Low valence, low arousal <br>
-                2. Intensity of the emotion increases as the point on the plane moves away from the center.</p><br>
-                <video src="https://github.com/kixlab/suggestbotData/raw/master/tutorial_tag.mp4" type="video/mp4" autoplay controls style="height:500px; width:700px">
+                <ol type="1">
+                  <li>You have to tag the emotions by estimating valence and arousal intensities of the actor/actress.<br>
+                    <!--b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative. <br-->
+                    <ul><li><strong>Valence</strong> means the intrinsic "good"-ness (positive valence) or "bad"-ness (negative valence) of a person's emotion.<br>
+                    <small>Some examples: <b>Joy</b> is <b>Positive</b> and <b>Anger</b> is <b>Negative</b></small><br></li>
+                    <li><strong>Arousal</strong> is the physiological and psychological state of being awoken or stimulated.<br>
+                      <!--b>Arousal:</b> potential bodily activity/inactivity of the person <br-->
+                    <small>Some Examples: <b>Excited</b> is <b>high</b> and <b>Sad</b> is <b>low</b></small><br></ul></li></li>
+                  <li>You have to click on the location on the two-dimensional emotion pane that best maps the actor/actress's emotion. Please consider the intensity of Valence and Arousal when you do the task. Intensity increases as it moves towards the rim.</li>
+                </ol>
+                <video src="{%static 'account/media/new_tutorial.mp4'%}" type="video/mp4" autoplay controls style="height:500px; width:700px">
                   <source src="movie.ogg" type="video/ogg">
                   Your browser does not support the video tag.
                 </video>
