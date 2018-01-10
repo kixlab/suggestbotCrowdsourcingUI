@@ -241,7 +241,7 @@ $("#replay").on("click",function() {
       tutostring = tutostring.replace(keyword, "<u>"+keyword+"</u><img src='{% static 'img/info-icon.png' %}' class='tutorial_keyword fa fa-info-circle' data-toggle='tooltip' title='"+keyword_explanation+"' data-placement='top' style='width:10px; height:10px; margin-bottom:8px; margin-left:2px;'></img>")
     }
     $("#tuto_text").empty().append(tutostring)//.text(tutostring);
-    $("#tuto_img_box").attr("src", "{% static 'img/' %}"+tutoimgname+".png")
+    $("#tuto_img_box").attr("src", "{% static 'account/img/' %}"+tutoimgname+".png")
     if(keyword){
       $(".tutorial_keyword").tooltip()
     }
