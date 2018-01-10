@@ -35,7 +35,7 @@
       </div>
         <!-- Jean's change ends here -->
       <div id="label_pane" class="col-md-6">
-        <div align='center'><font size='5'><strong>Emotion Pane</strong></font></div>
+        <div align='center'><font size='5'><strong>Emotion Map</strong></font></div>
         <div id="labeler" style="display:block; margin:auto; opacity:1"></div>
         <script>
           generate_circular_labeler('labeler')
@@ -47,7 +47,7 @@
       <!-- <button id='Selftag_Add' class='btn btn-primary btn-sm' style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:950px;">Done</button><hr> -->
       <form id="selftag_form" method='POST' style='margin-bottom: 0px;'>
         {% csrf_token %}
-        <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:850px; ">Proceed</button>
+        <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:850px; " disabled>Proceed</button>
         <!-- <span class="glyphicon glyphicon-chevron-right"></span></a> -->
       </form>
       <!-- <a href="/home/task/" class="btn btn-dark btn-lg " role="submit" onclick="useralert()" style="float:center; margin-top:15px; margin-left:950px; ">Proceed
@@ -78,6 +78,12 @@
 // })
 
 //self_tag button submit
+$(window).click(function() {
+//Hide the menus if visible
+if (select_dic['labeler']) {
+  $("#Selftag_submit").prop("disabled", false);
+}
+
 $("#Selftag_submit").click(function(event) {
   // force submit
   if (select_dic['labeler']) {
@@ -91,6 +97,7 @@ else{
      alert("Please tag your emotion on the Plane before submitting");
    }
   //location.href = "/home/task/";
+});
 });
 </script>
 {% endblock %}
