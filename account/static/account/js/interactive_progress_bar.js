@@ -69,13 +69,13 @@ function playPauseVideo() {
 // Update the progress bar
 function updateProgressBar() {
   // Work out how much of the media has played via the duration and currentTime parameters
-
+  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('update');
   var elem = document.getElementById("progress-bar");
   var percentage = Math.floor((100 / vd_player.duration) * vd_player.currentTime);
   if(time_value_last < vd_player.currentTime){
     time_value_last = vd_player.currentTime
   }
-  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
+
   $("#tag-tooltip").parent().on("click", function(){
     enable_tagging();
   })
@@ -141,7 +141,7 @@ $(document).ready(function(){
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
   $("#label_pane").css("opacity", 0.3);
-
+  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
 
