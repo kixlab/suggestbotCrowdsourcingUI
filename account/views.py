@@ -312,12 +312,8 @@ def save_db(request):
                                     arousal=arousal,
                                     valence=valence)
         s.save()
-<<<<<<< HEAD
         print ("saved")
         return (HttpResponse(status=200))
-=======
-        return (HttpResponseRedirect("/home/task"))
->>>>>>> d0caa0dacf80928ff3203e7fe031eddcb4660903
     elif t == "label":
         timeUsed = float(request.POST['timeUsed'])
         start_time = request.POST['start_time']
