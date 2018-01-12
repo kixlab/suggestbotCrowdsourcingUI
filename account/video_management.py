@@ -1,11 +1,14 @@
 from .models import Video, Segment, Labels, Taskmarker
 from django.db.models import Sum, Case, When, IntegerField, Count
 import os
+#if it is hard to set the environment related to the video, please make below as ineffective
 from moviepy.editor import VideoFileClip
 import datetime
 MAX_TASK_NUM = 3
 TASK_TIME_LIMIT = 60
 #generate video related meta data
+
+#if it is hard to set the environment related to the video, please make below function as ineffective
 def Video_into_Database():
 
     Video.objects.all().delete()
