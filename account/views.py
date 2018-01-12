@@ -12,9 +12,9 @@ import os, queue
 import json
 import random
 import logging
-from .video_management import Video_into_Database
+from .video_management import Video_into_Database, deployer
 
-Video_into_Database()
+#Video_into_Database()
 assign_queue = queue.Queue()
 
 def updateQueue():
@@ -101,10 +101,12 @@ def about(request):
 def help(request):
     return(render(request,'account/help.html'))
 
-def introduction1(request):
+def introduction1(request, video_task):
     return(render(request,'account/introduction1.html'))
 
 def self_emotion(request):
+
+    deployer("grumpycustomer_uniform", "workerid", "taskid")
     return(render(request,'account/self_emotion_tagging.html'))
 
 def task(request):

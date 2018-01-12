@@ -4,7 +4,7 @@ urlpatterns = [
     url(r'^$', views.home),
     url(r'^about/$', views.about),
     url(r'^help/$', views.help),
-    url(r'^introduction1/$', views.introduction1),
+    url(r'^introduction1/(?P<video_task>\w+)/$$', views.introduction1),
     url(r'^self_emotion/$', views.self_emotion),
     url(r'^task/$', views.task),
     url(r'^questionaire/$', views.get),

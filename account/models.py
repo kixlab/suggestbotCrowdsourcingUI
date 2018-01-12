@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 # Create your models here.
 
 # Extra Instructions
@@ -13,7 +13,7 @@ class Video(models.Model):
     video_name = models.CharField(max_length=50, default = "")
     video_condition = models.CharField(max_length=3)
     def __str__(self):
-        return self.video_name
+        return self.video_name+"_"+self.video_condition
 
 # one video segment
 class Segment(models.Model):
@@ -25,7 +25,7 @@ class Segment(models.Model):
     #where the segment is actually positioned in the whole video
     start_time_in_whole = models.FloatField(default = 0)
     def __str__(self):
-        return self.video.video_name + "_" + self.video.video_condition + "_" + self.filename
+        return self.video.video_name + "_" + self.video.video_condition + "_" + str(self.sequence_num)
 
 
 class Assign(models.Model):
@@ -56,7 +56,6 @@ class Assign(models.Model):
         return (vname+" "+"Done" if self.done else "Not done yet")
 
 
-
 class Labels(models.Model):
     aId = models.CharField(max_length=20)
     wId = models.CharField(max_length=20)
@@ -79,3 +78,11 @@ class Feedback(models.Model):
     feedback1 = models.TextField()
     feedback2 = models.TextField()
     feedback3 = models.TextField()
+
+class Taskmarker(models.Model):
+    aId=models.CharField(max_length=20)
+    wId=models.CharField(max_length=20)
+    video = models.ForeignKey(Video)
+    segment = models.ForeignKey(Segment)
+    start_time = models.DateTimeField(default = datetime.datetime.now())
+    done = models.BooleanField(default = False)
