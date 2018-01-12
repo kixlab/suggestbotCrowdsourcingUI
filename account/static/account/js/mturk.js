@@ -82,7 +82,7 @@ function selfTagSubmit() { // added by Arti
     type: "POST",
     data: selfEmotiondataPackage,
     success: function(d) {
-      window.location.assigen("/home/task/");
+      window.location.assign("/home/task/");
       console.log("succeeded saving worker's self emotion tag to db");
     }
   })
