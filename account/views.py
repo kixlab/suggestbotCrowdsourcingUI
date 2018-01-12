@@ -12,7 +12,9 @@ import os, queue
 import json
 import random
 import logging
+from .video_management import Video_into_Database
 
+Video_into_Database()
 assign_queue = queue.Queue()
 
 def updateQueue():

@@ -7,28 +7,26 @@ from django.db import models
 # 1) python manage.py makemigrations
 # 2) python manage.py migrate
 
-class Data(models.Model):
-    fig_id=models.IntegerField(default = 0, max_length=15)
-    val1=models.IntegerField(max_length=20)
-    val2=models.IntegerField(max_length=20)
-    q1=models.CharField(max_length=200)
 
+# one video meta data with its experiment condition (A, B, C)
+class Video(models.Model):
+    video_name = models.CharField(max_length=50, default = "")
+    video_condition = models.CharField(max_length=3)
     def __str__(self):
-        return str(self.fig_id)+"_"+str(self.val1)+"_"+str(self.val2)
+        return self.video_name
 
-class Intention(models.Model):
-    mturk_id=models.CharField(max_length=15)
-    val1=models.CharField(max_length=20)
-    val2=models.CharField(max_length=50)
-
+# one video segment
+class Segment(models.Model):
+    video = models.ForeignKey(Video)
+    file_name = models.CharField(max_length=50, default = "")
+    sequence_num = models.IntegerField(default = -1)
+    #How long the video
+    video_length = models.FloatField(default = 0)
+    #where the segment is actually positioned in the whole video
+    start_time_in_whole = models.FloatField(default = 0)
     def __str__(self):
-        return self.mturk_id
+        return self.video.video_name + "_" + self.video.video_condition + "_" + self.filename
 
-class FeedbackModel(models.Model):
-    text=models.CharField(max_length=500)
-
-    def __str__(self):
-        return self.text
 
 class Assign(models.Model):
     # name of the video file
@@ -57,48 +55,15 @@ class Assign(models.Model):
     def __str__(self):
         return (vname+" "+"Done" if self.done else "Not done yet")
 
-class EmotionHit(models.Model):
-    # id of the row in Assign table
-    segment_id = models.IntegerField()
-    mturk_id = models.CharField(max_length=15)
-    positivity1 = models.FloatField()
-    excitement1 = models.FloatField()
-    positivity2 = models.FloatField()
-    excitement2 = models.FloatField()
-    bodyexpression1 = models.CharField(max_length=50)
-    bodyexpression2 = models.CharField(max_length=50)
-    length = models.TextField()
-    elapsedtime = models.FloatField()
 
-# # - video ID
-# # - segment ID (or starting time?)
-# # - worker ID
-# # - assignment ID (mturk has this param for all HITs)
-# # - time stamps (this should be a string of all time stamps a worker made)
-# # - comments
-# # - starting time of the task
-# # - ending time of the task (edited)
-#
-class Experiment3(models.Model):
-    video_id = models.CharField(max_length=20)
-    segment_id = models.IntegerField()
-    mturk_id = models.CharField(max_length=15)
-    timestamps = models.CharField(max_length=20)
-    comments = models.TextField()
-    start_time = models.CharField(max_length=20)
-    end_time = models.CharField(max_length=20)
-
-#
-#
-# class IntentionHit(models.Model):
 
 class Labels(models.Model):
     aId = models.CharField(max_length=20)
     wId = models.CharField(max_length=20)
-    timeUsed = models.FloatField()
-    start_time = models.CharField(max_length=40)
-    finish_time = models.CharField(max_length=40)
-    label_time = models.IntegerField()
+    video = models.ForeignKey(Video, null=True, blank=True)
+    segment = models.ForeignKey(Segment, null=True, blank=True)
+    label_time_in_whole = models.FloatField(default =-1)
+    label_time_in_video = models.FloatField(default =-1)
     arousal = models.FloatField()
     valence = models.FloatField()
 
