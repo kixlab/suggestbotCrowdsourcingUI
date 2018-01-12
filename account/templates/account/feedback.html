@@ -6,7 +6,7 @@
 {% endblock %}
 {% block body %}
 <div class="container footer">
-  <form method="post" id="feedback_form" action="/home/thankyou/" style='margin-bottom: 0px;'>
+  <!--<form method="post" id="feedback_form" style='margin-bottom: 0px;'>-->
   <h3>Feedback time</h3><hr/><br>
   <div>
     <p class="text" >Were you able to understand the context/situation of the video you were provided?</p>
@@ -18,8 +18,8 @@
 </div>
   <hr/>
     {% csrf_token %}
-    <button id="Submit_feedback" class="btn btn-dark btn-lg footer" type="submit" style="height:50px; width:100px">Submit</button>
-  </form>
+    <button id="Submit_feedback" class="btn btn-dark btn-lg footer" style="height:50px; width:100px">Submit</button>
+  <!--</form>-->
 </div>
 <script type="text/javascript">
 $("#Submit_feedback").click(function(event) {
@@ -29,7 +29,7 @@ $("#Submit_feedback").click(function(event) {
   $("#Submit_feedback").attr('method', 'POST');
   $("#Submit_feedback").attr('type', 'submit');
   feedbackSubmit();
-  //location.href = "/home/thankyou/";
+  location.href = "/home/thankyou/";
 });
 </script>
 {% endblock %}

@@ -42,6 +42,7 @@ function seek(e) {
 
     if(percent * vd_player.duration < time_value_last){
       vd_player.currentTime = percent * vd_player.duration;
+      console.log(vd_player.currentTime)
       updateProgressBar();
     }else{
       alert("You can only jump to the time you have seen before.")
@@ -53,14 +54,14 @@ function playPauseVideo() {
   if (vd_player.paused || vd_player.ended) {
     // Change the button to a pause button
     changeButtonType(btnPlayPause, 'pause');
-    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+    document.getElementById('playpauseimg').src="../../../../static/account/img/icon_round_pause.png";
     vd_player.play();
     return false
   }
   else {
     // Change the button to a play button
     changeButtonType(btnPlayPause, 'play');
-    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_play.png";
+    document.getElementById('playpauseimg').src="../../../../static/account/img/icon_round_play.png";
     vd_player.pause();
     return false
   }
@@ -124,7 +125,7 @@ function enable_tagging(add_tag=false) {
 
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
-  document.getElementById('playpauseimg').src="../../static/account/img/icon_round_play.png";
+  document.getElementById('playpauseimg').src="../../../../static/account/img/icon_round_play.png";
   vd_player.pause();
 }
 
@@ -173,7 +174,7 @@ $(document).ready(function(){
 
       // Change the button to a pause button
       changeButtonType(btnPlayPause, 'pause');
-      document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+      document.getElementById('playpauseimg').src="../../../../static/account/img/icon_round_pause.png";
       vd_player.play();
     }
     else{
@@ -200,7 +201,7 @@ $(document).ready(function(){
 
     // Change the button to a pause button
     changeButtonType(btnPlayPause, 'pause');
-    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+    document.getElementById('playpauseimg').src="../../../../static/account/img/icon_round_pause.png";
     vd_player.play();
   })
 
@@ -253,6 +254,7 @@ function blur_progress_bar(unblurred = false){
     $("#"+unblurred).css("opacity", "1")
     $("#tag-tooltip_"+unblurred).parent().parent().css("opacity", "1")
   }
+  $("#btnPlayPause").css('pointer-events', 'none')
 }
 function unblur_progress_bar(){
   $("#controls").css("opacity", "1")
@@ -260,4 +262,5 @@ function unblur_progress_bar(){
   $(".progressbar").css("opacity", "1")
   $(".tooltip").css("opacity", "1");
   $(".red_bar").css("opacity", "1")
+  $("#btnPlayPause").css('pointer-events', '')
 }

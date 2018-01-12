@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head %}
+
 <script src="{%static 'account/js/emotion_labeler.js'%}"></script>
 <script src="{%static 'account/js/tutorial.js'%}"></script>
 <script src="{%static 'account/js/tutorial1.js'%}"></script>
@@ -33,7 +34,7 @@ window.onload=function(){
       <h5>INSTRUCTIONS:</h5>
       <div class='row'>
         <div class='col-sm-1' style="display:inline-block">
-          <img id="figure_image" src="{% static 'account/img/customer_1.png' %}" style="height: 110px; display:block; margin: auto;">
+          <img id="figure_image" src="{% static 'account/img/target_figure/' %}{{video}}.png" style="height: 110px; display:block; margin: auto;">
         </div>
         <div class='col-sm-11' style="display:inline-block">
           <font size="2"><p class='compact_p'>&#8592; Please watch the video and pay attention to the emotions of the <em>person presented in the left <b>screenshot</em></b><br>
@@ -48,8 +49,10 @@ window.onload=function(){
       </div>
   <div class="container-fluid">
     <div class="row">
+      {% if condition == "manual" %}
       <h4>Context/Situation:</h4>
       <p>The girl’s mom is abusing her and she is kicked out of her home, living in the street even though she does not look like a homeless in her appearance.</p>
+      {% endif %}
       <hr><div class="col-md-6">
         <p class='compact_p'><font size="2">Play the video once you are ready (turn up the volume):</font><br></p>
 
@@ -57,7 +60,10 @@ window.onload=function(){
           <!-- Jean's change starts here -->
           <video class="embed-responsive-item" id="myVideo">
               {% load staticfiles %}
-              <source src="https://github.com/kixlab/suggestbotData/raw/master/grumpy_customer.mp4" type="video/mp4">
+              <script>
+
+              </script>
+              <source src="{%static 'account/media/' %}{{path}}.mp4" type="video/mp4">
               <source src="movie.ogg" type="video/ogg">
               Your browser does not support the video tag.
           </video>
@@ -238,6 +244,9 @@ $("#replay").on("click",function() {
       </div>
     </div>
   <script>
+  var video_condition = '{{path}}'.split("/")[0]
+  var video_file = '{{path}}'.split("/")[1]
+  console.log(video_condition, video_file)
   apply_tuto_content = function(tutostring,tutoimgname, keyword=false, keyword_explanation=false){
     if(keyword){
       tutostring = tutostring.replace(keyword, "<u>"+keyword+"</u><img src='{% static 'img/info-icon.png' %}' class='tutorial_keyword fa fa-info-circle' data-toggle='tooltip' title='"+keyword_explanation+"' data-placement='top' style='width:10px; height:10px; margin-bottom:8px; margin-left:2px;'></img>")

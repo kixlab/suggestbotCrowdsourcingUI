@@ -4,8 +4,8 @@ import os
 from moviepy.editor import VideoFileClip
 import datetime
 MAX_TASK_NUM = 3
-TASK_TIME_LIMIT = 30
-
+TASK_TIME_LIMIT = 60
+#generate video related meta data
 def Video_into_Database():
 
     Video.objects.all().delete()
@@ -17,6 +17,7 @@ def Video_into_Database():
         if os.path.isdir(os.path.join(path,foldername)):
             print(foldername)
             folderpath = os.path.join(path, foldername)
+            videos = []
             for filename in os.listdir(folderpath):
                 filepath = os.path.join(folderpath, filename)
 
@@ -29,6 +30,7 @@ def Video_into_Database():
                     if video_objects.count() ==0:
                         video_object = Video(video_name = split_filename[0], video_condition = foldername)
                         video_object.save()
+                        videos.append(video_object)
                     else:
                         video_object = video_objects[0]
                     #get the duration of the file
@@ -37,13 +39,16 @@ def Video_into_Database():
                     cur_count = int(filename[-6:-4])
                     newseg = Segment(video = video_object, file_name = filepath, sequence_num = cur_count, video_length=duration)
                     newseg.save()
-            generated_segments = Segment.objects.filter(video = video_object).order_by('sequence_num')
-            video_start = 0
-            for segment in generated_segments:
-                segment.start_time_in_whole = video_start
-                video_start = video_start + segment.video_length
-                segment.save()
-
+            for video in videos:
+                generated_segments = Segment.objects.filter(video = video).order_by('sequence_num')
+                video_start = 0
+                for segment in generated_segments:
+                    segment.start_time_in_whole = video_start
+                    video_start = video_start + segment.video_length
+                    print("video end",video_start)
+                    print("segment length", segment.video_length)
+                    segment.save()
+#mark that the task is being done
 def deployer(parameter, aId, wId):
     path = os.path.dirname(__file__)+"/static/account/media/"
     Taskmarker.objects.filter(done = False, start_time__lte = datetime.datetime.now()-datetime.timedelta(minutes=TASK_TIME_LIMIT)).delete()
@@ -68,15 +73,11 @@ def deployer(parameter, aId, wId):
                 segment = segments.get(sequence_num = already_marked[0]['segment__sequence_num'])
         taskmarker = Taskmarker(aId = aId, wId = wId, video = video, segment = segment)
         taskmarker.save()
-        filename = segment.file_name
-        return filename
+        filename = segment.file_name.split("/")
+        return filename[-1].split(".")[0]
     elif "manual" in parameter:
         #parameter should be videoname.mp4
-        path = os.path.join(path, "manual")
-        path = os.path.join(path, parameter)
-        return path
+        return parameter
     elif "single" in parameter:
         #parameter should be videoname.mp4
-        path = os.path.join(path, "manual")
-        path = os.path.join(path, parameter)
-        return path
+        return parameter

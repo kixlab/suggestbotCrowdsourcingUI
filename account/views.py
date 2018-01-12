@@ -13,7 +13,7 @@ import json
 import random
 import logging
 from .video_management import Video_into_Database, deployer
-
+from django.views.decorators.clickjacking import xframe_options_exempt
 #Video_into_Database()
 assign_queue = queue.Queue()
 
@@ -92,40 +92,62 @@ def updateAssignTable(video_location,duration):
         print ("Please check video location again")
 
 # Create your views here.
+@xframe_options_exempt
 def home(request):
     return(render(request,'account/home.html'))
 
+@xframe_options_exempt
 def about(request):
     return(render(request,'account/about.html'))
 
+@xframe_options_exempt
 def help(request):
     return(render(request,'account/help.html'))
 
+@xframe_options_exempt
 def introduction1(request, video_task):
+    if request.method == "POST":
+        video =  deployer(video_task, request.POST['assignmentId'], request.POST['workerId'])
+        print(video)
+        return HttpResponseRedirect('/home/self_emotion/'+video)
     return(render(request,'account/introduction1.html'))
 
-def self_emotion(request):
-
-    deployer("grumpycustomer_uniform", "workerid", "taskid")
+@xframe_options_exempt
+def self_emotion(request, video_task):
+    print(request.method)
+    if request.method == "POST":
+        if "uniform" in video_task:
+            category = "uniform"
+        elif "manual" in video_task:
+            category = "manual"
+        elif "single" in video_task:
+            category = "single"
+        return HttpResponseRedirect('/home/task/'+category+"/"+video_task)
     return(render(request,'account/self_emotion_tagging.html'))
 
-def task(request):
+@xframe_options_exempt
+def task(request, category, video_task):
     try:
         if request.GET['full'] == "True":
             return(render(request,'account/task.html', {"full":True}))
         else:
-            if assign_queue.empty() or assign_queue.qsize()<10:
-                updateQueue()
-            assignment = assign_queue.get()
+            assignment={
+                'condition' : category,
+                'path' : category+"/"+video_task,
+                'video' : video_task.split("_")[0]
+            }
             print (assignment)
             return(render(request,'account/task.html', assignment))
     except MultiValueDictKeyError:
-        if assign_queue.empty() or assign_queue.qsize()<10:
-            updateQueue()
-        assignment = assign_queue.get()
+        assignment={
+            'condition' : category,
+            'path' : category+"/"+video_task,
+            'video' : video_task.split("_")[0]
+        }
         print (assignment)
         return(render(request,'account/task.html', assignment))
 
+@xframe_options_exempt
 def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
@@ -183,6 +205,7 @@ def get(request):
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
 
+@xframe_options_exempt
 def getIntention(request):
     if request.method == 'POST':
         form = intentionform(request.POST)
@@ -197,9 +220,11 @@ def getIntention(request):
         form = intentionform()
         return(render(request,'account/intention.html', {'form': form}))
 
+@xframe_options_exempt
 def thankyou(request):
     return(render(request,'account/thankyou.html'))
 
+@xframe_options_exempt
 def feedback(request):
     # form = FeedbackForm(request.POST)
     # print(form)
@@ -305,21 +330,39 @@ def save_db(request):
                                     arousal=arousal,
                                     valence=valence)
         s.save()
+        print ("saved")
+        return (HttpResponse(status=200))
     elif t == "label":
         timeUsed = float(request.POST['timeUsed'])
         start_time = request.POST['start_time']
         finish_time = request.POST["finish_time"]
         result_json_string = json.loads(request.POST["result_json_string"])
+        video_file = request.POST['video_file']
+        video_condition = request.POST['video_condition']
+        video_name_full = video_file[:-2].split("_")
+        video = Video.objects.get(video_name = video_name_full[0], video_condition=video_name_full[1])
+        segment = Segment.objects.get(video = video, sequence_num = int(video_file[-2:]))
+        print(video, segment)
         for key,value in result_json_string.items():
             label_time = key
             arousal = value['aro']
             valence = value['val']
+            if video_condition=="uniform":
+                taskmarker, created = Taskmarker.objects.get_or_create(aId = aId,
+                                                                wId = wId,
+                                                                video = video,
+                                                                segment = segment,
+                                                                )
+                taskmarker.done = True
+                taskmarker.end_time = datetime.datetime.now()
+                taskmarker.save()
+
             label, created = Labels.objects.get_or_create(aId=aId,
                                                         wId=wId,
-                                                        timeUsed=timeUsed,
-                                                        start_time=start_time,
-                                                        finish_time=finish_time,
-                                                        label_time=label_time,
+                                                        video=video,
+                                                        segment=segment,
+                                                        label_time_in_video=float(label_time),
+                                                        label_time_in_whole=float(label_time)+segment.start_time_in_whole,
                                                         arousal=arousal,
                                                         valence=valence)
             print (label, created)
@@ -336,7 +379,7 @@ def save_db(request):
                                     feedback2=feedback2,
                                     feedback3=feedback3)
         f.save()
-
+        return (HttpResponseRedirect("/home/thankyou/"))
 
 
     # print (request.POST)

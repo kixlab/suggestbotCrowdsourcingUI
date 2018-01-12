@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block body %}
+<script src="{% static 'account/js/mturk.js' %}"></script>
 <div class="container footer">
 
 <h4>Emotion Tagging in Videos</h4><br>
@@ -51,7 +52,7 @@
     <div class="col-md-6" style="background-color: #efefef;">
       <br><p align="center">Demo Video</p>
       <div align="center" class="embed-responsive embed-responsive-16by9">
-        <video src="https://github.com/kixlab/suggestbotData/raw/master/tutorial_tag.mp4" type="video/mp4" autoplay controls style="height:100%; width:100%">
+        <video src="{% static 'account/media/tutorial_tag.mp4' %}" type="video/mp4" autoplay controls style="height:100%; width:100%">
           <source src="movie.ogg" type="video/ogg">
           Your browser does not support the video tag.
         </video>
@@ -65,8 +66,12 @@
   </div> -->
 </div>
 <div><hr>
-<a id="proceed_btn" class="btn btn-success btn-lg " role="button" style="color: white; float:center; margin-top:15px; margin-left:1000px; ">Proceed
-  <span class="glyphicon glyphicon-chevron-right"></span></a>
+<form method='post'>{% csrf_token %}
+<input id="intro_worker_id" type="text" style="display:none" name='workerId'>
+<input id="intro_assignment_id" type="text" style="display:none" name='assignmentId'>
+<input id="proceed_btn" class="btn btn-success btn-lg " name='submit' type='button' value="Proceed" style="color: white; float:center; margin-top:15px; margin-left:1000px; ">
+</input>
+</form>
 </div>
 </div>
 <!-- <script>
@@ -76,10 +81,10 @@
 }
 </script> -->
 <script>
-  $("#proceed_btn").on('click', function() {
+ $("#proceed_btn").on('click', function() {
     if ($("#checkBox-int2").prop('checked') && ($("#checkBox-int1").prop('checked'))){
       // useralert();
-      window.location.href = "/home/self_emotion/"
+      $("#proceed_btn").prop("type", "submit")
     }
     else {
       alert("Please read the instruction carefully and click all the checkboxes.")

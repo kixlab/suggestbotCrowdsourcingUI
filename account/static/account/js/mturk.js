@@ -47,6 +47,8 @@ function validateAndSubmit() { // added by Jean
     timeUsed : time_used,
     start_time : start_time,
     finish_time : finish_time,
+    video_file : video_file,
+    video_condition : video_condition,
     result_json_string: JSON.stringify(label_data_structure)
   };
 
@@ -82,10 +84,13 @@ function selfTagSubmit() { // added by Arti
     type: "POST",
     data: selfEmotiondataPackage,
     success: function(d) {
-      window.location.href = "/home/task/";
+    //  window.location.assign("/home/task/");
+      //window.location.href = '/home/task/';
+      //window.location = '/home/task';
       console.log("succeeded saving worker's self emotion tag to db");
     }
-  });
+  })
+
 }
 
 //submitting feedback form
@@ -110,7 +115,8 @@ function feedbackSubmit() { // added by Arti
     type: "POST",
     data: feedbackdataPackage,
     success: function(d) {
-      //window.location.href = "/home/thankyou/";
+      $("#mturk_form").submit();
+      alert("Thank you for submitting the task! Your HIT is being processed and evaluated as part of a quality check. You'll be paid soon.");
       console.log("succeeded saving worker's feedback to db");
     }
   });
@@ -127,6 +133,10 @@ $(document).ready(function () {
     validateAndSubmit();
     //window.location.href = '/account/feedback.html';
   });
+
+  //send workerId and assignmentId if it is introduction page
+  $("#intro_worker_id").val(gup("workerId"))
+  $("#intro_assignment_id").val(gup("assignmentId"))
 
   // is assigntmentId is a URL parameter
   if((aid = gup("assignmentId"))!="" && $(form_selector).length>0) {

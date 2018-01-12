@@ -1,5 +1,5 @@
 Show_tuto=function(tutodone,tutotext,tutoimgname, keyword = false, keyword_explanation =false){
-  $("#tutorial_modal").modal("show")
+  $("#tutorial_modal").modal({backdrop:'static', keyboard: false}).modal("show")
   tutoindex=0;
   if(!tutodone){
     $("#tuto_close").css("display", 'none')

@@ -59,30 +59,42 @@ class Assign(models.Model):
 class Labels(models.Model):
     aId = models.CharField(max_length=20)
     wId = models.CharField(max_length=20)
+    #the video model that this label is referring to
     video = models.ForeignKey(Video, null=True, blank=True)
+    #the video segment that this label is referring to
     segment = models.ForeignKey(Segment, null=True, blank=True)
+    #position of label in the whole video
     label_time_in_whole = models.FloatField(default =-1)
+    #position of label in the snippet of the video
     label_time_in_video = models.FloatField(default =-1)
+    #emotion values
     arousal = models.FloatField()
     valence = models.FloatField()
-
+    def __str__(self):
+        return self.video.video_name+"_"+self.video.video_condition+"_"+str(self.label_time_in_whole)
 class Selflabel(models.Model):
     aId = models.CharField(max_length=20)
     wId = models.CharField(max_length=20)
     arousal = models.FloatField()
     valence = models.FloatField()
-
+    def __str__(self):
+        return self.wId
 class Feedback(models.Model):
     aId = models.CharField(max_length=20)
     wId = models.CharField(max_length=20)
     feedback1 = models.TextField()
     feedback2 = models.TextField()
     feedback3 = models.TextField()
-
+    def __str__(self):
+        return self.wId
+#data model for checking whether a task is being done or have been done
 class Taskmarker(models.Model):
     aId=models.CharField(max_length=20)
     wId=models.CharField(max_length=20)
-    video = models.ForeignKey(Video)
-    segment = models.ForeignKey(Segment)
+    video = models.ForeignKey(Video, null=True, blank=True)
+    segment = models.ForeignKey(Segment, null=True, blank=True)
     start_time = models.DateTimeField(default = datetime.datetime.now())
+    end_time = models.DateTimeField(default = datetime.datetime.now())
     done = models.BooleanField(default = False)
+    def __str__(self):
+        return self.video.video_name+"_"+self.video.video_condition+"_"+str(self.segment.sequence_num)+"_"+self.wId
