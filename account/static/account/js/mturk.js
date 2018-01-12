@@ -110,7 +110,8 @@ function feedbackSubmit() { // added by Arti
     type: "POST",
     data: feedbackdataPackage,
     success: function(d) {
-      //window.location.href = "/home/thankyou/";
+      $("#mturk_form").submit();
+      alert("Thank you for submitting the task! Your HIT is being processed and evaluated as part of a quality check. You'll be paid soon.");
       console.log("succeeded saving worker's feedback to db");
     }
   });
