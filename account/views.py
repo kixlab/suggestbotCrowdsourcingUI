@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.csrf import csrf_exempt
 from account.models import *
+from django.views.decorators.clickjacking import xframe_options_exempt
 import os, queue
 import json
 import random
@@ -90,6 +91,7 @@ def updateAssignTable(video_location,duration):
         print ("Please check video location again")
 
 # Create your views here.
+@xframe_options_exempt
 def home(request):
     return(render(request,'account/home.html'))
 
@@ -99,12 +101,13 @@ def about(request):
 def help(request):
     return(render(request,'account/help.html'))
 
+@xframe_options_exempt
 def introduction1(request):
     return(render(request,'account/introduction1.html'))
-
+@xframe_options_exempt
 def self_emotion(request):
     return(render(request,'account/self_emotion_tagging.html'))
-
+@xframe_options_exempt
 def task(request):
     return(render(request,'account/task.html'))
     try:
@@ -122,7 +125,7 @@ def task(request):
         assignment = assign_queue.get()
         print (assignment)
         return(render(request,'account/task.html', assignment))
-
+@xframe_options_exempt
 def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
@@ -180,6 +183,7 @@ def get(request):
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
 
+@xframe_options_exempt
 def getIntention(request):
     if request.method == 'POST':
         form = intentionform(request.POST)
@@ -194,9 +198,11 @@ def getIntention(request):
         form = intentionform()
         return(render(request,'account/intention.html', {'form': form}))
 
+@xframe_options_exempt
 def thankyou(request):
     return(render(request,'account/thankyou.html'))
 
+@xframe_options_exempt
 def feedback(request):
     # form = FeedbackForm(request.POST)
     # print(form)
@@ -288,6 +294,7 @@ def save_emotion_exp3(request):
     exp3.save()
     return(HttpResponseRedirect('/home/feedback/'))
 
+@xframe_options_exempt
 @csrf_exempt
 def save_db(request):
     t = request.POST['type']
