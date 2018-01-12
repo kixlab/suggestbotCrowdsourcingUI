@@ -7,28 +7,28 @@ from django.db import models
 # 1) python manage.py makemigrations
 # 2) python manage.py migrate
 
-# class Data(models.Model):
-#     fig_id=models.IntegerField(default = 0, max_length=15)
-#     val1=models.IntegerField(max_length=20)
-#     val2=models.IntegerField(max_length=20)
-#     q1=models.CharField(max_length=200)
-#
-#     def __str__(self):
-#         return str(self.fig_id)+"_"+str(self.val1)+"_"+str(self.val2)
-#
-# class Intention(models.Model):
-#     mturk_id=models.CharField(max_length=15)
-#     val1=models.CharField(max_length=20)
-#     val2=models.CharField(max_length=50)
-#
-#     def __str__(self):
-#         return self.mturk_id
-#
-# class FeedbackModel(models.Model):
-#     text=models.CharField(max_length=500)
-#
-#     def __str__(self):
-#         return self.text
+class Data(models.Model):
+    fig_id=models.IntegerField(default = 0, max_length=15)
+    val1=models.IntegerField(max_length=20)
+    val2=models.IntegerField(max_length=20)
+    q1=models.CharField(max_length=200)
+
+    def __str__(self):
+        return str(self.fig_id)+"_"+str(self.val1)+"_"+str(self.val2)
+
+class Intention(models.Model):
+    mturk_id=models.CharField(max_length=15)
+    val1=models.CharField(max_length=20)
+    val2=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.mturk_id
+
+class FeedbackModel(models.Model):
+    text=models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.text
 
 class Assign(models.Model):
     # name of the video file
@@ -70,15 +70,15 @@ class EmotionHit(models.Model):
     length = models.TextField()
     elapsedtime = models.FloatField()
 
-# - video ID
-# - segment ID (or starting time?)
-# - worker ID
-# - assignment ID (mturk has this param for all HITs)
-# - time stamps (this should be a string of all time stamps a worker made)
-# - comments
-# - starting time of the task
-# - ending time of the task (edited)
-
+# # - video ID
+# # - segment ID (or starting time?)
+# # - worker ID
+# # - assignment ID (mturk has this param for all HITs)
+# # - time stamps (this should be a string of all time stamps a worker made)
+# # - comments
+# # - starting time of the task
+# # - ending time of the task (edited)
+#
 class Experiment3(models.Model):
     video_id = models.CharField(max_length=20)
     segment_id = models.IntegerField()
@@ -91,3 +91,26 @@ class Experiment3(models.Model):
 #
 #
 # class IntentionHit(models.Model):
+
+class Labels(models.Model):
+    aId = models.CharField(max_length=20)
+    wId = models.CharField(max_length=20)
+    timeUsed = models.FloatField()
+    start_time = models.CharField(max_length=40)
+    finish_time = models.CharField(max_length=40)
+    label_time = models.IntegerField()
+    arousal = models.FloatField()
+    valence = models.FloatField()
+
+class Selflabel(models.Model):
+    aId = models.CharField(max_length=20)
+    wId = models.CharField(max_length=20)
+    arousal = models.FloatField()
+    valence = models.FloatField()
+
+class Feedback(models.Model):
+    aId = models.CharField(max_length=20)
+    wId = models.CharField(max_length=20)
+    feedback1 = models.TextField()
+    feedback2 = models.TextField()
+    feedback3 = models.TextField()

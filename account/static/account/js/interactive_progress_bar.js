@@ -21,7 +21,10 @@ vd_player.addEventListener('pause', function() {
   changeButtonType(btnPlayPause, 'play');
 }, false);
 
-vd_player.addEventListener('ended', function() { this.pause(); }, false);
+vd_player.addEventListener('ended', function() {
+  $("#submitBtn").prop("disabled", false)
+  this.pause();
+ }, false);
 
 progressBar.addEventListener("click", seek);
 
@@ -31,6 +34,8 @@ function seek(e) {
     var percent;
     if(e.path[0].id=='progress-bar'){
       percent = e.offsetX / this.offsetWidth;
+    }else if(e.path[0].className.includes("red_bar")){
+      percent = ($("#"+e.path[0].id).position().left-$("#progress-bar").position().left+e.offsetX) / this.offsetWidth;
     }else{
       percent = (elem.offsetWidth + e.offsetX) / this.offsetWidth
     }
@@ -39,7 +44,7 @@ function seek(e) {
       vd_player.currentTime = percent * vd_player.duration;
       updateProgressBar();
     }else{
-      alert("h")
+      alert("You can only jump to the time you have seen before.")
     }
   }
 }
@@ -50,28 +55,32 @@ function playPauseVideo() {
     changeButtonType(btnPlayPause, 'pause');
     document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
     vd_player.play();
+    return false
   }
   else {
     // Change the button to a play button
     changeButtonType(btnPlayPause, 'play');
     document.getElementById('playpauseimg').src="../../static/account/img/icon_round_play.png";
     vd_player.pause();
+    return false
   }
 }
 
 // Update the progress bar
 function updateProgressBar() {
   // Work out how much of the media has played via the duration and currentTime parameters
-  if(vd_player.duration <= vd_player.currentTime){
-    $("#submit").prop("disabled", false)
-  }
-
+  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('update');
   var elem = document.getElementById("progress-bar");
   var percentage = Math.floor((100 / vd_player.duration) * vd_player.currentTime);
   if(time_value_last < vd_player.currentTime){
     time_value_last = vd_player.currentTime
   }
-  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
+
+  $("#tag-tooltip").parent().on("click", function(){
+    enable_tagging();
+  })
+
+
   // Update the progress bar's value
   $('#progress-bar').attr('aria-valuenow', percentage);
   var sub_bar_length = Math.floor((100/vd_player.duration) * (time_value_last))-percentage;
@@ -87,15 +96,31 @@ function changeButtonType(btn, value) {
   btn.className = value;
 }
 
-function enable_tagging() {
-  $("#interactive_progress_bar").css("opacity", "0.3");
-  $(".tooltip").css("opacity", "0.3");
+function enable_tagging(add_tag=false) {
+  blur_progress_bar(add_tag)
+  if(add_tag){
+    retrieve_data_from_data_structure(add_tag, 'labeler');
+  }else{
+    var st_time = parseInt(vd_player.currentTime).toString();
+    add_tag=retrieve_data_from_data_structure(st_time, 'labeler');
+    if(add_tag){
+      revise_tag=st_time
+    }
+  }
+  //$("#interactive_progress_bar").css("opacity", "0.3");
+  //$(".tooltip").css("opacity", "0.3");
   var elem1 = document.getElementById("label_pane");
   elem1.setAttribute("style","pointer-events: auto;");
-
+  if(add_tag!=false){
+    $("#Add_button").text("Revise")
+    $("#Delete_button").text("Delete")
+  }else{
+    $("#Add_button").text("Add")
+    $("#Delete_button").text("Cancel")
+  }
   $('#Add_button').prop("disabled", false);
-  $("#labeler").css("opacity", "1");
-
+  $('#Delete_button').prop("disabled", false);
+  $("#label_pane").css("opacity", 1);
 
   // Change the button to a play button
   changeButtonType(btnPlayPause, 'play');
@@ -103,27 +128,48 @@ function enable_tagging() {
   vd_player.pause();
 }
 
+function revise_tagging(string_time){
+  revise_tag = string_time;
+  enable_tagging(revise_tag);
+  //$('body').prepend($("#"+string_time))
+
+
+}
+
 $(document).ready(function(){
-  submit_stringify_value()
+  //submit_stringify_value()
   var elem = document.getElementById("label_pane");
   elem.setAttribute("style","pointer-events: none;");
-
+  $("#label_pane").css("opacity", 0.3);
+  $('#pr-bar-tooltip').tooltip({trigger: 'manual'}).tooltip('show');
+  $(".tooltip").css("z-index", "0")
   // tagging happens here ! //////////////////////
   $("#Add_button").click(function(){
 
     if (select_dic['labeler']) {
-      $("#interactive_progress_bar").css("opacity", "1");
-      $(".tooltip").css("opacity", "1")
-      var string_time = parseInt(vd_player.currentTime).toString()
+      unblur_progress_bar()
+      //$("#interactive_progress_bar").css("opacity", "1");
+      //$(".tooltip").css("opacity", "1")
+
+      if (revise_tag){
+        var string_time = revise_tag;
+      }else{
+        var string_time = parseInt(vd_player.currentTime).toString();
+        // add red bar div in progress bar
+        if(label_data_structure[string_time]==null){
+          create_red_bar_div(string_time);
+        }
+
+      }
+      revise_tag = 0;
+
       add_data_to_data_structure(string_time, 'labeler')
       $('#Add_button').prop("disabled", true);
-      $("#labeler").css("opacity", "0.3");
+      $('#Delete_button').prop("disabled", true);
       var elem = document.getElementById("label_pane");
       elem.setAttribute("style","pointer-events: none;");
+      $("#label_pane").css("opacity", 0.3);
       delete_value_circle('labeler')
-
-      // add red bar div in progress bar
-      create_red_bar_div(string_time);
 
       // Change the button to a pause button
       changeButtonType(btnPlayPause, 'pause');
@@ -134,12 +180,31 @@ $(document).ready(function(){
       alert("Please label emotion of the character.");
     }
   });
+  $("#Delete_button").click(function(){
+    unblur_progress_bar()
+    if (revise_tag){
+      var string_time = revise_tag;
+      delete_red_bar_div(string_time);
+    }else{
+      var string_time = parseInt(vd_player.currentTime).toString();
+      // add red bar div in progress bar
+    }
+    revise_tag = 0;
+    delete_data_from_data_structure(string_time)
+    $('#Add_button').prop("disabled", true);
+    $('#Delete_button').prop("disabled", true);
+    var elem = document.getElementById("label_pane");
+    elem.setAttribute("style","pointer-events: none;");
+    $("#label_pane").css("opacity", 0.3);
+    delete_value_circle('labeler')
+
+    // Change the button to a pause button
+    changeButtonType(btnPlayPause, 'pause');
+    document.getElementById('playpauseimg').src="../../static/account/img/icon_round_pause.png";
+    vd_player.play();
+  })
 
 });
-
-function revise_tagging(string_time){
-  retrieve_data_from_data_structure(string_time);
-}
 
 function create_red_bar_div(string_time){
 
@@ -155,10 +220,11 @@ function create_red_bar_div(string_time){
   div.style.left = barlocation + 'px';
   //div.style.pointerEvents = "none";
   div.id = string_time;
-  div.title = "<a href='#' id='tag-tooltip' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
+  div.title = "<a href='#' id='tag-tooltip_"+string_time+"' style='color:red' onclick='revise_tagging(" + string_time + ")'>H</a>";
   //div.title = 'H';
 
   document.getElementById("progress").appendChild(div);
+  $("#"+string_time).addClass("red_bar")
 
   div.setAttribute("data-placement", "top");       // Create a "class" attribute
 
@@ -169,4 +235,29 @@ function create_red_bar_div(string_time){
     template: '<div class="tooltip red-tooltip"><div class="tooltip-inner"></div><div class="tooltip-arrow"></div></div>'
   }).tooltip('show');
 
+}
+
+function delete_red_bar_div(string_time){
+  $("#tag-tooltip_"+string_time).parent().parent().remove()
+  $("#"+string_time).remove()
+
+}
+
+function blur_progress_bar(unblurred = false){
+  $("#controls").css("opacity", "0.3")
+  $("#progress").css("background-color", "rgba(233, 236, 239, 0.3)")
+  $(".progressbar").css("opacity", "0.3")
+  $(".tooltip").css("opacity", "0.3");
+  $(".red_bar").css("opacity", "0.3")
+  if(unblurred!=false){
+    $("#"+unblurred).css("opacity", "1")
+    $("#tag-tooltip_"+unblurred).parent().parent().css("opacity", "1")
+  }
+}
+function unblur_progress_bar(){
+  $("#controls").css("opacity", "1")
+  $("#progress").css("background-color", "rgba(233, 236, 239, 1)")
+  $(".progressbar").css("opacity", "1")
+  $(".tooltip").css("opacity", "1");
+  $(".red_bar").css("opacity", "1")
 }

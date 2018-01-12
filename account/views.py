@@ -6,10 +6,12 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.utils.datastructures import MultiValueDictKeyError
+from django.views.decorators.csrf import csrf_exempt
 from account.models import *
 import os, queue
 import json
 import random
+import logging
 
 assign_queue = queue.Queue()
 
@@ -89,7 +91,7 @@ def updateAssignTable(video_location,duration):
 
 # Create your views here.
 def home(request):
-    return(render(request,'account/base_v_2.html'))
+    return(render(request,'account/home.html'))
 
 def about(request):
     return(render(request,'account/about.html'))
@@ -99,6 +101,9 @@ def help(request):
 
 def introduction1(request):
     return(render(request,'account/introduction1.html'))
+
+def self_emotion(request):
+    return(render(request,'account/self_emotion_tagging.html'))
 
 def task(request):
     try:
@@ -121,6 +126,29 @@ def get(request):
     if request.method == 'POST':
         form = testform(request.POST)
         if form.is_valid():
+
+            print("AAA")
+            data1=models.Data()
+            data1.fig_id=1
+            data1.val1 = int(form.cleaned_data['val1_1'])
+            data1.val2 = int(form.cleaned_data['val1_2'])
+            data1.q1 = form.cleaned_data['q1_1']
+            data1.save()
+            data2=models.Data()
+            data2.fig_id=2
+            data2.val1 = int(form.cleaned_data['val2_1'])
+            data2.val2 = int(form.cleaned_data['val2_2'])
+            data2.q1 = form.cleaned_data['q2_1']
+            data2.save()
+            data2.save()
+            #elapsedtime
+            elapsedtime = float(form.cleaned_data['elapsedtime'])
+            print(elapsedtime)
+        # if(token== True):
+        #     return(HttpResponseRedirect('/home/task/'))
+        # else:
+        #     return(HttpResponseRedirect('/home/feedback/'))
+        #
             emotion=EmotionHit.objects.create(mturk_id = form.cleaned_data['mturk_id'],
                                             positivity1=float(form.cleaned_data['positivity1']),
                                             excitement1 = float(form.cleaned_data['excitement1']),
@@ -146,6 +174,7 @@ def get(request):
             return(HttpResponseRedirect('/home/task?full=True'))
         else:
             return(HttpResponseRedirect('/home/feedback/'))
+
     else:
         form = testform()
         return(render(request,'account/questionaire.html', {'form': form}))
@@ -168,16 +197,18 @@ def thankyou(request):
     return(render(request,'account/thankyou.html'))
 
 def feedback(request):
-    form = FeedbackForm(request.POST)
-    print(form)
-    if request.method == 'POST':
-        # if form.is_valid():
-            # feed_data=models.FeedbackModel()
-            # #data.q1 = form.cleaned_data['q1'
-            # feed_data.text = form.cleaned_data['text']
-            # args = {'form': feed_data}
-            # feed_data.save()
-        return(HttpResponseRedirect('/home/thankyou/'))
+    # form = FeedbackForm(request.POST)
+    # print(form)
+    # print(request.action)
+    # if (request.method == 'POST'):
+    #     print("feedback post method")
+    #     # if form.is_valid():
+    #         # feed_data=models.FeedbackModel()
+    #         # #data.q1 = form.cleaned_data['q1'
+    #         # feed_data.text = form.cleaned_data['text']
+    #         # args = {'form': feed_data}
+    #         # feed_data.save()
+    #     return(HttpResponseRedirect('/home/thankyou/'))
     return(render(request,'account/feedback.html'))
 
 def retrieve_emotion_data(request):
@@ -255,3 +286,56 @@ def save_emotion_exp3(request):
                                     timestamps=timestamps,comments=comments,start_time=start_time,end_time=end_time)
     exp3.save()
     return(HttpResponseRedirect('/home/feedback/'))
+
+@csrf_exempt
+def save_db(request):
+    t = request.POST['type']
+    aId = request.POST['aID']
+    wId = request.POST['wID']
+    if t == "selftag":
+        js = json.loads(request.POST["result_json_string"])
+        arousal = js['aro_self']
+        valence = js['val_self']
+        s = Selflabel.objects.create(aId=aId,
+                                    wId=wId,
+                                    arousal=arousal,
+                                    valence=valence)
+        s.save()
+    elif t == "label":
+        timeUsed = float(request.POST['timeUsed'])
+        start_time = request.POST['start_time']
+        finish_time = request.POST["finish_time"]
+        result_json_string = json.loads(request.POST["result_json_string"])
+        for key,value in result_json_string.items():
+            label_time = key
+            arousal = value['aro']
+            valence = value['val']
+            label, created = Labels.objects.get_or_create(aId=aId,
+                                                        wId=wId,
+                                                        timeUsed=timeUsed,
+                                                        start_time=start_time,
+                                                        finish_time=finish_time,
+                                                        label_time=label_time,
+                                                        arousal=arousal,
+                                                        valence=valence)
+            print (label, created)
+            if created:
+                label.save()
+    elif t == "feedback":
+        js = json.loads(request.POST["result_json_string"])
+        feedback1 = js['q1']
+        feedback2 = js['q2']
+        feedback3 = js['q3']
+        f = Feedback.objects.create(aId=aId,
+                                    wId=wId,
+                                    feedback1=feedback1,
+                                    feedback2=feedback2,
+                                    feedback3=feedback3)
+        f.save()
+
+
+
+    # print (request.POST)
+    # return (HttpResponseRedirect("/home/thankyou/"))
+    print("save db on")
+    return (HttpResponse(status=204))

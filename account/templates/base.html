@@ -17,8 +17,8 @@
   </head>
   <body>
   <div >
-    <nav class="navbar  navbar-dark bg-dark">
-        <button type="button" class="btn btn-outline-success btn-lg " id="help_button" style="float:right" data-toggle="modal" data-target="#helpDialouge">How to Tag</button>
+    <nav class="navbar  navbar-dark bg-dark" style="height:40px">
+        <button type="button" class="btn btn-outline-success btn-sm " id="help_button" style="float:right" data-toggle="modal" data-target="#helpDialouge">How to Tag</button>
         <div id="helpDialouge" class="modal fade" role="dialog">
           <div class="modal-dialog">
 
@@ -28,9 +28,18 @@
                 <h4 class="modal-title">Emotion Video Labeling</h4>
               </div>
               <div class="modal-body">
-                <p> You will watch video in which different actors express several emotions during a short speech-like utterance. Your task is to select the emotion which best describes the emotion the actor wanted to express in the respective video. While it is often quite clear which emotion is intended, in some cases the actors use fairly subtle expressions and it is more difficult to judge which emotion is shown. If this is the case, just trust your intuition and guess which emotion might be expressed. Please put on your earphones to hear the sound.
-                </p>
-                <video src="{% static 'account/media/videos/tutorial_vid.mp4' %}" type="video/mp4" autoplay controls style="height:500px; width:700px">
+                <h4>Instructions</h4>
+                <ol type="1">
+                  <li>You have to tag the emotions by estimating valence and arousal intensities of the actor/actress.<br>
+                    <!--b>Valence:</b> signifies if the emotion ilicited in the person is positive or negative. <br-->
+                    <ul><li><strong>Valence</strong> means the intrinsic "good"-ness (positive valence) or "bad"-ness (negative valence) of a person's emotion.<br>
+                    <small>Some examples: <b>Joy</b> is <b>Positive</b> and <b>Anger</b> is <b>Negative</b></small><br></li>
+                    <li><strong>Arousal</strong> is the physiological and psychological state of being awoken or stimulated.<br>
+                      <!--b>Arousal:</b> potential bodily activity/inactivity of the person <br-->
+                    <small>Some Examples: <b>Excited</b> is <b>high</b> and <b>Sad</b> is <b>low</b></small><br></ul></li></li>
+                  <li>You have to click on the location on the two-dimensional emotion pane that best maps the actor/actress's emotion. Please consider the intensity of Valence and Arousal when you do the task. Intensity increases as it moves towards the rim.</li>
+                </ol>
+                <video src="{%static 'account/media/new_tutorial.mp4'%}" type="video/mp4" autoplay controls style="height:500px; width:700px">
                   <source src="movie.ogg" type="video/ogg">
                   Your browser does not support the video tag.
                 </video>
