@@ -301,6 +301,8 @@ def save_db(request):
                                     arousal=arousal,
                                     valence=valence)
         s.save()
+        print ("saved")
+        return (HttpResponse(status=200))
     elif t == "label":
         timeUsed = float(request.POST['timeUsed'])
         start_time = request.POST['start_time']
