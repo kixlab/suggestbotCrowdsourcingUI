@@ -41,6 +41,7 @@ function validateAndSubmit() { // added by Jean
 
   // assembling data package
   var dataPackage = { //::: TODO: change here [start] :::
+    type: 'label',
     aID : assignmentID,
     wID : workerID,
     timeUsed : time_used,
@@ -70,6 +71,7 @@ function selfTagSubmit() { // added by Arti
 
   // assembling data package
   var selfEmotiondataPackage = { //::: TODO: change here [start] :::
+    type: "selftag",
     aID : assignmentID,
     wID : workerID,
     result_json_string: JSON.stringify(selflabel_data_structure)
@@ -80,6 +82,7 @@ function selfTagSubmit() { // added by Arti
     type: "POST",
     data: selfEmotiondataPackage,
     success: function(d) {
+      window.location.href = "/home/task/";
       console.log("succeeded saving worker's self emotion tag to db");
     }
   });
@@ -96,6 +99,7 @@ function feedbackSubmit() { // added by Arti
 
   // assembling data package
   var feedbackdataPackage = { //::: TODO: change here [start] :::
+    type: "feedback",
     aID : assignmentID,
     wID : workerID,
     result_json_string: JSON.stringify(feedback_data_structure)
@@ -106,7 +110,8 @@ function feedbackSubmit() { // added by Arti
     type: "POST",
     data: feedbackdataPackage,
     success: function(d) {
-      //window.location.href = "/home/thankyou/";
+      $("#mturk_form").submit();
+      alert("Thank you for submitting the task! Your HIT is being processed and evaluated as part of a quality check. You'll be paid soon.");
       console.log("succeeded saving worker's feedback to db");
     }
   });

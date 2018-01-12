@@ -296,28 +296,53 @@ def save_emotion_exp3(request):
 @xframe_options_exempt
 @csrf_exempt
 def save_db(request):
+    t = request.POST['type']
+    aId = request.POST['aID']
+    wId = request.POST['wID']
+    if t == "selftag":
+        js = json.loads(request.POST["result_json_string"])
+        arousal = js['aro_self']
+        valence = js['val_self']
+        s = Selflabel.objects.create(aId=aId,
+                                    wId=wId,
+                                    arousal=arousal,
+                                    valence=valence)
+        s.save()
+    elif t == "label":
+        timeUsed = float(request.POST['timeUsed'])
+        start_time = request.POST['start_time']
+        finish_time = request.POST["finish_time"]
+        result_json_string = json.loads(request.POST["result_json_string"])
+        for key,value in result_json_string.items():
+            label_time = key
+            arousal = value['aro']
+            valence = value['val']
+            label, created = Labels.objects.get_or_create(aId=aId,
+                                                        wId=wId,
+                                                        timeUsed=timeUsed,
+                                                        start_time=start_time,
+                                                        finish_time=finish_time,
+                                                        label_time=label_time,
+                                                        arousal=arousal,
+                                                        valence=valence)
+            print (label, created)
+            if created:
+                label.save()
+    elif t == "feedback":
+        js = json.loads(request.POST["result_json_string"])
+        feedback1 = js['q1']
+        feedback2 = js['q2']
+        feedback3 = js['q3']
+        f = Feedback.objects.create(aId=aId,
+                                    wId=wId,
+                                    feedback1=feedback1,
+                                    feedback2=feedback2,
+                                    feedback3=feedback3)
+        f.save()
+
+
+
     # print (request.POST)
     # return (HttpResponseRedirect("/home/thankyou/"))
     print("save db on")
-    aId = request.POST['aID']
-    wId = request.POST['wID']
-    timeUsed = float(request.POST['timeUsed'])
-    start_time = request.POST['start_time']
-    finish_time = request.POST["finish_time"]
-    result_json_string = json.loads(request.POST["result_json_string"])
-    for key,value in result_json_string.items():
-        label_time = key
-        arousal = value['aro']
-        valence = value['val']
-        label, created = Labels.objects.get_or_create(aId=aId,
-                                                    wId=wId,
-                                                    timeUsed=timeUsed,
-                                                    start_time=start_time,
-                                                    finish_time=finish_time,
-                                                    label_time=label_time,
-                                                    arousal=arousal,
-                                                    valence=valence)
-        print (label, created)
-        if created:
-            label.save()
     return (HttpResponse(status=204))
