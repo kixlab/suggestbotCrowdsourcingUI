@@ -85,6 +85,9 @@ function selfTagSubmit() { // added by Arti
       window.location.href = "/home/task/";
       console.log("succeeded saving worker's self emotion tag to db");
     }
+  })
+  .done(function() {
+    window.location.href = "/home/task/"
   });
 }
 
