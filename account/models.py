@@ -101,3 +101,16 @@ class Labels(models.Model):
     label_time = models.IntegerField()
     arousal = models.FloatField()
     valence = models.FloatField()
+
+class Selflabel(models.Model):
+    aId = models.CharField(max_length=20)
+    wId = models.CharField(max_length=20)
+    arousal = models.FloatField()
+    valence = models.FloatField()
+
+class Feedback(models.Model):
+    aId = models.CharField(max_length=20)
+    wId = models.CharField(max_length=20)
+    feedback1 = models.TextField()
+    feedback2 = models.TextField()
+    feedback3 = models.TextField()
