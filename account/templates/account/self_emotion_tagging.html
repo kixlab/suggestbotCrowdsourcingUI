@@ -45,7 +45,7 @@
 
     <div><hr>
       <!-- <button id='Selftag_Add' class='btn btn-primary btn-sm' style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:950px;">Done</button><hr> -->
-      <form id="selftag_form" method='POST' style='margin-bottom: 0px;'>
+      <form id="selftag_form" method='POST' action='/home/task/' style='margin-bottom: 0px;'>
         {% csrf_token %}
         <button class="btn btn-success btn-lg " type="submit" id="Selftag_submit" style="display:block; margin:auto; margin-top:0px; padding: .1rem 1rem; margin-left:850px; " disabled>Proceed</button>
         <!-- <span class="glyphicon glyphicon-chevron-right"></span></a> -->
