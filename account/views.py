@@ -106,6 +106,7 @@ def self_emotion(request):
     return(render(request,'account/self_emotion_tagging.html'))
 
 def task(request):
+    return(render(request,'account/task.html'))
     try:
         if request.GET['full'] == "True":
             return(render(request,'account/task.html', {"full":True}))
