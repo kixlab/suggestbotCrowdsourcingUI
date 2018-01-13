@@ -127,6 +127,7 @@ def self_emotion(request, video_task):
 
 @xframe_options_exempt
 def task(request, category, video_task):
+    video = Video.objects.get(video_name = video_task.split("_")[0], video_condition = category)
     try:
         if request.GET['full'] == "True":
             return(render(request,'account/task.html', {"full":True}))
@@ -134,7 +135,8 @@ def task(request, category, video_task):
             assignment={
                 'condition' : category,
                 'path' : category+"/"+video_task,
-                'video' : video_task.split("_")[0]
+                'video' : video_task.split("_")[0],
+                'summary' : video.summary,
             }
             print (assignment)
             return(render(request,'account/task.html', assignment))
@@ -142,7 +144,8 @@ def task(request, category, video_task):
         assignment={
             'condition' : category,
             'path' : category+"/"+video_task,
-            'video' : video_task.split("_")[0]
+            'video' : video_task.split("_")[0],
+            'summary' : video.summary,
         }
         print (assignment)
         return(render(request,'account/task.html', assignment))

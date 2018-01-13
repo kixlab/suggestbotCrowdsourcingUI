@@ -11,7 +11,8 @@ import datetime
 # one video meta data with its experiment condition (A, B, C)
 class Video(models.Model):
     video_name = models.CharField(max_length=50, default = "")
-    video_condition = models.CharField(max_length=3)
+    video_condition = models.CharField(max_length=20)
+    summary = models.TextField(default="")
     def __str__(self):
         return self.video_name+"_"+self.video_condition
 
