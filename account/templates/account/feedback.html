@@ -26,9 +26,10 @@ $("#Submit_feedback").click(function(event) {
   // force submit
   add_feedback_to_data_structure(document.getElementById('feedback1').value, document.getElementById('feedback2').value, document.getElementById('feedback3').value);
   console.log("Submit feedback");
-  $("#Submit_feedback").attr('method', 'POST');
-  $("#Submit_feedback").attr('type', 'submit');
+  //$("#Submit_feedback").attr('method', 'POST');
+  //$("#Submit_feedback").attr('type', 'submit');
   feedbackSubmit();
+  console.log("heh")
   location.href = "/home/thankyou/";
 });
 </script>
