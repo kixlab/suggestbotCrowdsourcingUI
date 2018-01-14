@@ -18,7 +18,7 @@ class Video(models.Model):
 
 # one video segment
 class Segment(models.Model):
-    video = models.ForeignKey(Video)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
     file_name = models.CharField(max_length=50, default = "")
     sequence_num = models.IntegerField(default = -1)
     #How long the video
@@ -61,9 +61,9 @@ class Labels(models.Model):
     aId = models.CharField(max_length=20)
     wId = models.CharField(max_length=20)
     #the video model that this label is referring to
-    video = models.ForeignKey(Video, null=True, blank=True)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, blank=True)
     #the video segment that this label is referring to
-    segment = models.ForeignKey(Segment, null=True, blank=True)
+    segment = models.ForeignKey(Segment, on_delete=models.CASCADE, null=True, blank=True)
     #position of label in the whole video
     label_time_in_whole = models.FloatField(default =-1)
     #position of label in the snippet of the video
@@ -92,8 +92,8 @@ class Feedback(models.Model):
 class Taskmarker(models.Model):
     aId=models.CharField(max_length=20)
     wId=models.CharField(max_length=20)
-    video = models.ForeignKey(Video, null=True, blank=True)
-    segment = models.ForeignKey(Segment, null=True, blank=True)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, blank=True)
+    segment = models.ForeignKey(Segment, on_delete=models.CASCADE, null=True, blank=True)
     start_time = models.DateTimeField(default = datetime.datetime.now())
     end_time = models.DateTimeField(default = datetime.datetime.now())
     done = models.BooleanField(default = False)
