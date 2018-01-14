@@ -27,8 +27,8 @@ function gup(name) {
   else return unescape(results[1]);
 }
 
-var assignmentID = gup("assignmentId");
-var workerID = gup("workerId");
+//var assignmentID = gup("assignmentId");
+//var workerID = gup("workerId");
 
 function validateAndSubmit() { // added by Jean
   // collecting information
@@ -45,8 +45,8 @@ function validateAndSubmit() { // added by Jean
   // assembling data package
   var dataPackage = { //::: TODO: change here [start] :::
     type: 'label',
-    aID : assignmentID,
-    wID : workerID,
+    aID : localStorage.getItem('assignmentID'),
+    wID : localStorage.getItem('workerID'),
     timeUsed : time_used,
     start_time : start_time,
     finish_time : finish_time,
@@ -77,8 +77,8 @@ function selfTagSubmit() { // added by Arti
   // assembling data package
   var selfEmotiondataPackage = { //::: TODO: change here [start] :::
     type: "selftag",
-    aID : assignmentID,
-    wID : workerID,
+    aID : localStorage.getItem('assignmentID'),
+    wID : localStorage.getItem('workerID'),
     result_json_string: JSON.stringify(selflabel_data_structure)
   };
 
@@ -108,8 +108,8 @@ function feedbackSubmit() { // added by Arti
   // assembling data package
   var feedbackdataPackage = { //::: TODO: change here [start] :::
     type: "feedback",
-    aID : assignmentID,
-    wID : workerID,
+    aID : localStorage.getItem('assignmentID'),
+    wID : localStorage.getItem('workerID'),
     result_json_string: JSON.stringify(feedback_data_structure)
   };
 
@@ -138,8 +138,8 @@ $(document).ready(function () {
   });
 
   //send workerId and assignmentId if it is introduction page
-  $("#intro_worker_id").val(gup("workerId"))
-  $("#intro_assignment_id").val(gup("assignmentId"))
+  $("#intro_worker_id").val(localStorage.getItem('workerID'))
+  $("#intro_assignment_id").val(localStorage.getItem('assignmentID'))
 
   // is assigntmentId is a URL parameter
   if((aid = localStorage.getItem('assignmentID'))!="" && $(form_selector).length>0) {
@@ -152,14 +152,14 @@ $(document).ready(function () {
     // Add a new hidden input element with name="assignmentId" that
     // with assignmentId as its value.
     var aid_input = $("<input type='hidden' name='assignmentId' value='" + aid + "'>").appendTo($(form_selector));
-    var workerId_input = $("<input type='hidden' name='workerId' value='" + gup("workerId") + "'>").appendTo($(form_selector));
-    var hitId_input = $("<input type='hidden' name='hitId' value='" + gup("hitId") + "'>").appendTo($(form_selector));
+    var workerId_input = $("<input type='hidden' name='workerId' value='" + localStorage.getItem('workerID') + "'>").appendTo($(form_selector));
+    var hitId_input = $("<input type='hidden' name='hitId' value='" + localStorage.getItem('hitID') + "'>").appendTo($(form_selector));
 
     // Make sure the submit form's method is POST
     $(form_selector).attr('method', 'POST');
 
     // Set the Action of the form to the provided "turkSubmitTo" field
-    if((submit_url=gup("turkSubmitTo"))!="") {
+    if((submit_url=localStorage.getItem('turkSubmitTo'))!="") {
         $(form_selector).attr('action', submit_url + '/mturk/externalSubmit');
     }
   }

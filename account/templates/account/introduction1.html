@@ -97,7 +97,10 @@
 if(localStorage){
         // Store data
         localStorage.setItem("assignmentID", gup("assignmentId"));
-            // Retrieve data
+        localStorage.setItem("hitID", gup("hitId"));
+        localStorage.setItem("workerID", gup("workerId"));
+        localStorage.setItem("turkSubmitTo", gup("turkSubmitTo"));
+        // Retrieve data
             //alert("Hi, " + localStorage.getItem("assignmentID"));
 } else{
         alert("Sorry, your browser do not support local storage.");
