@@ -19,7 +19,7 @@ assign_queue = queue.Queue()
 
 def updateQueue():
     global assign_queue
-    #print ("updateQueue yes")
+    print ("updateQueue yes")
     all_entries = Assign.objects.all().filter(done=0).order_by("?")
     for i in all_entries:
         if not assign_queue.full():
@@ -31,7 +31,7 @@ def updateQueue():
             assign_queue.put(assignment)
         else:
             break
-    #print ("assigned")
+    print ("assigned")
 
 def generateFakeData():
     all_entries = list(Assign.objects.all().order_by("?"))
@@ -88,7 +88,8 @@ def updateAssignTable(video_location,duration):
                 continue
             assign = Assign.objects.create(vname=vname,start=start,full=False, seq=i*2+1)
             assign.save()
-
+    else:
+        print ("Please check video location again")
 
 # Create your views here.
 @xframe_options_exempt
@@ -107,13 +108,13 @@ def help(request):
 def introduction1(request, video_task):
     if request.method == "POST":
         video =  deployer(video_task, request.POST['assignmentId'], request.POST['workerId'])
-        #print(video)
+        print(video)
         return HttpResponseRedirect('/home/self_emotion/'+video)
     return(render(request,'account/introduction1.html'))
 
 @xframe_options_exempt
 def self_emotion(request, video_task):
-    #print(request.method)
+    print(request.method)
     if request.method == "POST":
         if "uniform" in video_task:
             category = "uniform"
@@ -137,7 +138,7 @@ def task(request, category, video_task):
                 'video' : video_task.split("_")[0],
                 'summary' : video.summary,
             }
-            #print (assignment)
+            print (assignment)
             return(render(request,'account/task.html', assignment))
     except MultiValueDictKeyError:
         assignment={
@@ -146,7 +147,7 @@ def task(request, category, video_task):
             'video' : video_task.split("_")[0],
             'summary' : video.summary,
         }
-        #print (assignment)
+        print (assignment)
         return(render(request,'account/task.html', assignment))
 
 @xframe_options_exempt
@@ -155,7 +156,7 @@ def get(request):
         form = testform(request.POST)
         if form.is_valid():
 
-            #print("AAA")
+            print("AAA")
             data1=models.Data()
             data1.fig_id=1
             data1.val1 = int(form.cleaned_data['val1_1'])
@@ -171,7 +172,7 @@ def get(request):
             data2.save()
             #elapsedtime
             elapsedtime = float(form.cleaned_data['elapsedtime'])
-            #print(elapsedtime)
+            print(elapsedtime)
         # if(token== True):
         #     return(HttpResponseRedirect('/home/task/'))
         # else:
@@ -244,7 +245,7 @@ def feedback(request):
 
 def retrieve_emotion_data(request):
     video_name = request.GET.get("video_name")
-    #print (video_name)
+    print (video_name)
     assigns = Assign.objects.filter(vname=video_name, full=False)
     data_to_return=[]
     for assign in assigns:
@@ -291,7 +292,7 @@ def retrieve_emotion_data(request):
     data ={
         'data' : json.dumps(data_to_return)
     }
-    #print (data_to_return)
+    print (data_to_return)
     return JsonResponse(data)
 #updateAssignTable("./account/static/account/media/grumpy_customer.mp4",120)
 
@@ -332,7 +333,7 @@ def save_db(request):
                                     arousal=arousal,
                                     valence=valence)
         s.save()
-        #print ("saved")
+        print ("saved")
         return (HttpResponse(status=200))
     elif t == "label":
         timeUsed = float(request.POST['timeUsed'])
@@ -344,7 +345,7 @@ def save_db(request):
         video_name_full = video_file[:-2].split("_")
         video = Video.objects.get(video_name = video_name_full[0], video_condition=video_name_full[1])
         segment = Segment.objects.get(video = video, sequence_num = int(video_file[-2:]))
-        #print(video, segment)
+        print(video, segment)
         for key,value in result_json_string.items():
             label_time = key
             arousal = value['aro']
@@ -367,7 +368,7 @@ def save_db(request):
                                                         label_time_in_whole=float(label_time)+segment.start_time_in_whole,
                                                         arousal=arousal,
                                                         valence=valence)
-            #print (label, created)
+            print (label, created)
             if created:
                 label.save()
     elif t == "feedback":
@@ -386,5 +387,5 @@ def save_db(request):
 
     # print (request.POST)
     # return (HttpResponseRedirect("/home/thankyou/"))
-    #print("save db on")
+    print("save db on")
     return (HttpResponse(status=204))
