@@ -27,6 +27,9 @@ function gup(name) {
   else return unescape(results[1]);
 }
 
+var assignmentID = gup("assignmentId");
+var workerID = gup("workerId");
+
 function validateAndSubmit() { // added by Jean
   // collecting information
 
@@ -36,8 +39,8 @@ function validateAndSubmit() { // added by Jean
 
   console.log("\nTime used: " + time_used + " seconds");
 
-  var assignmentID = gup("assignmentId");
-  var workerID = gup("workerId");
+//  var assignmentID = gup("assignmentId");
+//  var workerID = gup("workerId");
 
   // assembling data package
   var dataPackage = { //::: TODO: change here [start] :::
@@ -68,8 +71,8 @@ function selfTagSubmit() { // added by Arti
 
   console.log("preparing datapacakage for self emotion tag");
 
-  var assignmentID = gup("assignmentId");
-  var workerID = gup("workerId");
+//  var assignmentID = gup("assignmentId");
+//  var workerID = gup("workerId");
 
   // assembling data package
   var selfEmotiondataPackage = { //::: TODO: change here [start] :::
@@ -99,8 +102,8 @@ function feedbackSubmit() { // added by Arti
 
   console.log("preparing datapacakage for feedback");
 
-  var assignmentID = gup("assignmentId");
-  var workerID = gup("workerId");
+//  var assignmentID = gup("assignmentId");
+//  var workerID = gup("workerId");
 
   // assembling data package
   var feedbackdataPackage = { //::: TODO: change here [start] :::
@@ -139,7 +142,7 @@ $(document).ready(function () {
   $("#intro_assignment_id").val(gup("assignmentId"))
 
   // is assigntmentId is a URL parameter
-  if((aid = gup("assignmentId"))!="" && $(form_selector).length>0) {
+  if((aid = localStorage.getItem('assignmentID'))!="" && $(form_selector).length>0) {
 
     // If the HIT hasn't been accepted yet, disabled the form fields.
     if(aid == "ASSIGNMENT_ID_NOT_AVAILABLE") {
@@ -154,5 +157,10 @@ $(document).ready(function () {
 
     // Make sure the submit form's method is POST
     $(form_selector).attr('method', 'POST');
+
+    // Set the Action of the form to the provided "turkSubmitTo" field
+    if((submit_url=gup("turkSubmitTo"))!="") {
+        $(form_selector).attr('action', submit_url + '/mturk/externalSubmit');
+    }
   }
 });
