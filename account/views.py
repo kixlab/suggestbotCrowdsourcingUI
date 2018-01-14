@@ -12,7 +12,7 @@ import os, queue
 import json
 import random
 import logging
-from .video_management import Video_into_Database, deployer
+from .video_management import *#Video_into_Database, deployer
 from django.views.decorators.clickjacking import xframe_options_exempt
 #Video_into_Database()
 assign_queue = queue.Queue()
