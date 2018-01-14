@@ -62,8 +62,8 @@ def deployer(parameter, aId, wId):
         video_markers = Taskmarker.objects.filter(video = video)
         already_marked = video_markers.values('segment__sequence_num').annotate(done_labels_count = Sum(Case(When(done=True, then=1), When(done=False, then=0), output_field=IntegerField())), total_labels_count = Count('segment'))
         unmarked = segments.exclude(sequence_num__in = [q['segment__sequence_num'] for q in already_marked])
-        #print(already_marked)
-        #print(unmarked)
+        print(already_marked)
+        print(unmarked)
         if unmarked.count() > 0 :
             segment = unmarked[0]
 
