@@ -14,7 +14,7 @@ import random
 import logging
 from .video_management import *#Video_into_Database, deployer
 from django.views.decorators.clickjacking import xframe_options_exempt
-#Video_into_Database()
+Video_into_Database()
 assign_queue = queue.Queue()
 
 def updateQueue():
@@ -350,7 +350,7 @@ def save_db(request):
             label_time = key
             arousal = value['aro']
             valence = value['val']
-            if video_condition=="uniform":
+            """if video_condition=="uniform":
                 taskmarker, created = Taskmarker.objects.get_or_create(aId = aId,
                                                                 wId = wId,
                                                                 video = video,
@@ -358,7 +358,7 @@ def save_db(request):
                                                                 )
                 taskmarker.done = True
                 taskmarker.end_time = datetime.datetime.now()
-                taskmarker.save()
+                taskmarker.save()"""
 
             label, created = Labels.objects.get_or_create(aId=aId,
                                                         wId=wId,

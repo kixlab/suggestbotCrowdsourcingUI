@@ -2,14 +2,14 @@ from .models import Video, Segment, Labels, Taskmarker
 from django.db.models import Sum, Case, When, IntegerField, Count
 import os
 #if it is hard to set the environment related to the video, please make below as ineffective
-#from moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip
 import datetime
 MAX_TASK_NUM = 3
 TASK_TIME_LIMIT = 60
 #generate video related meta data
 
 #if it is hard to set the environment related to the video, please make below function as ineffective
-"""def Video_into_Database():
+def Video_into_Database():
 
     Video.objects.all().delete()
     Segment.objects.all().delete()
@@ -50,12 +50,13 @@ TASK_TIME_LIMIT = 60
                     video_start = video_start + segment.video_length
                     print("video end",video_start)
                     print("segment length", segment.video_length)
-                    segment.save()"""
+                    segment.save()
 #mark that the task is being done
 def deployer(parameter, aId, wId):
     path = os.path.dirname(__file__)+"/static/account/media/"
     Taskmarker.objects.filter(done = False, start_time__lte = datetime.datetime.now()-datetime.timedelta(minutes=TASK_TIME_LIMIT)).delete()
-    if "uniform" in parameter:
+    return parameter
+    """if "uniform" in parameter:
         parameter_split = parameter.split("_")
         video = Video.objects.get(video_name = parameter_split[0], video_condition = parameter_split[1])
         segments = Segment.objects.filter(video = video)
@@ -83,4 +84,4 @@ def deployer(parameter, aId, wId):
         return parameter
     elif "single" in parameter:
         #parameter should be videoname.mp4
-        return parameter
+        return parameter"""
