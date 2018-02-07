@@ -14,7 +14,7 @@ import random
 import logging
 from .video_management import *#Video_into_Database, deployer
 from django.views.decorators.clickjacking import xframe_options_exempt
-Video_into_Database()
+#Video_into_Database()
 assign_queue = queue.Queue()
 
 def updateQueue():
@@ -229,18 +229,18 @@ def thankyou(request):
 
 @xframe_options_exempt
 def feedback(request):
-    # form = FeedbackForm(request.POST)
-    # print(form)
-    # print(request.action)
-    # if (request.method == 'POST'):
-    #     print("feedback post method")
-    #     # if form.is_valid():
-    #         # feed_data=models.FeedbackModel()
-    #         # #data.q1 = form.cleaned_data['q1'
-    #         # feed_data.text = form.cleaned_data['text']
-    #         # args = {'form': feed_data}
-    #         # feed_data.save()
-    #     return(HttpResponseRedirect('/home/thankyou/'))
+    form = FeedbackForm(request.POST)
+    print(form)
+    #print(request.action)
+    if (request.method == 'POST'):
+        print("feedback post method")
+        if form.is_valid():
+            feed_data=Feedback()
+            #data.q1 = form.cleaned_data['q1'
+            feed_data.text = form.cleaned_data['text']
+            args = {'form': feed_data}
+            feed_data.save()
+        return(HttpResponseRedirect('/home/thankyou/'))
     return(render(request,'account/feedback.html'))
 
 def retrieve_emotion_data(request):

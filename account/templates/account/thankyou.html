@@ -2,8 +2,14 @@
 
 {% block body %}
 <div class="container footer">
-  
-  <h2>Thank you for your participation!</h2>
 
+  <h2>Thank you for your participation!</h2>
+  <div id='turker_token'></div>
 </div>
+<script>
+$(document).ready(function(){
+  $("#turker_token").text(Math.random().toString(36).substring(7))
+})
+
+</script>
 {% endblock %}

@@ -121,6 +121,9 @@ function feedbackSubmit() { // added by Arti
       //$("#mturk_form").submit();
       alert("Thank you for submitting the task! Your HIT is being processed and evaluated as part of a quality check. You'll be paid soon.");
       console.log("succeeded saving worker's feedback to db");
+    },
+    error: function(d){
+      alert("error");
     }
   });
 }
