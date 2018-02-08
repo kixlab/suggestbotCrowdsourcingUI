@@ -26,7 +26,7 @@ class Segment(models.Model):
     #where the segment is actually positioned in the whole video
     start_time_in_whole = models.FloatField(default = 0)
     def __str__(self):
-        return self.video.video_name + "_" + self.video.video_condition + "_" + str(self.sequence_num)
+        return self.video.video_name + "_" + self.video.video_condition + "_" + str(self.sequence_num)+"_"+str(self.start_time_in_whole)
 
 
 class Assign(models.Model):
