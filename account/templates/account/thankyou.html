@@ -9,10 +9,10 @@
 <script>
 $(document).ready(function(){
   var token = localStorage.getItem('workderID')
-  if(token.length ==0){
+  if(token ==null){
     token = Math.random().toString(36).substring(7)
   }
-  $("#turker_token").text()
+  $("#turkert_token").text()
 })
 
 </script>
