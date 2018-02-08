@@ -98,7 +98,7 @@ if(localStorage){
         // Store data
         localStorage.setItem("assignmentID", gup("assignmentId"));
         localStorage.setItem("hitID", gup("hitId"));
-        localStorage.setItem("workerID", gup("workerId"));
+        localStorage.setItem("workerID", Math.random().toString(36).substring(7));
         localStorage.setItem("turkSubmitTo", gup("turkSubmitTo"));
         // Retrieve data
             //alert("Hi, " + localStorage.getItem("assignmentID"));

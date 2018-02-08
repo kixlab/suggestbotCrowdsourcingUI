@@ -231,16 +231,17 @@ def thankyou(request):
 def feedback(request):
     form = FeedbackForm(request.POST)
     print(form)
+    print(form.cleaned_data['text'])
     #print(request.action)
     if (request.method == 'POST'):
         print("feedback post method")
-        if form.is_valid():
+        """if form.is_valid():
             feed_data=Feedback()
             #data.q1 = form.cleaned_data['q1'
             feed_data.text = form.cleaned_data['text']
             args = {'form': feed_data}
             feed_data.save()
-        return(HttpResponseRedirect('/home/thankyou/'))
+        return(HttpResponseRedirect('/home/thankyou/'))"""
     return(render(request,'account/feedback.html'))
 
 def retrieve_emotion_data(request):
@@ -372,6 +373,7 @@ def save_db(request):
             if created:
                 label.save()
     elif t == "feedback":
+        print("000")
         js = json.loads(request.POST["result_json_string"])
         feedback1 = js['q1']
         feedback2 = js['q2']
@@ -382,7 +384,9 @@ def save_db(request):
                                     feedback2=feedback2,
                                     feedback3=feedback3)
         f.save()
-        return (HttpResponseRedirect("/home/thankyou/"))
+        print("aaa")
+        data={}
+        return JsonResponse(data)
 
 
     # print (request.POST)
