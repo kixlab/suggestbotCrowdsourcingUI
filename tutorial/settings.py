@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_*0ukkki37%_yc=@4*r!wrw-1+no1#m6rrnd!sll!eb6jxce7i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*','0.0.0.0','192.168.1.134','[::8000]','[::8080]','[::9090]','127.0.0.1','107.170.53.99']
 
@@ -120,4 +120,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/html/Jean_Main/uwsgi-suggestbot/suggestbotCrowdsourcingUI/static/'
-

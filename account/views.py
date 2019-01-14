@@ -8,14 +8,14 @@ from django.http import HttpResponseRedirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.csrf import csrf_exempt
 from account.models import *
-import os, queue
+import os, Queue
 import json
 import random
 import logging
 from .video_management import *#Video_into_Database, deployer
 from django.views.decorators.clickjacking import xframe_options_exempt
 #Video_into_Database()
-assign_queue = queue.Queue()
+assign_queue = Queue.Queue()
 
 def updateQueue():
     global assign_queue
